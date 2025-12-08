@@ -3,7 +3,7 @@ import { Navbar } from "./Navbar";
 
 export default function Home() {
   return (
-    <div className="bg-gradient-to-br from-blue-50 dark:from-gray-900 to-indigo-100 dark:to-gray-800 min-h-screen">
+    <div className="bg-linear-to-br from-blue-50 dark:from-gray-900 to-indigo-100 dark:to-gray-800 min-h-screen">
       <Navbar />
 
       <main className="mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-7xl">
