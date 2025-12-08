@@ -1,4 +1,5 @@
 import { Navbar } from "./Navbar";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,29 +17,38 @@ export default function Home() {
           </p>
 
           <div className="gap-8 grid md:grid-cols-3 mt-16">
-            <div className="bg-white shadow-md p-8 rounded-lg">
+            <Link
+              href="/tickets/submit"
+              className="bg-white hover:shadow-lg shadow-md p-8 rounded-lg transition-shadow"
+            >
               <div className="mb-4 text-4xl">🎫</div>
               <h3 className="mb-2 font-semibold text-xl">Submit Tickets</h3>
               <p className="text-gray-600">
                 Easy ticket submission with real-time status tracking
               </p>
-            </div>
+            </Link>
 
-            <div className="bg-white shadow-md p-8 rounded-lg">
+            <Link
+              href="/kb"
+              className="bg-white hover:shadow-lg shadow-md p-8 rounded-lg transition-shadow"
+            >
               <div className="mb-4 text-4xl">📚</div>
               <h3 className="mb-2 font-semibold text-xl">Knowledge Base</h3>
               <p className="text-gray-600">
                 Search and browse helpful articles and documentation
               </p>
-            </div>
+            </Link>
 
-            <div className="bg-white shadow-md p-8 rounded-lg">
-              <div className="mb-4 text-4xl">👥</div>
-              <h3 className="mb-2 font-semibold text-xl">Team Management</h3>
+            <Link
+              href="/tickets/status"
+              className="bg-white hover:shadow-lg shadow-md p-8 rounded-lg transition-shadow"
+            >
+              <div className="mb-4 text-4xl">🔍</div>
+              <h3 className="mb-2 font-semibold text-xl">Track Ticket</h3>
               <p className="text-gray-600">
-                Assign tickets and collaborate with your support team
+                Check the status of your existing support tickets
               </p>
-            </div>
+            </Link>
           </div>
 
           <div className="mt-16">
