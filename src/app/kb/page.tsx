@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getPublishedKbArticles, getKbCategories } from "@/app/actions/kb";
+import { truncateText } from "@/lib/utils";
 import Link from "next/link";
 import type { KbArticle, KbCategoryWithCount } from "@/types";
 
@@ -219,7 +220,7 @@ export default function KnowledgeBasePage() {
                   )}
                 </div>
                 <p className="mb-4 text-gray-600 line-clamp-2">
-                  {article.content.substring(0, CONTENT_PREVIEW_LENGTH)}...
+                  {truncateText(article.content, CONTENT_PREVIEW_LENGTH)}
                 </p>
                 <div className="flex justify-between items-center text-gray-500 text-sm">
                   <span>By {article.author.name}</span>

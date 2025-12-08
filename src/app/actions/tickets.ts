@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { sendTicketCreatedEmail } from "@/lib/email";
+import { normalizeEmail } from "@/lib/utils";
 
 export async function createTicket(formData: FormData) {
   const subject = formData.get("subject") as string;
@@ -84,7 +85,7 @@ export async function getTicketStatus(ticketId: string, email: string) {
       where: {
         id: ticketId,
         user: {
-          email: email.toLowerCase().trim(),
+          email: normalizeEmail(email),
         },
       },
       include: {

@@ -1,4 +1,5 @@
 import { SendSmtpEmail, TransactionalEmailsApi } from "@getbrevo/brevo";
+import { escapeHtml } from "./utils";
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
@@ -12,19 +13,8 @@ let brevoClient: TransactionalEmailsApi | null = null;
 
 if (BREVO_API_KEY) {
   brevoClient = new TransactionalEmailsApi();
+  // API Key Type: 0 = partner key, 1 = account key
   brevoClient.setApiKey(0, BREVO_API_KEY);
-}
-
-// HTML escape helper to prevent XSS
-function escapeHtml(text: string): string {
-  const map: Record<string, string> = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;",
-  };
-  return text.replace(/[&<>"']/g, (m) => map[m]);
 }
 
 export async function sendTicketCreatedEmail(

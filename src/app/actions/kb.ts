@@ -1,13 +1,14 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
 
 export async function getPublishedKbArticles(
   categoryId?: string,
   searchQuery?: string
 ) {
   try {
-    const where: any = {
+    const where: Prisma.KbArticleWhereInput = {
       published: true,
     };
 
