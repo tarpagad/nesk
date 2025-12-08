@@ -25,37 +25,35 @@ function KnowledgeBaseContent() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    async function loadCategories() {
+      const result = await getKbCategories();
+      if (result.success) {
+        setCategories(result.categories || []);
+      }
+    }
     loadCategories();
-  }, [loadCategories]);
+  }, []);
 
   useEffect(() => {
+    async function loadArticles() {
+      setLoading(true);
+      setError("");
+
+      const result = await getPublishedKbArticles(
+        selectedCategory || undefined,
+        searchFromUrl || undefined,
+      );
+
+      if (result.error) {
+        setError(result.error);
+      } else if (result.success) {
+        setArticles(result.articles || []);
+      }
+
+      setLoading(false);
+    }
     loadArticles();
-  }, [loadArticles]);
-
-  const loadCategories = async () => {
-    const result = await getKbCategories();
-    if (result.success) {
-      setCategories(result.categories || []);
-    }
-  };
-
-  const loadArticles = async () => {
-    setLoading(true);
-    setError("");
-
-    const result = await getPublishedKbArticles(
-      selectedCategory || undefined,
-      searchFromUrl || undefined,
-    );
-
-    if (result.error) {
-      setError(result.error);
-    } else if (result.success) {
-      setArticles(result.articles || []);
-    }
-
-    setLoading(false);
-  };
+  }, [selectedCategory, searchFromUrl]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

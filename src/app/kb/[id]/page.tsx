@@ -14,23 +14,22 @@ export default function KbArticlePage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    loadArticle();
-  }, [loadArticle]);
+    async function loadArticle() {
+      setLoading(true);
+      setError("");
 
-  const loadArticle = async () => {
-    setLoading(true);
-    setError("");
+      const result = await getKbArticleById(articleId);
 
-    const result = await getKbArticleById(articleId);
+      if (result.error) {
+        setError(result.error);
+      } else if (result.success) {
+        setArticle(result.article);
+      }
 
-    if (result.error) {
-      setError(result.error);
-    } else if (result.success) {
-      setArticle(result.article);
+      setLoading(false);
     }
-
-    setLoading(false);
-  };
+    loadArticle();
+  }, [articleId]);
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
