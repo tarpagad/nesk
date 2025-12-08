@@ -10,6 +10,7 @@ import {
   updateTicketStatus,
 } from "@/app/actions/staff";
 import { getCategories, getPriorities } from "@/app/actions/tickets";
+import { isRichTextEmpty } from "@/lib/utils";
 import RichTextEditor from "@/components/RichTextEditor";
 import RichTextDisplay from "@/components/RichTextDisplay";
 import type { Category, Priority } from "@/types";
@@ -100,9 +101,8 @@ export default function StaffTicketDetailPage() {
     setSuccess("");
     setSubmitting(true);
 
-    // Validate that message is not empty (Quill empty content is "<p><br></p>")
-    const strippedMessage = replyMessage.replace(/<[^>]*>/g, "").trim();
-    if (!strippedMessage) {
+    // Validate that message is not empty
+    if (isRichTextEmpty(replyMessage)) {
       setError("Reply message is required");
       setSubmitting(false);
       return;

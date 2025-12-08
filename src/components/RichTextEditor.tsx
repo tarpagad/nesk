@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
+import "./RichTextEditor.css";
 
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -54,31 +55,6 @@ export default function RichTextEditor({
         placeholder={placeholder}
         className="bg-white"
       />
-      <style jsx global>{`
-        .rich-text-editor .quill {
-          background: white;
-        }
-        .rich-text-editor .ql-toolbar {
-          border: 1px solid #d1d5db;
-          border-radius: 0.375rem 0.375rem 0 0;
-          background: white;
-        }
-        .rich-text-editor .ql-container {
-          border: 1px solid #d1d5db;
-          border-top: none;
-          border-radius: 0 0 0.375rem 0.375rem;
-          font-family: inherit;
-          font-size: 0.875rem;
-          min-height: 200px;
-        }
-        .rich-text-editor .ql-editor {
-          min-height: 200px;
-        }
-        .rich-text-editor .ql-editor.ql-blank::before {
-          color: #9ca3af;
-          font-style: normal;
-        }
-      `}</style>
     </div>
   );
 }

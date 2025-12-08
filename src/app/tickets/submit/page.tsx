@@ -8,6 +8,7 @@ import {
   getPriorities,
 } from "@/app/actions/tickets";
 import { useSession } from "@/lib/auth-client";
+import { isRichTextEmpty } from "@/lib/utils";
 import RichTextEditor from "@/components/RichTextEditor";
 import type { Category, Priority } from "@/types";
 
@@ -51,9 +52,8 @@ export default function SubmitTicketPage() {
     setSuccess(false);
     setLoading(true);
 
-    // Validate that message is not empty (Quill empty content is "<p><br></p>")
-    const strippedMessage = message.replace(/<[^>]*>/g, "").trim();
-    if (!strippedMessage) {
+    // Validate that message is not empty
+    if (isRichTextEmpty(message)) {
       setError("Message is required");
       setLoading(false);
       return;
