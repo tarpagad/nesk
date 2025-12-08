@@ -1,9 +1,9 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 // Check if user is staff
 async function isStaff() {
@@ -183,7 +183,7 @@ export async function updateTicketStatus(ticketId: string, status: string) {
 // Update ticket priority
 export async function updateTicketPriority(
   ticketId: string,
-  priorityId: string | null
+  priorityId: string | null,
 ) {
   if (!(await isStaff())) {
     return { error: "Unauthorized" };
@@ -208,7 +208,7 @@ export async function updateTicketPriority(
 // Update ticket category
 export async function updateTicketCategory(
   ticketId: string,
-  categoryId: string | null
+  categoryId: string | null,
 ) {
   if (!(await isStaff())) {
     return { error: "Unauthorized" };
@@ -234,7 +234,7 @@ export async function updateTicketCategory(
 export async function addTicketReply(
   ticketId: string,
   message: string,
-  isInternal: boolean
+  isInternal: boolean,
 ) {
   if (!(await isStaff())) {
     return { error: "Unauthorized" };
@@ -282,7 +282,7 @@ export async function addTicketReply(
 // Assign ticket to staff member
 export async function assignTicket(
   ticketId: string,
-  assignedTo: string | null
+  assignedTo: string | null,
 ) {
   if (!(await isStaff())) {
     return { error: "Unauthorized" };
@@ -446,7 +446,9 @@ export async function updateKbArticle(id: string, formData: FormData) {
         categoryId: categoryId || null,
         published,
         publishedAt:
-          published && !existingArticle.published ? new Date() : existingArticle.publishedAt,
+          published && !existingArticle.published
+            ? new Date()
+            : existingArticle.publishedAt,
       },
     });
 
@@ -501,7 +503,10 @@ export async function toggleKbArticlePublished(id: string) {
       where: { id },
       data: {
         published: !article.published,
-        publishedAt: !article.published && !article.publishedAt ? new Date() : article.publishedAt,
+        publishedAt:
+          !article.published && !article.publishedAt
+            ? new Date()
+            : article.publishedAt,
       },
     });
 

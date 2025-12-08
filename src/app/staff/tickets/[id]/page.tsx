@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
-  getTicketForStaff,
-  updateTicketStatus,
-  updateTicketPriority,
-  updateTicketCategory,
   addTicketReply,
+  getTicketForStaff,
+  updateTicketCategory,
+  updateTicketPriority,
+  updateTicketStatus,
 } from "@/app/actions/staff";
 import { getCategories, getPriorities } from "@/app/actions/tickets";
 import type { Category, Priority } from "@/types";
@@ -69,10 +69,7 @@ export default function StaffTicketDetailPage() {
   };
 
   const handlePriorityChange = async (priorityId: string) => {
-    const result = await updateTicketPriority(
-      ticketId,
-      priorityId || null
-    );
+    const result = await updateTicketPriority(ticketId, priorityId || null);
     if (result.success) {
       const priority = priorities.find((p) => p.id === priorityId);
       setTicket({ ...ticket, priorityId, priority });
@@ -84,10 +81,7 @@ export default function StaffTicketDetailPage() {
   };
 
   const handleCategoryChange = async (categoryId: string) => {
-    const result = await updateTicketCategory(
-      ticketId,
-      categoryId || null
-    );
+    const result = await updateTicketCategory(ticketId, categoryId || null);
     if (result.success) {
       const category = categories.find((c) => c.id === categoryId);
       setTicket({ ...ticket, categoryId, category });
@@ -296,9 +290,7 @@ export default function StaffTicketDetailPage() {
         <div className="space-y-6">
           {/* Status */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">
-              Status
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">Status</h3>
             <select
               value={ticket.status}
               onChange={(e) => handleStatusChange(e.target.value)}

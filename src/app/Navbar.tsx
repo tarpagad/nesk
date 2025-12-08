@@ -4,7 +4,8 @@ import { UserMenu } from "./UserMenu";
 
 export async function Navbar() {
   const session = await getSession();
-  const isStaff = session?.user.role === "staff" || session?.user.role === "admin";
+  const isStaff =
+    session?.user.role === "staff" || session?.user.role === "admin";
 
   return (
     <nav className="bg-white shadow-sm">
@@ -15,7 +16,7 @@ export async function Navbar() {
               <h1 className="font-bold text-blue-600 text-2xl">NESK</h1>
               <span className="ml-2 text-gray-600">Help Desk</span>
             </Link>
-            
+
             <div className="hidden md:flex gap-6">
               <Link
                 href="/kb"

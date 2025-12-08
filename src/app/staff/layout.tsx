@@ -1,6 +1,6 @@
-import { ProtectedRoute, getSession } from "@/lib/Session";
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/Session";
 
 export default async function StaffLayout({
   children,
@@ -15,8 +15,9 @@ export default async function StaffLayout({
   }
 
   // Check if user has staff role
-  const isStaff = session.user.role === "staff" || session.user.role === "admin";
-  
+  const isStaff =
+    session.user.role === "staff" || session.user.role === "admin";
+
   if (!isStaff) {
     redirect("/");
   }
@@ -32,7 +33,7 @@ export default async function StaffLayout({
               {session.user.name || session.user.email}
             </p>
           </div>
-          
+
           <nav className="px-4 space-y-1">
             <Link
               href="/staff"
@@ -62,9 +63,7 @@ export default async function StaffLayout({
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-8">
-          {children}
-        </main>
+        <main className="flex-1 p-8">{children}</main>
       </div>
     </div>
   );

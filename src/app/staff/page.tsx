@@ -1,15 +1,20 @@
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 async function getTicketStats() {
-  const [totalTickets, openTickets, inProgressTickets, resolvedTickets, closedTickets] =
-    await Promise.all([
-      prisma.ticket.count(),
-      prisma.ticket.count({ where: { status: "open" } }),
-      prisma.ticket.count({ where: { status: "in_progress" } }),
-      prisma.ticket.count({ where: { status: "resolved" } }),
-      prisma.ticket.count({ where: { status: "closed" } }),
-    ]);
+  const [
+    totalTickets,
+    openTickets,
+    inProgressTickets,
+    resolvedTickets,
+    closedTickets,
+  ] = await Promise.all([
+    prisma.ticket.count(),
+    prisma.ticket.count({ where: { status: "open" } }),
+    prisma.ticket.count({ where: { status: "in_progress" } }),
+    prisma.ticket.count({ where: { status: "resolved" } }),
+    prisma.ticket.count({ where: { status: "closed" } }),
+  ]);
 
   return {
     total: totalTickets,
@@ -62,34 +67,46 @@ export default async function StaffDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-sm font-medium text-gray-600">Total Tickets</div>
-          <div className="mt-2 text-3xl font-bold text-gray-900">{stats.total}</div>
+          <div className="mt-2 text-3xl font-bold text-gray-900">
+            {stats.total}
+          </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-sm font-medium text-gray-600">Open</div>
-          <div className="mt-2 text-3xl font-bold text-orange-600">{stats.open}</div>
+          <div className="mt-2 text-3xl font-bold text-orange-600">
+            {stats.open}
+          </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-sm font-medium text-gray-600">In Progress</div>
-          <div className="mt-2 text-3xl font-bold text-blue-600">{stats.inProgress}</div>
+          <div className="mt-2 text-3xl font-bold text-blue-600">
+            {stats.inProgress}
+          </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-sm font-medium text-gray-600">Resolved</div>
-          <div className="mt-2 text-3xl font-bold text-green-600">{stats.resolved}</div>
+          <div className="mt-2 text-3xl font-bold text-green-600">
+            {stats.resolved}
+          </div>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-sm font-medium text-gray-600">Closed</div>
-          <div className="mt-2 text-3xl font-bold text-gray-600">{stats.closed}</div>
+          <div className="mt-2 text-3xl font-bold text-gray-600">
+            {stats.closed}
+          </div>
         </div>
       </div>
 
       {/* Recent Tickets */}
       <div className="bg-white rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Tickets</h2>
+          <h2 className="text-lg font-semibold text-gray-900">
+            Recent Tickets
+          </h2>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -155,13 +172,13 @@ export default async function StaffDashboard() {
             </tbody>
           </table>
         </div>
-        
+
         {recentTickets.length === 0 && (
           <div className="px-6 py-12 text-center text-gray-500">
             No tickets found
           </div>
         )}
-        
+
         {recentTickets.length > 0 && (
           <div className="px-6 py-4 border-t border-gray-200">
             <Link

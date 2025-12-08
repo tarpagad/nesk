@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { KbArticleForm } from "../../KbArticleForm";
+import { useEffect, useState } from "react";
 import { getKbArticleForStaff, updateKbArticle } from "@/app/actions/staff";
+import { KbArticleForm } from "../../KbArticleForm";
 
 export default function EditKbArticlePage() {
   const params = useParams();
@@ -51,9 +51,7 @@ export default function EditKbArticlePage() {
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Edit Article</h1>
-        <p className="mt-2 text-gray-600">
-          Update the knowledge base article
-        </p>
+        <p className="mt-2 text-gray-600">Update the knowledge base article</p>
       </div>
 
       <div className="bg-white rounded-lg shadow p-6">

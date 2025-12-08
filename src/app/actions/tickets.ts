@@ -1,10 +1,10 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 import { sendTicketCreatedEmail } from "@/lib/email";
+import { prisma } from "@/lib/prisma";
 import { normalizeEmail } from "@/lib/utils";
 
 export async function createTicket(formData: FormData) {
@@ -59,7 +59,7 @@ export async function createTicket(formData: FormData) {
       await sendTicketCreatedEmail(
         session.user.email,
         ticket.id,
-        ticket.subject
+        ticket.subject,
       );
     } catch (emailError) {
       console.error("Failed to send email notification:", emailError);

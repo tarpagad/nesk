@@ -1,17 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { getTicketStatus } from "@/app/actions/tickets";
-import type { Ticket } from "@/types";
 
-export default function TicketStatusPage() {
+function TicketStatusContent() {
   const searchParams = useSearchParams();
   const ticketIdFromUrl = searchParams.get("id");
 
   const [ticketId, setTicketId] = useState(ticketIdFromUrl || "");
   const [email, setEmail] = useState("");
-  const [ticket, setTicket] = useState<Ticket | null>(null);
+  const [ticket, setTicket] = useState<any>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +35,7 @@ export default function TicketStatusPage() {
       } else if (result.success) {
         setTicket(result.ticket);
       }
-    } catch (err) {
+    } catch (_err) {
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setLoading(false);
@@ -191,7 +190,7 @@ export default function TicketStatusPage() {
                   Conversation
                 </h3>
                 <div className="space-y-4">
-                  {ticket.replies.map((reply) => (
+                  {ticket.replies.map((reply: any) => (
                     <div
                       key={reply.id}
                       className={`p-4 rounded-lg ${
@@ -236,5 +235,19 @@ export default function TicketStatusPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function TicketStatusPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <TicketStatusContent />
+    </Suspense>
   );
 }

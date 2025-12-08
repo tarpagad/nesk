@@ -1,34 +1,36 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { getPublishedKbArticles, getKbCategories } from "@/app/actions/kb";
-import { truncateText } from "@/lib/utils";
 import Link from "next/link";
-import type { KbArticle, KbCategoryWithCount } from "@/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { getKbCategories, getPublishedKbArticles } from "@/app/actions/kb";
+import { truncateText } from "@/lib/utils";
+import type { KbCategoryWithCount } from "@/types";
 
 const CONTENT_PREVIEW_LENGTH = 200;
 
-export default function KnowledgeBasePage() {
+function KnowledgeBaseContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryFromUrl = searchParams.get("category");
   const searchFromUrl = searchParams.get("search");
 
-  const [articles, setArticles] = useState<KbArticle[]>([]);
+  const [articles, setArticles] = useState<any[]>([]);
   const [categories, setCategories] = useState<KbCategoryWithCount[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryFromUrl || "",
+  );
   const [searchQuery, setSearchQuery] = useState(searchFromUrl || "");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     loadCategories();
-  }, []);
+  }, [loadCategories]);
 
   useEffect(() => {
     loadArticles();
-  }, [selectedCategory, searchFromUrl]);
+  }, [loadArticles]);
 
   const loadCategories = async () => {
     const result = await getKbCategories();
@@ -43,7 +45,7 @@ export default function KnowledgeBasePage() {
 
     const result = await getPublishedKbArticles(
       selectedCategory || undefined,
-      searchFromUrl || undefined
+      searchFromUrl || undefined,
     );
 
     if (result.error) {
@@ -157,7 +159,7 @@ export default function KnowledgeBasePage() {
                 key={cat.id}
                 onClick={() =>
                   handleCategoryChange(
-                    selectedCategory === cat.id ? "" : cat.id
+                    selectedCategory === cat.id ? "" : cat.id,
                   )
                 }
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -249,5 +251,19 @@ export default function KnowledgeBasePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function KnowledgeBasePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <KnowledgeBaseContent />
+    </Suspense>
   );
 }

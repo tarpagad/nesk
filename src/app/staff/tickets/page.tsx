@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { getTicketsForStaff } from "@/app/actions/staff";
-import type { Ticket } from "@/types";
 
 export default function StaffTicketsPage() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [tickets, setTickets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     status: "",
@@ -41,7 +40,9 @@ export default function StaffTicketsPage() {
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">All Tickets</h1>
-          <p className="mt-2 text-gray-600">Manage and respond to support tickets</p>
+          <p className="mt-2 text-gray-600">
+            Manage and respond to support tickets
+          </p>
         </div>
       </div>
 
@@ -60,7 +61,7 @@ export default function StaffTicketsPage() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Status
@@ -78,7 +79,7 @@ export default function StaffTicketsPage() {
               <option value="closed">Closed</option>
             </select>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Priority
@@ -95,7 +96,7 @@ export default function StaffTicketsPage() {
               <option value="critical">Critical</option>
             </select>
           </div>
-          
+
           <div className="flex items-end">
             <button
               onClick={clearFilters}

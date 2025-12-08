@@ -1,22 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import { getKbArticleById } from "@/app/actions/kb";
 import Link from "next/link";
-import type { KbArticle } from "@/types";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getKbArticleById } from "@/app/actions/kb";
 
 export default function KbArticlePage() {
   const params = useParams();
   const articleId = params.id as string;
 
-  const [article, setArticle] = useState<KbArticle | null>(null);
+  const [article, setArticle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     loadArticle();
-  }, [articleId]);
+  }, [loadArticle]);
 
   const loadArticle = async () => {
     setLoading(true);
@@ -128,7 +127,9 @@ export default function KbArticlePage() {
             <div className="flex items-center text-gray-600 text-sm">
               <span className="mr-4">By {article.author.name}</span>
               <span className="mr-4">•</span>
-              <span>Published {formatDate(article.publishedAt || article.createdAt)}</span>
+              <span>
+                Published {formatDate(article.publishedAt || article.createdAt)}
+              </span>
               {article.updatedAt !== article.createdAt && (
                 <>
                   <span className="mx-4">•</span>
@@ -152,14 +153,16 @@ export default function KbArticlePage() {
                 Keywords:
               </h3>
               <div className="flex flex-wrap gap-2">
-                {article.keywords.split(",").map((keyword, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-200 px-3 py-1 rounded-full text-gray-700 text-sm"
-                  >
-                    {keyword.trim()}
-                  </span>
-                ))}
+                {article.keywords
+                  .split(",")
+                  .map((keyword: string, index: number) => (
+                    <span
+                      key={index}
+                      className="bg-gray-200 px-3 py-1 rounded-full text-gray-700 text-sm"
+                    >
+                      {keyword.trim()}
+                    </span>
+                  ))}
               </div>
             </div>
           )}
@@ -171,8 +174,8 @@ export default function KbArticlePage() {
             Was this article helpful?
           </h3>
           <p className="mb-4 text-blue-800">
-            If this didn't solve your issue, you can submit a support ticket
-            for personalized assistance.
+            If this didn't solve your issue, you can submit a support ticket for
+            personalized assistance.
           </p>
           <div className="flex gap-4">
             <Link

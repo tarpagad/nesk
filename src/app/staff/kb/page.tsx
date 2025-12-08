@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 async function getKbArticles() {
   return await prisma.kbArticle.findMany({

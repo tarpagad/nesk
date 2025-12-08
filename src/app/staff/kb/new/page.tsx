@@ -1,7 +1,7 @@
 "use client";
 
-import { KbArticleForm } from "../KbArticleForm";
 import { createKbArticle } from "@/app/actions/staff";
+import { KbArticleForm } from "../KbArticleForm";
 
 export default function NewKbArticlePage() {
   return (

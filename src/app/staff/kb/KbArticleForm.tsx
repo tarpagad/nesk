@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { getCategories } from "@/app/actions/tickets";
 import type { Category } from "@/types";
 
@@ -14,7 +14,9 @@ interface KbArticleFormProps {
     categoryId: string | null;
     published: boolean;
   };
-  onSubmit: (formData: FormData) => Promise<{ success?: boolean; error?: string; articleId?: string }>;
+  onSubmit: (
+    formData: FormData,
+  ) => Promise<{ success?: boolean; error?: string; articleId?: string }>;
 }
 
 export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
@@ -57,7 +59,11 @@ export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
     if (result.error) {
       setError(result.error);
     } else if (result.success) {
-      setSuccess(article ? "Article updated successfully!" : "Article created successfully!");
+      setSuccess(
+        article
+          ? "Article updated successfully!"
+          : "Article created successfully!",
+      );
       if (!article && result.articleId) {
         // Redirect to edit page after creation
         setTimeout(() => {
@@ -84,7 +90,10 @@ export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
       )}
 
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+        <label
+          htmlFor="title"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
           Title <span className="text-red-500">*</span>
         </label>
         <input
@@ -99,7 +108,10 @@ export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
       </div>
 
       <div>
-        <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+        <label
+          htmlFor="category"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
           Category
         </label>
         <select
@@ -118,7 +130,10 @@ export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
       </div>
 
       <div>
-        <label htmlFor="keywords" className="block text-sm font-medium text-gray-700 mb-2">
+        <label
+          htmlFor="keywords"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
           Keywords
         </label>
         <input
@@ -135,7 +150,10 @@ export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
       </div>
 
       <div>
-        <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+        <label
+          htmlFor="content"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
           Content <span className="text-red-500">*</span>
         </label>
         <textarea
@@ -171,7 +189,11 @@ export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
           disabled={loading}
           className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-md font-medium"
         >
-          {loading ? "Saving..." : article ? "Update Article" : "Create Article"}
+          {loading
+            ? "Saving..."
+            : article
+              ? "Update Article"
+              : "Create Article"}
         </button>
         <button
           type="button"
