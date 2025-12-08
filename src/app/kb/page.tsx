@@ -5,6 +5,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { getPublishedKbArticles, getKbCategories } from "@/app/actions/kb";
 import Link from "next/link";
 
+const CONTENT_PREVIEW_LENGTH = 200;
+
 export default function KnowledgeBasePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -216,7 +218,7 @@ export default function KnowledgeBasePage() {
                   )}
                 </div>
                 <p className="mb-4 text-gray-600 line-clamp-2">
-                  {article.content.substring(0, 200)}...
+                  {article.content.substring(0, CONTENT_PREVIEW_LENGTH)}...
                 </p>
                 <div className="flex justify-between items-center text-gray-500 text-sm">
                   <span>By {article.author.name}</span>

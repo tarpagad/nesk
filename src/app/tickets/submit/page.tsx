@@ -9,6 +9,8 @@ import {
   getPriorities,
 } from "@/app/actions/tickets";
 
+const REDIRECT_DELAY_MS = 2000;
+
 export default function SubmitTicketPage() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
@@ -65,10 +67,10 @@ export default function SubmitTicketPage() {
         setCategoryId("");
         setPriorityId("");
 
-        // Redirect to ticket status page after 2 seconds
+        // Redirect to ticket status page after delay
         setTimeout(() => {
           router.push(`/tickets/status?id=${result.ticketId}`);
-        }, 2000);
+        }, REDIRECT_DELAY_MS);
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");

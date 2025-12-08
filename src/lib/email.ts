@@ -8,15 +8,19 @@ if (!BREVO_API_KEY) {
   );
 }
 
-const brevoClient = new TransactionalEmailsApi();
-brevoClient.setApiKey(0, BREVO_API_KEY || "");
+let brevoClient: TransactionalEmailsApi | null = null;
+
+if (BREVO_API_KEY) {
+  brevoClient = new TransactionalEmailsApi();
+  brevoClient.setApiKey(0, BREVO_API_KEY);
+}
 
 export async function sendTicketCreatedEmail(
   to: string,
   ticketId: string,
   subject: string
 ) {
-  if (!BREVO_API_KEY) {
+  if (!brevoClient) {
     console.log("Skipping email - BREVO_API_KEY not configured");
     return;
   }
@@ -70,7 +74,7 @@ export async function sendTicketUpdateEmail(
   status: string,
   message?: string
 ) {
-  if (!BREVO_API_KEY) {
+  if (!brevoClient) {
     console.log("Skipping email - BREVO_API_KEY not configured");
     return;
   }
