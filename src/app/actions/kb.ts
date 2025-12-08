@@ -1,7 +1,7 @@
 "use server";
 
-import type { Prisma } from "@/generated/client";
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@/prisma/generated/client";
 
 export async function getPublishedKbArticles(
   categoryId?: string,
