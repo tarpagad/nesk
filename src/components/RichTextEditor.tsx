@@ -4,7 +4,8 @@ import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import "./RichTextEditor.css";
 
-// Dynamically import ReactQuill with SSR disabled
+// Dynamically import ReactQuill with SSR disabled to avoid Next.js hydration issues
+// Quill manipulates the DOM directly and doesn't work well with server-side rendering
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface RichTextEditorProps {

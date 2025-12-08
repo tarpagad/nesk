@@ -40,6 +40,9 @@ export function escapeHtml(text: string): string {
 /**
  * Strip HTML tags and return plain text
  * Used for validating rich text editor content
+ * Note: This is a simple regex-based approach that handles common HTML tags.
+ * It may not handle edge cases like malformed HTML or HTML comments.
+ * For more robust HTML parsing, consider using a dedicated HTML parser.
  */
 export function stripHtmlTags(html: string): string {
   return html.replace(/<[^>]*>/g, "").trim();
