@@ -44,13 +44,13 @@ export default function ReportsPage() {
     ]);
 
     if ("error" in dashResult) {
-      setError(dashResult.error);
+      setError(dashResult.error || "Failed to load dashboard stats");
     } else {
       setDashboardStats(dashResult.stats);
     }
 
     if ("error" in ticketResult) {
-      setError(ticketResult.error);
+      setError(ticketResult.error || "Failed to load ticket stats");
     } else {
       setTicketStats(ticketResult.stats);
     }

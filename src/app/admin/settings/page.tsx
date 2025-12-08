@@ -36,7 +36,7 @@ export default function SettingsPage() {
     setLoading(true);
     const result = await getSettings(activeCategory);
     if ("error" in result) {
-      setError(result.error);
+      setError(result.error || "Failed to load settings");
     } else {
       setSettings(result.settings);
       const initialFormData: Record<string, string> = {};
@@ -54,7 +54,7 @@ export default function SettingsPage() {
 
     const result = await updateSetting(key, formData[key], activeCategory);
     if ("error" in result) {
-      setError(result.error);
+      setError(result.error || "Failed to update setting");
     } else {
       setSuccess(`Setting "${key}" updated successfully`);
       setEditingKey(null);
@@ -69,7 +69,7 @@ export default function SettingsPage() {
 
     const result = await deleteSetting(id);
     if ("error" in result) {
-      setError(result.error);
+      setError(result.error || "Failed to delete setting");
     } else {
       setSuccess("Setting deleted successfully");
       loadSettings();

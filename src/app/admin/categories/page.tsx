@@ -45,7 +45,7 @@ export default function CategoriesPage() {
     setLoading(true);
     const result = await getCategories();
     if ("error" in result) {
-      setError(result.error);
+      setError(result.error || "Failed to load categories");
     } else {
       setCategories(result.categories);
     }
@@ -62,7 +62,7 @@ export default function CategoriesPage() {
         parentId: formData.parentId || null,
       });
       if ("error" in result) {
-        setError(result.error);
+        setError(result.error || "Failed to update category");
       } else {
         setEditingId(null);
         setFormData({ name: "", parentId: "" });
@@ -74,7 +74,7 @@ export default function CategoriesPage() {
         parentId: formData.parentId || undefined,
       });
       if ("error" in result) {
-        setError(result.error);
+        setError(result.error || "Failed to create category");
       } else {
         setShowAddForm(false);
         setFormData({ name: "", parentId: "" });
@@ -90,7 +90,7 @@ export default function CategoriesPage() {
 
     const result = await deleteCategory(id);
     if ("error" in result) {
-      setError(result.error);
+      setError(result.error || "Failed to delete category");
     } else {
       loadCategories();
     }

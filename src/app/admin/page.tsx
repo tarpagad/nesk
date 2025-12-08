@@ -14,7 +14,7 @@ export default async function AdminDashboard() {
   }
 
   const { stats } = statsResult;
-  const logs = "logs" in logsResult ? logsResult.logs : [];
+  const logs = "logs" in logsResult ? logsResult.logs : undefined;
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -118,7 +118,7 @@ export default async function AdminDashboard() {
         <h2 className="mb-4 font-semibold text-gray-900 text-xl">
           Recent Activity
         </h2>
-        {logs.length === 0 ? (
+        {!logs || logs.length === 0 ? (
           <p className="text-gray-500 text-sm">No recent activity</p>
         ) : (
           <div className="space-y-3">
