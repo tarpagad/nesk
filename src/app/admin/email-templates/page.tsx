@@ -131,8 +131,8 @@ export default function EmailTemplatesPage() {
     <div className="mx-auto max-w-6xl">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="font-bold text-gray-900 text-3xl">Email Templates</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">Email Templates</h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             Customize email notifications sent to customers
           </p>
         </div>
@@ -145,20 +145,20 @@ export default function EmailTemplatesPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 mb-6 p-4 border border-red-200 rounded-lg text-red-700">
+        <div className="bg-red-50 dark:bg-red-900/20 mb-6 p-4 border border-red-200 rounded-lg text-red-700 dark:text-red-400">
           {error}
         </div>
       )}
 
       {/* Add/Edit Form */}
       {(showAddForm || editingId) && (
-        <div className="bg-white shadow-sm mb-6 p-6 border border-gray-200 rounded-lg">
-          <h2 className="mb-4 font-semibold text-gray-900 text-xl">
+        <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 mb-6 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+          <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-xl">
             {editingId ? "Edit Template" : "Create Template"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-1 font-medium text-gray-700 text-sm">
+              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Template Name
               </label>
               <input
@@ -169,11 +169,11 @@ export default function EmailTemplatesPage() {
                 }
                 required
                 placeholder="e.g., new_ticket_confirmation"
-                className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 text-sm">
+              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Description
               </label>
               <input
@@ -183,11 +183,11 @@ export default function EmailTemplatesPage() {
                   setFormData({ ...formData, description: e.target.value })
                 }
                 placeholder="Brief description of this template"
-                className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 text-sm">
+              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Subject
               </label>
               <input
@@ -198,11 +198,11 @@ export default function EmailTemplatesPage() {
                 }
                 required
                 placeholder="Email subject line (can use {{variables}})"
-                className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 text-sm">
+              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Body
               </label>
               <textarea
@@ -213,11 +213,11 @@ export default function EmailTemplatesPage() {
                 required
                 rows={10}
                 placeholder="Email body (can use {{variables}})"
-                className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 text-sm">
+              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Available Variables (JSON Array)
               </label>
               <input
@@ -228,9 +228,9 @@ export default function EmailTemplatesPage() {
                 }
                 required
                 placeholder='["ticketId", "customerName", "subject"]'
-                className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
               />
-              <p className="mt-1 text-gray-500 text-xs">
+              <p className="mt-1 text-gray-500 dark:text-gray-400 text-xs">
                 Example: ["ticketId", "customerName", "ticketSubject",
                 "supportEmail"]
               </p>
@@ -245,7 +245,7 @@ export default function EmailTemplatesPage() {
               <button
                 type="button"
                 onClick={cancelEdit}
-                className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-gray-700 transition-colors"
+                className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 transition-colors"
               >
                 Cancel
               </button>
@@ -257,22 +257,22 @@ export default function EmailTemplatesPage() {
       {/* Templates List */}
       <div className="space-y-4">
         {templates.length === 0 ? (
-          <div className="bg-white shadow-sm p-8 border border-gray-200 rounded-lg text-gray-500 text-center">
+          <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-8 border border-gray-200 rounded-lg text-gray-500 dark:text-gray-400 text-center">
             No email templates yet
           </div>
         ) : (
           templates.map((template) => (
             <div
               key={template.id}
-              className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg"
+              className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg"
             >
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-lg">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
                     {template.name}
                   </h3>
                   {template.description && (
-                    <p className="mt-1 text-gray-600 text-sm">
+                    <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
                       {template.description}
                     </p>
                   )}
@@ -280,13 +280,13 @@ export default function EmailTemplatesPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => startEdit(template)}
-                    className="hover:bg-blue-50 px-3 py-1 rounded text-blue-600 text-sm transition-colors"
+                    className="hover:bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded text-blue-600 text-sm transition-colors"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(template.id)}
-                    className="hover:bg-red-50 px-3 py-1 rounded text-red-600 text-sm transition-colors"
+                    className="hover:bg-red-50 dark:hover:bg-red-900/30 dark:bg-red-900/20 px-3 py-1 rounded text-red-600 text-sm transition-colors"
                   >
                     Delete
                   </button>
@@ -294,33 +294,33 @@ export default function EmailTemplatesPage() {
               </div>
               <div className="space-y-3">
                 <div>
-                  <span className="font-medium text-gray-500 text-xs uppercase">
+                  <span className="font-medium text-gray-500 dark:text-gray-400 text-xs uppercase">
                     Subject:
                   </span>
-                  <p className="mt-1 text-gray-900 text-sm">
+                  <p className="mt-1 text-gray-900 dark:text-gray-100 text-sm">
                     {template.subject}
                   </p>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-500 text-xs uppercase">
+                  <span className="font-medium text-gray-500 dark:text-gray-400 text-xs uppercase">
                     Body:
                   </span>
-                  <pre className="bg-gray-50 mt-1 p-3 border border-gray-200 rounded font-mono text-gray-900 text-sm whitespace-pre-wrap">
+                  <pre className="bg-gray-50 dark:bg-gray-900 mt-1 p-3 border border-gray-200 rounded font-mono text-gray-900 dark:text-gray-100 text-sm whitespace-pre-wrap">
                     {template.body.length > 200
                       ? `${template.body.substring(0, 200)}...`
                       : template.body}
                   </pre>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-500 text-xs uppercase">
+                  <span className="font-medium text-gray-500 dark:text-gray-400 text-xs uppercase">
                     Variables:
                   </span>
-                  <p className="mt-1 font-mono text-gray-900 text-sm">
+                  <p className="mt-1 font-mono text-gray-900 dark:text-gray-100 text-sm">
                     {template.variables}
                   </p>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-gray-200 border-t text-gray-500 text-xs">
+              <div className="mt-4 pt-4 border-gray-200 border-t text-gray-500 dark:text-gray-400 text-xs">
                 Last updated: {new Date(template.updatedAt).toLocaleString()}
               </div>
             </div>

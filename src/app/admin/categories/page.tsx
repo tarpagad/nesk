@@ -120,8 +120,8 @@ export default function CategoriesPage() {
     <div className="mx-auto max-w-6xl">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="font-bold text-gray-900 text-3xl">Categories</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">Categories</h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             Manage categories for tickets and KB articles
           </p>
         </div>
@@ -134,20 +134,20 @@ export default function CategoriesPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 mb-6 p-4 border border-red-200 rounded-lg text-red-700">
+        <div className="bg-red-50 dark:bg-red-900/20 mb-6 p-4 border border-red-200 rounded-lg text-red-700 dark:text-red-400">
           {error}
         </div>
       )}
 
       {/* Add/Edit Form */}
       {(showAddForm || editingId) && (
-        <div className="bg-white shadow-sm mb-6 p-6 border border-gray-200 rounded-lg">
-          <h2 className="mb-4 font-semibold text-gray-900 text-xl">
+        <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 mb-6 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+          <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-xl">
             {editingId ? "Edit Category" : "Add Category"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-1 font-medium text-gray-700 text-sm">
+              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Name
               </label>
               <input
@@ -157,11 +157,11 @@ export default function CategoriesPage() {
                   setFormData({ ...formData, name: e.target.value })
                 }
                 required
-                className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 text-sm">
+              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Parent Category (Optional)
               </label>
               <select
@@ -169,7 +169,7 @@ export default function CategoriesPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, parentId: e.target.value })
                 }
-                className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               >
                 <option value="">None (Top Level)</option>
                 {categories
@@ -191,7 +191,7 @@ export default function CategoriesPage() {
               <button
                 type="button"
                 onClick={cancelEdit}
-                className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-gray-700 transition-colors"
+                className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 transition-colors"
               >
                 Cancel
               </button>
@@ -201,57 +201,57 @@ export default function CategoriesPage() {
       )}
 
       {/* Categories List */}
-      <div className="bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50 border-gray-200 border-b">
+          <thead className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 border-b">
             <tr>
-              <th className="px-6 py-3 font-medium text-gray-500 text-xs text-left uppercase tracking-wider">
+              <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                 Name
               </th>
-              <th className="px-6 py-3 font-medium text-gray-500 text-xs text-left uppercase tracking-wider">
+              <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                 Parent
               </th>
-              <th className="px-6 py-3 font-medium text-gray-500 text-xs text-left uppercase tracking-wider">
+              <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                 Subcategories
               </th>
-              <th className="px-6 py-3 font-medium text-gray-500 text-xs text-left uppercase tracking-wider">
+              <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                 Tickets
               </th>
-              <th className="px-6 py-3 font-medium text-gray-500 text-xs text-left uppercase tracking-wider">
+              <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                 KB Articles
               </th>
-              <th className="px-6 py-3 font-medium text-gray-500 text-xs text-right uppercase tracking-wider">
+              <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-right uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {categories.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-gray-500 text-center">
+                <td colSpan={6} className="px-6 py-8 text-gray-500 dark:text-gray-400 text-center">
                   No categories yet
                 </td>
               </tr>
             ) : (
               categories.map((category) => (
-                <tr key={category.id} className="hover:bg-gray-50">
+                <tr key={category.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-900">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="font-medium text-gray-900 text-sm">
+                    <div className="font-medium text-gray-900 dark:text-gray-100 text-sm">
                       {category.name}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-gray-600 text-sm">
+                    <div className="text-gray-600 dark:text-gray-400 text-sm">
                       {category.parent?.name || "-"}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-600 text-sm whitespace-nowrap">
+                  <td className="px-6 py-4 text-gray-600 dark:text-gray-400 text-sm whitespace-nowrap">
                     {category.children.length}
                   </td>
-                  <td className="px-6 py-4 text-gray-600 text-sm whitespace-nowrap">
+                  <td className="px-6 py-4 text-gray-600 dark:text-gray-400 text-sm whitespace-nowrap">
                     {category._count.tickets}
                   </td>
-                  <td className="px-6 py-4 text-gray-600 text-sm whitespace-nowrap">
+                  <td className="px-6 py-4 text-gray-600 dark:text-gray-400 text-sm whitespace-nowrap">
                     {category._count.kbArticles}
                   </td>
                   <td className="px-6 py-4 font-medium text-sm text-right whitespace-nowrap">

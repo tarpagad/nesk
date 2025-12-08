@@ -32,7 +32,7 @@ export default function EditKbArticlePage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-gray-600">Loading article...</div>
+        <div className="text-gray-600 dark:text-gray-400">Loading article...</div>
       </div>
     );
   }
@@ -40,7 +40,7 @@ export default function EditKbArticlePage() {
   if (error || !article) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded">
           {error || "Article not found"}
         </div>
       </div>
@@ -50,11 +50,11 @@ export default function EditKbArticlePage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Edit Article</h1>
-        <p className="mt-2 text-gray-600">Update the knowledge base article</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Edit Article</h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">Update the knowledge base article</p>
       </div>
 
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">
         <KbArticleForm article={article} onSubmit={handleSubmit} />
       </div>
     </div>

@@ -87,24 +87,24 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-4xl">
       <div className="mb-8">
-        <h1 className="font-bold text-gray-900 text-3xl">System Settings</h1>
-        <p className="mt-2 text-gray-600">Configure your help desk system</p>
+        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">System Settings</h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">Configure your help desk system</p>
       </div>
 
       {error && (
-        <div className="bg-red-50 mb-6 p-4 border border-red-200 rounded-lg text-red-700">
+        <div className="bg-red-50 dark:bg-red-900/20 mb-6 p-4 border border-red-200 rounded-lg text-red-700 dark:text-red-400">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="bg-green-50 mb-6 p-4 border border-green-200 rounded-lg text-green-700">
+        <div className="bg-green-50 dark:bg-green-900/20 mb-6 p-4 border border-green-200 rounded-lg text-green-700 dark:text-green-400">
           {success}
         </div>
       )}
 
       {/* Category Tabs */}
-      <div className="flex space-x-1 mb-6 border-gray-200 border-b">
+      <div className="flex space-x-1 mb-6 border-gray-200 dark:border-gray-700 border-b">
         {categories.map((cat) => (
           <button
             type="button"
@@ -113,7 +113,7 @@ export default function SettingsPage() {
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               activeCategory === cat.id
                 ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-600 hover:text-gray-900"
+                : "text-gray-600 hover:text-gray-900 dark:text-gray-100"
             }`}
           >
             {cat.label}
@@ -122,10 +122,10 @@ export default function SettingsPage() {
       </div>
 
       {/* Settings List */}
-      <div className="bg-white shadow-sm border border-gray-200 rounded-lg">
-        <div className="divide-y divide-gray-200">
+      <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg">
+        <div className="divide-y divide-gray-200 dark:divide-gray-700">
           {settings.length === 0 ? (
-            <div className="p-8 text-gray-500 text-center">
+            <div className="p-8 text-gray-500 dark:text-gray-400 text-center">
               No settings configured for this category yet
             </div>
           ) : (
@@ -133,7 +133,7 @@ export default function SettingsPage() {
               <div key={setting.id} className="p-6">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <label className="block mb-2 font-medium text-gray-900 text-sm">
+                    <label className="block mb-2 font-medium text-gray-900 dark:text-gray-100 text-sm">
                       {setting.key
                         .replace(/_/g, " ")
                         .replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -146,7 +146,7 @@ export default function SettingsPage() {
                             handleChange(setting.key, e.target.value)
                           }
                           rows={3}
-                          className="px-3 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
                         />
                         <div className="flex gap-2">
                           <button
@@ -157,7 +157,7 @@ export default function SettingsPage() {
                           </button>
                           <button
                             onClick={() => setEditingKey(null)}
-                            className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-gray-700 text-sm transition-colors"
+                            className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-gray-700 dark:text-gray-300 text-sm transition-colors"
                           >
                             Cancel
                           </button>
@@ -165,7 +165,7 @@ export default function SettingsPage() {
                       </div>
                     ) : (
                       <div>
-                        <p className="text-gray-600 text-sm whitespace-pre-wrap">
+                        <p className="text-gray-600 dark:text-gray-400 text-sm whitespace-pre-wrap">
                           {setting.value}
                         </p>
                         <p className="mt-2 text-gray-400 text-xs">
@@ -199,11 +199,11 @@ export default function SettingsPage() {
       </div>
 
       {/* Quick Settings Guide */}
-      <div className="bg-blue-50 mt-8 p-6 border border-blue-200 rounded-lg">
+      <div className="bg-blue-50 dark:bg-blue-900/30 mt-8 p-6 border border-blue-200 dark:border-blue-800 rounded-lg">
         <h3 className="mb-3 font-semibold text-blue-900 text-sm">
           Common Settings
         </h3>
-        <div className="space-y-2 text-blue-800 text-sm">
+        <div className="space-y-2 text-blue-800 dark:text-blue-400 text-sm">
           <p>
             <strong>General:</strong> site_name, support_email, timezone
           </p>
