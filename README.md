@@ -57,9 +57,11 @@
 
 ### 🔐 Security & Auth
 - **Better Auth** integration for secure authentication
+- **Math-based CAPTCHA** on login and signup to prevent abuse
 - Password reset flow with email verification
 - Session management with role-based access control
 - Protected routes and API endpoints
+- Graceful email fallback when API keys are not configured
 
 ---
 
@@ -229,8 +231,8 @@ EmailTemplate (Notification templates)
 - `/tickets/status` - Check ticket status by ID and email
 
 ### Authentication Routes
-- `/auth/signin` - User login
-- `/auth/signup` - User registration
+- `/auth/signin` - User login (with CAPTCHA protection)
+- `/auth/signup` - User registration (with CAPTCHA protection)
 - `/auth/forgot-password` - Password reset request
 - `/auth/reset-password` - Set new password
 
@@ -315,6 +317,7 @@ bun run format
 ## 🔒 Security Features
 
 - ✅ Password hashing with bcrypt
+- ✅ **Math-based CAPTCHA** on authentication forms to prevent bot abuse
 - ✅ CSRF protection via Better Auth
 - ✅ SQL injection prevention via Prisma
 - ✅ XSS protection via React's built-in escaping
@@ -322,6 +325,7 @@ bun run format
 - ✅ Secure session management
 - ✅ Email verification workflow
 - ✅ Password reset with token expiration
+- ✅ Graceful fallback when email service is unavailable (logs user intent instead of sending)
 
 ---
 
