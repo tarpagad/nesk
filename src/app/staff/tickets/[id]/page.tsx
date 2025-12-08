@@ -10,6 +10,8 @@ import {
   updateTicketStatus,
 } from "@/app/actions/staff";
 import { getCategories, getPriorities } from "@/app/actions/tickets";
+import RichTextEditor from "@/components/RichTextEditor";
+import RichTextDisplay from "@/components/RichTextDisplay";
 import type { Category, Priority } from "@/types";
 
 export default function StaffTicketDetailPage() {
@@ -97,6 +99,14 @@ export default function StaffTicketDetailPage() {
     setError("");
     setSuccess("");
     setSubmitting(true);
+
+    // Validate that message is not empty (Quill empty content is "<p><br></p>")
+    const strippedMessage = replyMessage.replace(/<[^>]*>/g, "").trim();
+    if (!strippedMessage) {
+      setError("Reply message is required");
+      setSubmitting(false);
+      return;
+    }
 
     const result = await addTicketReply(ticketId, replyMessage, isInternal);
 
@@ -236,9 +246,7 @@ export default function StaffTicketDetailPage() {
                       {new Date(reply.createdAt).toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                    {reply.message}
-                  </p>
+                  <RichTextDisplay content={reply.message} />
                 </div>
               ))}
             </div>
@@ -251,13 +259,10 @@ export default function StaffTicketDetailPage() {
             </h2>
             <form onSubmit={handleSubmitReply} className="space-y-4">
               <div>
-                <textarea
+                <RichTextEditor
                   value={replyMessage}
-                  onChange={(e) => setReplyMessage(e.target.value)}
-                  rows={6}
-                  required
+                  onChange={setReplyMessage}
                   placeholder="Type your message here..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
