@@ -53,7 +53,7 @@ function TicketStatusContent() {
       case "waiting for customer":
         return "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400";
       case "resolved":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400";
       case "closed":
         return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100";
       default:

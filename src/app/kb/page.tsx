@@ -166,7 +166,7 @@ function KnowledgeBaseContent() {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === cat.id
                     ? "bg-blue-600 text-white"
-                    : "bg-white dark:bg-gray-800 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-700 border border-gray-300 dark:border-gray-600"
+                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600"
                 }`}
               >
                 {cat.name} ({cat._count.kbArticles})

@@ -107,8 +107,8 @@ export default function SubmitTicketPage() {
         <Navbar />
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
-          <div className="bg-yellow-50 shadow dark:shadow-gray-900 p-6 border border-yellow-200 rounded-lg text-center">
-            <h2 className="mb-4 font-semibold text-2xl text-yellow-800 dark:text-yellow-400">
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 shadow dark:shadow-gray-900 p-6 border border-yellow-200 dark:border-yellow-800 rounded-lg text-center">
+            <h2 className="mb-4 font-semibold text-2xl text-yellow-800 dark:text-yellow-300">
               Sign In Required
             </h2>
             <p className="mb-6 text-yellow-700">

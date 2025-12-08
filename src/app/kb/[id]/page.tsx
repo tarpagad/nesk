@@ -188,7 +188,7 @@ export default function KbArticlePage() {
           <div className="flex gap-4">
             <Link
               href="/kb"
-              className="inline-block bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-700 px-6 py-2 border border-blue-300 rounded-md font-medium text-blue-700"
+              className="inline-block bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 px-6 py-2 border border-blue-300 dark:border-blue-600 rounded-md font-medium text-blue-700 dark:text-blue-400"
             >
               Browse More Articles
             </Link>
