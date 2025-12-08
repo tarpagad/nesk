@@ -8,6 +8,8 @@ import {
   getPriorities,
 } from "@/app/actions/tickets";
 import { useSession } from "@/lib/auth-client";
+import { isRichTextEmpty } from "@/lib/utils";
+import RichTextEditor from "@/components/RichTextEditor";
 import type { Category, Priority } from "@/types";
 
 const REDIRECT_DELAY_MS = 2000;
@@ -49,6 +51,13 @@ export default function SubmitTicketPage() {
     setError("");
     setSuccess(false);
     setLoading(true);
+
+    // Validate that message is not empty
+    if (isRichTextEmpty(message)) {
+      setError("Message is required");
+      setLoading(false);
+      return;
+    }
 
     const formData = new FormData();
     formData.append("subject", subject);
@@ -213,14 +222,10 @@ export default function SubmitTicketPage() {
               >
                 Message <span className="text-red-500">*</span>
               </label>
-              <textarea
-                id="message"
-                required
-                rows={8}
+              <RichTextEditor
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={setMessage}
                 placeholder="Please provide as much detail as possible about your issue..."
-                className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
               />
             </div>
 

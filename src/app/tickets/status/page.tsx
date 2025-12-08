@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { getTicketStatus } from "@/app/actions/tickets";
+import RichTextDisplay from "@/components/RichTextDisplay";
 
 function TicketStatusContent() {
   const searchParams = useSearchParams();
@@ -209,9 +210,7 @@ function TicketStatusContent() {
                           {formatDate(reply.createdAt)}
                         </span>
                       </div>
-                      <p className="text-gray-700 whitespace-pre-wrap">
-                        {reply.message}
-                      </p>
+                      <RichTextDisplay content={reply.message} />
                     </div>
                   ))}
                 </div>

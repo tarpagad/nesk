@@ -41,7 +41,7 @@ export default function EmailTemplatesPage() {
     setLoading(true);
     const result = await getEmailTemplates();
     if ("error" in result) {
-      setError(result.error);
+      setError(result.error || "Failed to load templates");
     } else {
       setTemplates(result.templates);
     }
@@ -55,7 +55,7 @@ export default function EmailTemplatesPage() {
     if (editingId) {
       const result = await updateEmailTemplate(editingId, formData);
       if ("error" in result) {
-        setError(result.error);
+        setError(result.error || "Failed to update template");
       } else {
         setEditingId(null);
         setFormData({
@@ -70,7 +70,7 @@ export default function EmailTemplatesPage() {
     } else {
       const result = await createEmailTemplate(formData);
       if ("error" in result) {
-        setError(result.error);
+        setError(result.error || "Failed to create template");
       } else {
         setShowAddForm(false);
         setFormData({
@@ -92,7 +92,7 @@ export default function EmailTemplatesPage() {
 
     const result = await deleteEmailTemplate(id);
     if ("error" in result) {
-      setError(result.error);
+      setError(result.error || "Failed to delete template");
     } else {
       loadTemplates();
     }
@@ -328,7 +328,5 @@ export default function EmailTemplatesPage() {
         )}
       </div>
     </div>
-  );
-}
   );
 }
