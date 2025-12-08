@@ -61,10 +61,12 @@ function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 min-h-screen">
-        <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 rounded-lg w-full max-w-md border dark:border-gray-700">
+      <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
+        <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
           <div>
-            <h2 className="font-bold text-3xl text-center dark:text-gray-100">Invalid Link</h2>
+            <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
+              Invalid Link
+            </h2>
             <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
               This password reset link is invalid or has expired.
             </p>
@@ -72,7 +74,7 @@ function ResetPasswordForm() {
           <div className="text-center">
             <Link
               href="/auth/forgot-password"
-              className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+              className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400"
             >
               Request a new reset link
             </Link>
@@ -83,10 +85,12 @@ function ResetPasswordForm() {
   }
 
   return (
-    <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 min-h-screen">
-      <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 rounded-lg w-full max-w-md border dark:border-gray-700">
+    <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
+      <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
         <div>
-          <h2 className="font-bold text-3xl text-center dark:text-gray-100">Set New Password</h2>
+          <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
+            Set New Password
+          </h2>
           <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
             Enter your new password below
           </p>
@@ -112,7 +116,7 @@ function ResetPasswordForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
               placeholder="Minimum 8 characters"
               minLength={8}
             />
@@ -131,7 +135,7 @@ function ResetPasswordForm() {
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
               placeholder="Re-enter your password"
               minLength={8}
             />
@@ -148,7 +152,7 @@ function ResetPasswordForm() {
           <div className="text-center">
             <Link
               href="/auth/signin"
-              className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+              className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400"
             >
               Back to sign in
             </Link>
@@ -163,7 +167,7 @@ export default function ResetPasswordPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 min-h-screen">
+        <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
           <div className="text-gray-600 dark:text-gray-300">Loading...</div>
         </div>
       }

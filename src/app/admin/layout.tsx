@@ -27,27 +27,31 @@ export default async function AdminLayout({
   ];
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="bg-white dark:bg-gray-900 min-h-screen">
       <div className="flex">
         {/* Sidebar */}
         <aside className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 border-r w-64 min-h-screen">
           <div className="p-6">
-            <h1 className="font-bold text-gray-900 dark:text-gray-100 text-2xl">Admin Panel</h1>
-            <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">{session.user.email}</p>
+            <h1 className="font-bold text-gray-900 dark:text-gray-100 text-2xl">
+              Admin Panel
+            </h1>
+            <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+              {session.user.email}
+            </p>
           </div>
           <nav className="space-y-1 px-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="block hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 text-sm transition-colors"
+                className="block hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-gray-900 dark:hover:text-gray-100 dark:text-gray-300 text-sm transition-colors"
               >
                 {item.label}
               </Link>
             ))}
             <Link
               href="/staff"
-              className="block hover:bg-gray-100 dark:hover:bg-gray-700 mt-4 px-4 py-2 rounded-lg font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 text-sm transition-colors"
+              className="block hover:bg-gray-100 dark:hover:bg-gray-700 mt-4 px-4 py-2 rounded-lg font-medium text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 dark:text-gray-400 text-sm transition-colors"
             >
               ← Back to Staff Portal
             </Link>

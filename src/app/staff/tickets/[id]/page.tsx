@@ -10,9 +10,9 @@ import {
   updateTicketStatus,
 } from "@/app/actions/staff";
 import { getCategories, getPriorities } from "@/app/actions/tickets";
-import { isRichTextEmpty } from "@/lib/utils";
-import RichTextEditor from "@/components/RichTextEditor";
 import RichTextDisplay from "@/components/RichTextDisplay";
+import RichTextEditor from "@/components/RichTextEditor";
+import { isRichTextEmpty } from "@/lib/utils";
 import type { Category, Priority } from "@/types";
 
 export default function StaffTicketDetailPage() {
@@ -129,15 +129,17 @@ export default function StaffTicketDetailPage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-gray-600 dark:text-gray-400">Loading ticket...</div>
+        <div className="text-gray-600 dark:text-gray-400">
+          Loading ticket...
+        </div>
       </div>
     );
   }
 
   if (!ticket) {
     return (
-      <div className="text-center py-12">
-        <div className="text-red-600 mb-4">{error || "Ticket not found"}</div>
+      <div className="py-12 text-center">
+        <div className="mb-4 text-red-600">{error || "Ticket not found"}</div>
         <button
           onClick={() => router.push("/staff/tickets")}
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
@@ -149,65 +151,73 @@ export default function StaffTicketDetailPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="mx-auto max-w-6xl">
       {/* Header */}
       <div className="mb-6">
         <button
           onClick={() => router.push("/staff/tickets")}
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 mb-4 flex items-center gap-2"
+          className="flex items-center gap-2 mb-4 text-blue-600 hover:text-blue-800 dark:text-blue-400"
         >
           ← Back to tickets
         </button>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{ticket.subject}</h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">
+        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
+          {ticket.subject}
+        </h1>
+        <p className="mt-1 text-gray-600 dark:text-gray-400">
           Ticket #{ticket.id.substring(0, 8)}
         </p>
       </div>
 
       {error && (
-        <div className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded">
+        <div className="bg-red-50 dark:bg-red-900/20 mb-4 px-4 py-3 border border-red-200 rounded text-red-700 dark:text-red-400">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="mb-4 bg-green-50 dark:bg-green-900/20 border border-green-200 text-green-700 dark:text-green-400 px-4 py-3 rounded">
+        <div className="bg-green-50 dark:bg-green-900/20 mb-4 px-4 py-3 border border-green-200 rounded text-green-700 dark:text-green-400">
           {success}
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="gap-6 grid grid-cols-1 lg:grid-cols-3">
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           {/* Ticket Details */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+            <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-lg">
               Ticket Information
             </h2>
-            <dl className="grid grid-cols-2 gap-4">
+            <dl className="gap-4 grid grid-cols-2">
               <div>
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Customer</dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                <dt className="font-medium text-gray-500 dark:text-gray-400 text-sm">
+                  Customer
+                </dt>
+                <dd className="mt-1 text-gray-900 dark:text-gray-100 text-sm">
                   {ticket.user.name || ticket.user.email}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Email</dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                <dt className="font-medium text-gray-500 dark:text-gray-400 text-sm">
+                  Email
+                </dt>
+                <dd className="mt-1 text-gray-900 dark:text-gray-100 text-sm">
                   {ticket.user.email}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Created</dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                <dt className="font-medium text-gray-500 dark:text-gray-400 text-sm">
+                  Created
+                </dt>
+                <dd className="mt-1 text-gray-900 dark:text-gray-100 text-sm">
                   {new Date(ticket.openDate).toLocaleString()}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <dt className="font-medium text-gray-500 dark:text-gray-400 text-sm">
                   Last Update
                 </dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                <dd className="mt-1 text-gray-900 dark:text-gray-100 text-sm">
                   {new Date(ticket.lastUpdate).toLocaleString()}
                 </dd>
               </div>
@@ -215,8 +225,8 @@ export default function StaffTicketDetailPage() {
           </div>
 
           {/* Conversation */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+            <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-lg">
               Conversation
             </h2>
             <div className="space-y-4">
@@ -228,7 +238,7 @@ export default function StaffTicketDetailPage() {
                       ? "bg-yellow-50 border border-yellow-200"
                       : reply.authorType === "staff"
                         ? "bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800"
-                        : "bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
+                        : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
                   }`}
                 >
                   <div className="flex justify-between items-start mb-2">
@@ -237,12 +247,12 @@ export default function StaffTicketDetailPage() {
                         {reply.authorType === "staff" ? "Staff" : "Customer"}
                       </span>
                       {reply.isInternal && (
-                        <span className="bg-yellow-200 text-yellow-800 dark:text-yellow-400 text-xs px-2 py-1 rounded">
+                        <span className="bg-yellow-200 px-2 py-1 rounded text-yellow-800 dark:text-yellow-400 text-xs">
                           Internal Note
                         </span>
                       )}
                     </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-gray-500 dark:text-gray-400 text-xs">
                       {new Date(reply.createdAt).toLocaleString()}
                     </span>
                   </div>
@@ -253,8 +263,8 @@ export default function StaffTicketDetailPage() {
           </div>
 
           {/* Reply Form */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+            <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-lg">
               Add Reply
             </h2>
             <form onSubmit={handleSubmitReply} className="space-y-4">
@@ -272,9 +282,9 @@ export default function StaffTicketDetailPage() {
                     type="checkbox"
                     checked={isInternal}
                     onChange={(e) => setIsInternal(e.target.checked)}
-                    className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"
+                    className="border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 text-blue-600"
                   />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">
+                  <span className="text-gray-700 dark:text-gray-300 text-sm">
                     Internal note (not visible to customer)
                   </span>
                 </label>
@@ -283,7 +293,7 @@ export default function StaffTicketDetailPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-md font-medium"
+                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-6 py-2 rounded-md font-medium text-white"
               >
                 {submitting ? "Sending..." : "Send Reply"}
               </button>
@@ -294,12 +304,14 @@ export default function StaffTicketDetailPage() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Status */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">Status</h3>
+          <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+            <h3 className="mb-3 font-semibold text-gray-900 dark:text-gray-100 text-sm">
+              Status
+            </h3>
             <select
               value={ticket.status}
               onChange={(e) => handleStatusChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
             >
               <option value="open">Open</option>
               <option value="in_progress">In Progress</option>
@@ -310,14 +322,14 @@ export default function StaffTicketDetailPage() {
           </div>
 
           {/* Priority */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
+          <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+            <h3 className="mb-3 font-semibold text-gray-900 dark:text-gray-100 text-sm">
               Priority
             </h3>
             <select
               value={ticket.priorityId || ""}
               onChange={(e) => handlePriorityChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
             >
               <option value="">None</option>
               {priorities.map((priority) => (
@@ -329,14 +341,14 @@ export default function StaffTicketDetailPage() {
           </div>
 
           {/* Category */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
+          <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+            <h3 className="mb-3 font-semibold text-gray-900 dark:text-gray-100 text-sm">
               Category
             </h3>
             <select
               value={ticket.categoryId || ""}
               onChange={(e) => handleCategoryChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
             >
               <option value="">None</option>
               {categories.map((category) => (

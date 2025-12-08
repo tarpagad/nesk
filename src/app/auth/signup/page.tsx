@@ -33,10 +33,12 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 min-h-screen">
-      <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 rounded-lg w-full max-w-md border dark:border-gray-700">
+    <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
+      <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
         <div>
-          <h2 className="font-bold text-3xl text-center dark:text-gray-100">Create Account</h2>
+          <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
+            Create Account
+          </h2>
           <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
             Sign up for NESK Help Desk
           </p>
@@ -62,7 +64,7 @@ export default function SignUpPage() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
             />
           </div>
 
@@ -79,7 +81,7 @@ export default function SignUpPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
             />
           </div>
 
@@ -97,7 +99,7 @@ export default function SignUpPage() {
               minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
             />
           </div>
 
@@ -113,7 +115,7 @@ export default function SignUpPage() {
             Already have an account?{" "}
             <a
               href="/auth/signin"
-              className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+              className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400"
             >
               Sign in
             </a>

@@ -131,7 +131,9 @@ export default function EmailTemplatesPage() {
     <div className="mx-auto max-w-6xl">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">Email Templates</h1>
+          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
+            Email Templates
+          </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
             Customize email notifications sent to customers
           </p>
@@ -169,7 +171,7 @@ export default function EmailTemplatesPage() {
                 }
                 required
                 placeholder="e.g., new_ticket_confirmation"
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
@@ -183,7 +185,7 @@ export default function EmailTemplatesPage() {
                   setFormData({ ...formData, description: e.target.value })
                 }
                 placeholder="Brief description of this template"
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
@@ -198,7 +200,7 @@ export default function EmailTemplatesPage() {
                 }
                 required
                 placeholder="Email subject line (can use {{variables}})"
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
@@ -213,7 +215,7 @@ export default function EmailTemplatesPage() {
                 required
                 rows={10}
                 placeholder="Email body (can use {{variables}})"
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
+                className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
               />
             </div>
             <div>
@@ -228,7 +230,7 @@ export default function EmailTemplatesPage() {
                 }
                 required
                 placeholder='["ticketId", "customerName", "subject"]'
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
+                className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full font-mono text-sm"
               />
               <p className="mt-1 text-gray-500 dark:text-gray-400 text-xs">
                 Example: ["ticketId", "customerName", "ticketSubject",
@@ -286,7 +288,7 @@ export default function EmailTemplatesPage() {
                   </button>
                   <button
                     onClick={() => handleDelete(template.id)}
-                    className="hover:bg-red-50 dark:hover:bg-red-900/30 dark:bg-red-900/20 px-3 py-1 rounded text-red-600 text-sm transition-colors"
+                    className="hover:bg-red-50 dark:bg-red-900/20 dark:hover:bg-red-900/30 px-3 py-1 rounded text-red-600 text-sm transition-colors"
                   >
                     Delete
                   </button>
@@ -305,7 +307,7 @@ export default function EmailTemplatesPage() {
                   <span className="font-medium text-gray-500 dark:text-gray-400 text-xs uppercase">
                     Body:
                   </span>
-                  <pre className="bg-gray-50 dark:bg-gray-900 mt-1 p-3 border border-gray-200 rounded font-mono text-gray-900 dark:text-gray-100 text-sm whitespace-pre-wrap">
+                  <pre className="bg-white dark:bg-gray-900 mt-1 p-3 border border-gray-200 rounded font-mono text-gray-900 dark:text-gray-100 text-sm whitespace-pre-wrap">
                     {template.body.length > 200
                       ? `${template.body.substring(0, 200)}...`
                       : template.body}

@@ -57,93 +57,108 @@ export default async function StaffDashboard() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
+          Dashboard
+        </h1>
         <p className="mt-2 text-gray-600 dark:text-gray-400">
           Overview of support tickets and system status
         </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900">
-          <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Tickets</div>
-          <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
+      <div className="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 mb-8">
+        <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+          <div className="font-medium text-gray-600 dark:text-gray-400 text-sm">
+            Total Tickets
+          </div>
+          <div className="mt-2 font-bold text-gray-900 dark:text-gray-100 text-3xl">
             {stats.total}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900">
-          <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Open</div>
-          <div className="mt-2 text-3xl font-bold text-orange-600 dark:text-orange-500">
+        <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+          <div className="font-medium text-gray-600 dark:text-gray-400 text-sm">
+            Open
+          </div>
+          <div className="mt-2 font-bold text-orange-600 dark:text-orange-500 text-3xl">
             {stats.open}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900">
-          <div className="text-sm font-medium text-gray-600 dark:text-gray-400">In Progress</div>
-          <div className="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-500">
+        <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+          <div className="font-medium text-gray-600 dark:text-gray-400 text-sm">
+            In Progress
+          </div>
+          <div className="mt-2 font-bold text-blue-600 dark:text-blue-500 text-3xl">
             {stats.inProgress}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900">
-          <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Resolved</div>
-          <div className="mt-2 text-3xl font-bold text-green-600 dark:text-green-500">
+        <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+          <div className="font-medium text-gray-600 dark:text-gray-400 text-sm">
+            Resolved
+          </div>
+          <div className="mt-2 font-bold text-green-600 dark:text-green-500 text-3xl">
             {stats.resolved}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-900">
-          <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Closed</div>
-          <div className="mt-2 text-3xl font-bold text-gray-600 dark:text-gray-400">
+        <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-6 rounded-lg">
+          <div className="font-medium text-gray-600 dark:text-gray-400 text-sm">
+            Closed
+          </div>
+          <div className="mt-2 font-bold text-gray-600 dark:text-gray-400 text-3xl">
             {stats.closed}
           </div>
         </div>
       </div>
 
       {/* Recent Tickets */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+      <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 rounded-lg">
+        <div className="px-6 py-4 border-gray-200 dark:border-gray-700 border-b">
+          <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
             Recent Tickets
           </h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-50 dark:bg-gray-900">
+          <table className="divide-y divide-gray-200 dark:divide-gray-700 min-w-full">
+            <thead className="bg-white dark:bg-gray-900">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                   Ticket ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                   Subject
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                   Customer
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                   Priority
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                   Last Update
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {recentTickets.map((ticket) => (
-                <tr key={ticket.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600 dark:text-blue-400">
+                <tr
+                  key={ticket.id}
+                  className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  <td className="px-6 py-4 font-medium text-blue-600 dark:text-blue-400 text-sm whitespace-nowrap">
                     <Link href={`/staff/tickets/${ticket.id}`}>
                       {ticket.id.substring(0, 8)}
                     </Link>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
+                  <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-sm">
                     {ticket.subject}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                  <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">
                     {ticket.user.name || ticket.user.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -161,10 +176,10 @@ export default async function StaffDashboard() {
                       {ticket.status.replace("_", " ")}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                  <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">
                     {ticket.priority?.name || "None"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                  <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">
                     {new Date(ticket.lastUpdate).toLocaleDateString()}
                   </td>
                 </tr>
@@ -174,16 +189,16 @@ export default async function StaffDashboard() {
         </div>
 
         {recentTickets.length === 0 && (
-          <div className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+          <div className="px-6 py-12 text-gray-500 dark:text-gray-400 text-center">
             No tickets found
           </div>
         )}
 
         {recentTickets.length > 0 && (
-          <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="px-6 py-4 border-gray-200 dark:border-gray-700 border-t">
             <Link
               href="/staff/tickets"
-              className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+              className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400 text-sm"
             >
               View all tickets →
             </Link>

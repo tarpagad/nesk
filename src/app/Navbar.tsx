@@ -1,12 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { getSession } from "@/lib/Session";
+import { useSession } from "@/lib/auth-client";
 import { UserMenu } from "./UserMenu";
 
-export async function Navbar() {
-  const session = await getSession();
+export function Navbar() {
+  const { data: session } = useSession();
   const isStaff =
-    session?.user.role === "staff" || session?.user.role === "admin";
+    session?.user?.role === "staff" || session?.user?.role === "admin";
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-sm dark:border-gray-800 border-b">

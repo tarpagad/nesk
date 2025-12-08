@@ -26,9 +26,9 @@ export default async function StaffKbPage() {
 
   return (
     <div>
-      <div className="mb-8 flex justify-between items-center">
+      <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
             Knowledge Base Management
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
@@ -37,15 +37,15 @@ export default async function StaffKbPage() {
         </div>
         <Link
           href="/staff/kb/new"
-          className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium"
+          className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium text-white"
         >
           Create Article
         </Link>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 rounded-lg overflow-hidden">
         {articles.length === 0 ? (
-          <div className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+          <div className="px-6 py-12 text-gray-500 dark:text-gray-400 text-center">
             <p className="mb-4">No articles found</p>
             <Link
               href="/staff/kb/new"
@@ -56,44 +56,47 @@ export default async function StaffKbPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-900">
+            <table className="divide-y divide-gray-200 dark:divide-gray-700 min-w-full">
+              <thead className="bg-white dark:bg-gray-900">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                     Title
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                     Category
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                     Author
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                     Updated
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {articles.map((article) => (
-                  <tr key={article.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-900">
-                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
+                  <tr
+                    key={article.id}
+                    className="hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700"
+                  >
+                    <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-sm">
                       <Link
                         href={`/kb/${article.id}`}
-                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400 font-medium"
+                        className="font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400"
                       >
                         {article.title}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">
                       {article.category?.name || "Uncategorized"}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">
                       {article.author.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -107,10 +110,10 @@ export default async function StaffKbPage() {
                         {article.published ? "Published" : "Draft"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">
                       {new Date(article.updatedAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                    <td className="space-x-4 px-6 py-4 font-medium text-sm whitespace-nowrap">
                       <Link
                         href={`/staff/kb/edit/${article.id}`}
                         className="text-blue-600 hover:text-blue-900"

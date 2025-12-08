@@ -125,7 +125,9 @@ export default function TeamManagementPage() {
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-2xl">Team Management</h1>
+        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-2xl">
+          Team Management
+        </h1>
         <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
           Manage team members, roles, and permissions
         </p>
@@ -139,7 +141,7 @@ export default function TeamManagementPage() {
 
       <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 rounded-lg overflow-hidden">
         <table className="divide-y divide-gray-200 dark:divide-gray-700 min-w-full">
-          <thead className="bg-gray-50 dark:bg-gray-900">
+          <thead className="bg-white dark:bg-gray-900">
             <tr>
               <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                 User
@@ -161,7 +163,10 @@ export default function TeamManagementPage() {
           <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
             {users.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-6 py-8 text-gray-500 dark:text-gray-400 text-center">
+                <td
+                  colSpan={5}
+                  className="px-6 py-8 text-gray-500 dark:text-gray-400 text-center"
+                >
                   No users found
                 </td>
               </tr>
@@ -182,7 +187,7 @@ export default function TeamManagementPage() {
                               name: e.target.value,
                             })
                           }
-                          className="shadow-sm dark:shadow-gray-900 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 rounded-md focus:ring-blue-500 w-full text-sm"
+                          className="shadow-sm dark:shadow-gray-900 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:ring-blue-500 w-full text-sm"
                           placeholder="User name"
                         />
                       ) : (
@@ -212,7 +217,7 @@ export default function TeamManagementPage() {
                               email: e.target.value,
                             })
                           }
-                          className="shadow-sm dark:shadow-gray-900 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 rounded-md focus:ring-blue-500 w-full text-sm"
+                          className="shadow-sm dark:shadow-gray-900 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:ring-blue-500 w-full text-sm"
                           placeholder="Email"
                         />
                       ) : (
@@ -228,7 +233,7 @@ export default function TeamManagementPage() {
                           handleRoleChange(user.id, e.target.value)
                         }
                         disabled={isEditing}
-                        className="disabled:opacity-50 shadow-sm dark:shadow-gray-900 border-gray-300 dark:border-gray-600 focus:border-blue-500 rounded-md focus:ring-blue-500 text-sm disabled:cursor-not-allowed"
+                        className="disabled:opacity-50 shadow-sm dark:shadow-gray-900 border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:ring-blue-500 text-sm disabled:cursor-not-allowed"
                       >
                         <option value="user">User</option>
                         <option value="staff">Staff</option>
@@ -249,7 +254,7 @@ export default function TeamManagementPage() {
                               emailVerified: e.target.value === "verified",
                             })
                           }
-                          className="shadow-sm dark:shadow-gray-900 border-gray-300 dark:border-gray-600 focus:border-blue-500 rounded-md focus:ring-blue-500 text-sm"
+                          className="shadow-sm dark:shadow-gray-900 border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:ring-blue-500 text-sm"
                         >
                           <option value="verified">Verified</option>
                           <option value="unverified">Unverified</option>

@@ -23,39 +23,41 @@ export default async function StaffLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="bg-white dark:bg-gray-900 min-h-screen">
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-900 min-h-screen border-r dark:border-gray-700">
+        <aside className="bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-900 dark:border-gray-700 border-r w-64 min-h-screen">
           <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Staff Portal</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <h2 className="font-bold text-gray-900 dark:text-gray-100 text-xl">
+              Staff Portal
+            </h2>
+            <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
               {session.user.name || session.user.email}
             </p>
           </div>
 
-          <nav className="px-4 space-y-1">
+          <nav className="space-y-1 px-4">
             <Link
               href="/staff"
-              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium"
+              className="block hover:bg-blue-50 dark:hover:bg-blue-900/30 px-4 py-2 rounded-md font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-400 dark:text-gray-300"
             >
               Dashboard
             </Link>
             <Link
               href="/staff/tickets"
-              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium"
+              className="block hover:bg-blue-50 dark:hover:bg-blue-900/30 px-4 py-2 rounded-md font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-400 dark:text-gray-300"
             >
               All Tickets
             </Link>
             <Link
               href="/staff/kb"
-              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium"
+              className="block hover:bg-blue-50 dark:hover:bg-blue-900/30 px-4 py-2 rounded-md font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-400 dark:text-gray-300"
             >
               Knowledge Base
             </Link>
             <Link
               href="/"
-              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium mt-8 border-t dark:border-gray-700 pt-4"
+              className="block hover:bg-blue-50 dark:hover:bg-blue-900/30 mt-8 px-4 py-2 pt-4 dark:border-gray-700 border-t rounded-md font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-400 dark:text-gray-300"
             >
               ← Back to Portal
             </Link>

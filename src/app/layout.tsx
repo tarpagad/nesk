@@ -16,10 +16,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         <ThemeProvider
-          attribute="class"
+          attribute="data-mode"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          storageKey="theme"
         >
           {children}
         </ThemeProvider>

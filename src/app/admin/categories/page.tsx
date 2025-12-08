@@ -120,7 +120,9 @@ export default function CategoriesPage() {
     <div className="mx-auto max-w-6xl">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">Categories</h1>
+          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
+            Categories
+          </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
             Manage categories for tickets and KB articles
           </p>
@@ -157,7 +159,7 @@ export default function CategoriesPage() {
                   setFormData({ ...formData, name: e.target.value })
                 }
                 required
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
             <div>
@@ -169,7 +171,7 @@ export default function CategoriesPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, parentId: e.target.value })
                 }
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
               >
                 <option value="">None (Top Level)</option>
                 {categories
@@ -203,7 +205,7 @@ export default function CategoriesPage() {
       {/* Categories List */}
       <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 border-b">
+          <thead className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 border-b">
             <tr>
               <th className="px-6 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs text-left uppercase tracking-wider">
                 Name
@@ -228,13 +230,19 @@ export default function CategoriesPage() {
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {categories.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-gray-500 dark:text-gray-400 text-center">
+                <td
+                  colSpan={6}
+                  className="px-6 py-8 text-gray-500 dark:text-gray-400 text-center"
+                >
                   No categories yet
                 </td>
               </tr>
             ) : (
               categories.map((category) => (
-                <tr key={category.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-900">
+                <tr
+                  key={category.id}
+                  className="hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900 dark:text-gray-100 text-sm">
                       {category.name}

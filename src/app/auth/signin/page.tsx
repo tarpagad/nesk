@@ -43,7 +43,7 @@ function SignInForm() {
   };
 
   return (
-    <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
       <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
         <div>
           <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
@@ -136,8 +136,8 @@ export default function SignInPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 min-h-screen">
-          <div className="py-12 dark:text-gray-200 text-center">Loading...</div>
+        <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
+          <div className="text-gray-600 dark:text-gray-300">Loading...</div>
         </div>
       }
     >

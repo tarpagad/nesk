@@ -1,11 +1,12 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-.dark {
+[data-mode="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
 }
@@ -24,23 +25,23 @@ body {
 }
 
 /* Fix input backgrounds in dark mode */
-.dark input,
-.dark textarea,
-.dark select {
+[data-mode="dark"] input,
+[data-mode="dark"] textarea,
+[data-mode="dark"] select {
   background-color: rgb(17 24 39);
   color: rgb(243 244 246);
   border-color: rgb(75 85 99);
 }
 
-.dark input:focus,
-.dark textarea:focus,
-.dark select:focus {
+[data-mode="dark"] input:focus,
+[data-mode="dark"] textarea:focus,
+[data-mode="dark"] select:focus {
   background-color: rgb(17 24 39);
   border-color: rgb(96 165 250);
   outline: none;
 }
 
-.dark input::placeholder,
-.dark textarea::placeholder {
+[data-mode="dark"] input::placeholder,
+[data-mode="dark"] textarea::placeholder {
   color: rgb(156 163 175);
 }
