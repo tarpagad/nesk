@@ -4,6 +4,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { signIn } from "@/lib/auth-client";
 
+function createCaptcha() {
+  const a = Math.floor(Math.random() * 8) + 2; // 2-9
+  const b = Math.floor(Math.random() * 8) + 2; // 2-9
+  return {
+    question: `${a} + ${b} = ?`,
+    answer: a + b,
+  };
+}
+
 function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -12,6 +21,8 @@ function SignInForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [captcha, setCaptcha] = useState(createCaptcha());
+  const [captchaInput, setCaptchaInput] = useState("");
 
   useEffect(() => {
     if (searchParams.get("reset") === "success") {
@@ -24,6 +35,14 @@ function SignInForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (Number(captchaInput) !== captcha.answer) {
+      setError("Captcha incorrect. Please try again.");
+      setCaptcha(createCaptcha());
+      setCaptchaInput("");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -37,6 +56,8 @@ function SignInForm() {
       setError(
         err instanceof Error ? err.message : "Invalid email or password",
       );
+      setCaptcha(createCaptcha());
+      setCaptchaInput("");
     } finally {
       setLoading(false);
     }
@@ -106,6 +127,40 @@ function SignInForm() {
               >
                 Forgot password?
               </a>
+            </div>
+          </div>
+
+          <div>
+            <label
+              className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
+              htmlFor="captcha"
+            >
+              Anti-bot check
+            </label>
+            <div className="flex items-center gap-3 mt-1">
+              <span className="font-medium text-gray-700 dark:text-gray-200 text-sm">
+                {captcha.question}
+              </span>
+              <input
+                id="captcha"
+                type="number"
+                inputMode="numeric"
+                required
+                value={captchaInput}
+                onChange={(e) => setCaptchaInput(e.target.value)}
+                className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-32"
+                placeholder="Answer"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setCaptcha(createCaptcha());
+                  setCaptchaInput("");
+                }}
+                className="text-blue-600 hover:text-blue-500 dark:text-blue-400 text-xs"
+              >
+                Refresh
+              </button>
             </div>
           </div>
 
