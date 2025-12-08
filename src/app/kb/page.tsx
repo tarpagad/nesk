@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getPublishedKbArticles, getKbCategories } from "@/app/actions/kb";
 import Link from "next/link";
+import type { KbArticle, KbCategoryWithCount } from "@/types";
 
 const CONTENT_PREVIEW_LENGTH = 200;
 
@@ -13,8 +14,8 @@ export default function KnowledgeBasePage() {
   const categoryFromUrl = searchParams.get("category");
   const searchFromUrl = searchParams.get("search");
 
-  const [articles, setArticles] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [articles, setArticles] = useState<KbArticle[]>([]);
+  const [categories, setCategories] = useState<KbCategoryWithCount[]>([]);
   const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl || "");
   const [searchQuery, setSearchQuery] = useState(searchFromUrl || "");
   const [loading, setLoading] = useState(true);

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { getTicketStatus } from "@/app/actions/tickets";
+import type { Ticket } from "@/types";
 
 export default function TicketStatusPage() {
   const searchParams = useSearchParams();
@@ -10,7 +11,7 @@ export default function TicketStatusPage() {
 
   const [ticketId, setTicketId] = useState(ticketIdFromUrl || "");
   const [email, setEmail] = useState("");
-  const [ticket, setTicket] = useState<any>(null);
+  const [ticket, setTicket] = useState<Ticket | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -190,7 +191,7 @@ export default function TicketStatusPage() {
                   Conversation
                 </h3>
                 <div className="space-y-4">
-                  {ticket.replies.map((reply: any) => (
+                  {ticket.replies.map((reply) => (
                     <div
                       key={reply.id}
                       className={`p-4 rounded-lg ${

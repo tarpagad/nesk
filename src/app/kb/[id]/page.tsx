@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { getKbArticleById } from "@/app/actions/kb";
 import Link from "next/link";
+import type { KbArticle } from "@/types";
 
 export default function KbArticlePage() {
   const params = useParams();
   const articleId = params.id as string;
 
-  const [article, setArticle] = useState<any>(null);
+  const [article, setArticle] = useState<KbArticle | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -151,7 +152,7 @@ export default function KbArticlePage() {
                 Keywords:
               </h3>
               <div className="flex flex-wrap gap-2">
-                {article.keywords.split(",").map((keyword: string, index: number) => (
+                {article.keywords.split(",").map((keyword, index) => (
                   <span
                     key={index}
                     className="bg-gray-200 px-3 py-1 rounded-full text-gray-700 text-sm"

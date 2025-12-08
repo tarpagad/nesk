@@ -8,6 +8,7 @@ import {
   getCategories,
   getPriorities,
 } from "@/app/actions/tickets";
+import type { Category, Priority } from "@/types";
 
 const REDIRECT_DELAY_MS = 2000;
 
@@ -18,8 +19,8 @@ export default function SubmitTicketPage() {
   const [message, setMessage] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [priorityId, setPriorityId] = useState("");
-  const [categories, setCategories] = useState<any[]>([]);
-  const [priorities, setPriorities] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [priorities, setPriorities] = useState<Priority[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);

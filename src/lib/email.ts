@@ -15,6 +15,18 @@ if (BREVO_API_KEY) {
   brevoClient.setApiKey(0, BREVO_API_KEY);
 }
 
+// HTML escape helper to prevent XSS
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
+
 export async function sendTicketCreatedEmail(
   to: string,
   ticketId: string,
@@ -41,8 +53,8 @@ export async function sendTicketCreatedEmail(
           <p>Thank you for contacting NESK Support. We have received your ticket and will respond as soon as possible.</p>
           
           <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <p style="margin: 5px 0;"><strong>Ticket ID:</strong> ${ticketId}</p>
-            <p style="margin: 5px 0;"><strong>Subject:</strong> ${subject}</p>
+            <p style="margin: 5px 0;"><strong>Ticket ID:</strong> ${escapeHtml(ticketId)}</p>
+            <p style="margin: 5px 0;"><strong>Subject:</strong> ${escapeHtml(subject)}</p>
           </div>
           
           <p>You can check the status of your ticket at any time by visiting our ticket status page with your ticket ID and email address.</p>
@@ -95,9 +107,9 @@ export async function sendTicketUpdateEmail(
           <p>There has been an update to your support ticket.</p>
           
           <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <p style="margin: 5px 0;"><strong>Ticket ID:</strong> ${ticketId}</p>
-            <p style="margin: 5px 0;"><strong>Subject:</strong> ${subject}</p>
-            <p style="margin: 5px 0;"><strong>Status:</strong> ${status}</p>
+            <p style="margin: 5px 0;"><strong>Ticket ID:</strong> ${escapeHtml(ticketId)}</p>
+            <p style="margin: 5px 0;"><strong>Subject:</strong> ${escapeHtml(subject)}</p>
+            <p style="margin: 5px 0;"><strong>Status:</strong> ${escapeHtml(status)}</p>
           </div>
           
           ${
@@ -105,7 +117,7 @@ export async function sendTicketUpdateEmail(
               ? `
             <div style="background-color: #eff6ff; padding: 15px; border-left: 4px solid #2563eb; margin: 20px 0;">
               <p style="margin: 0;"><strong>Latest Response:</strong></p>
-              <p style="margin: 10px 0 0 0;">${message}</p>
+              <p style="margin: 10px 0 0 0;">${escapeHtml(message)}</p>
             </div>
           `
               : ""
