@@ -9,10 +9,33 @@ export async function Navbar() {
     <nav className="bg-white shadow-sm">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center">
-            <h1 className="font-bold text-blue-600 text-2xl">NESK</h1>
-            <span className="ml-2 text-gray-600">Help Desk</span>
-          </Link>
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-center">
+              <h1 className="font-bold text-blue-600 text-2xl">NESK</h1>
+              <span className="ml-2 text-gray-600">Help Desk</span>
+            </Link>
+            
+            <div className="hidden md:flex gap-6">
+              <Link
+                href="/kb"
+                className="text-gray-700 hover:text-blue-600 font-medium"
+              >
+                Knowledge Base
+              </Link>
+              <Link
+                href="/tickets/submit"
+                className="text-gray-700 hover:text-blue-600 font-medium"
+              >
+                Submit Ticket
+              </Link>
+              <Link
+                href="/tickets/status"
+                className="text-gray-700 hover:text-blue-600 font-medium"
+              >
+                Track Ticket
+              </Link>
+            </div>
+          </div>
 
           {session ? (
             <UserMenu user={session.user} />
