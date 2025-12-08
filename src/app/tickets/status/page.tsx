@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { getTicketStatus } from "@/app/actions/tickets";
 import RichTextDisplay from "@/components/RichTextDisplay";
+import { Navbar } from "@/app/Navbar";
 
 function TicketStatusContent() {
   const searchParams = useSearchParams();
@@ -46,17 +47,17 @@ function TicketStatusContent() {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "open":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800 dark:text-blue-400";
       case "in progress":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400";
       case "waiting for customer":
-        return "bg-purple-100 text-purple-800";
+        return "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400";
       case "resolved":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400";
       case "closed":
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100";
     }
   };
 
@@ -71,21 +72,23 @@ function TicketStatusContent() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen py-12">
+    <>
+      <Navbar />
+      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="mb-8">
-          <h1 className="font-bold text-3xl text-gray-900">
+          <h1 className="font-bold text-3xl text-gray-900 dark:text-gray-100">
             Check Ticket Status
           </h1>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             Enter your ticket ID and email address to view your ticket status.
           </p>
         </div>
 
-        <div className="bg-white shadow mb-8 rounded-lg">
+        <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 mb-8 rounded-lg">
           <form onSubmit={handleSubmit} className="space-y-6 p-6">
             {error && (
-              <div className="bg-red-50 px-4 py-3 border border-red-200 rounded text-red-700">
+              <div className="bg-red-50 dark:bg-red-900/20 px-4 py-3 border border-red-200 rounded text-red-700 dark:text-red-400">
                 {error}
               </div>
             )}
@@ -93,7 +96,7 @@ function TicketStatusContent() {
             <div>
               <label
                 htmlFor="ticketId"
-                className="block font-medium text-gray-700 text-sm"
+                className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
               >
                 Ticket ID <span className="text-red-500">*</span>
               </label>
@@ -104,14 +107,14 @@ function TicketStatusContent() {
                 value={ticketId}
                 onChange={(e) => setTicketId(e.target.value)}
                 placeholder="Enter your ticket ID"
-                className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
+                className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block font-medium text-gray-700 text-sm"
+                className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
               >
                 Email Address <span className="text-red-500">*</span>
               </label>
@@ -122,14 +125,14 @@ function TicketStatusContent() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter the email used when submitting the ticket"
-                className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
+                className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-sm px-6 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full font-medium text-white"
+              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-sm dark:shadow-gray-900 px-6 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full font-medium text-white"
             >
               {loading ? "Checking..." : "Check Status"}
             </button>
@@ -137,14 +140,14 @@ function TicketStatusContent() {
         </div>
 
         {ticket && (
-          <div className="bg-white shadow rounded-lg">
-            <div className="border-gray-200 px-6 py-4 border-b">
+          <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 rounded-lg">
+            <div className="border-gray-200 dark:border-gray-700 px-6 py-4 border-b">
               <div className="flex justify-between items-start">
                 <div>
-                  <h2 className="font-semibold text-2xl text-gray-900">
+                  <h2 className="font-semibold text-2xl text-gray-900 dark:text-gray-100">
                     {ticket.subject}
                   </h2>
-                  <p className="mt-1 text-gray-500 text-sm">
+                  <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">
                     Ticket ID: {ticket.id}
                   </p>
                 </div>
@@ -159,35 +162,35 @@ function TicketStatusContent() {
             <div className="px-6 py-4">
               <div className="gap-6 grid grid-cols-2 md:grid-cols-4 mb-6">
                 <div>
-                  <p className="font-medium text-gray-500 text-sm">
+                  <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">
                     Created By
                   </p>
-                  <p className="mt-1 text-gray-900">{ticket.user.name}</p>
+                  <p className="mt-1 text-gray-900 dark:text-gray-100">{ticket.user.name}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-500 text-sm">
+                  <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">
                     Created On
                   </p>
-                  <p className="mt-1 text-gray-900">
+                  <p className="mt-1 text-gray-900 dark:text-gray-100">
                     {formatDate(ticket.openDate)}
                   </p>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-500 text-sm">Category</p>
-                  <p className="mt-1 text-gray-900">
+                  <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">Category</p>
+                  <p className="mt-1 text-gray-900 dark:text-gray-100">
                     {ticket.category?.name || "Not specified"}
                   </p>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-500 text-sm">Priority</p>
-                  <p className="mt-1 text-gray-900">
+                  <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">Priority</p>
+                  <p className="mt-1 text-gray-900 dark:text-gray-100">
                     {ticket.priority?.name || "Not specified"}
                   </p>
                 </div>
               </div>
 
-              <div className="border-gray-200 pt-6 border-t">
-                <h3 className="mb-4 font-semibold text-gray-900 text-lg">
+              <div className="border-gray-200 dark:border-gray-700 pt-6 border-t">
+                <h3 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-lg">
                   Conversation
                 </h3>
                 <div className="space-y-4">
@@ -196,17 +199,17 @@ function TicketStatusContent() {
                       key={reply.id}
                       className={`p-4 rounded-lg ${
                         reply.authorType === "customer"
-                          ? "bg-blue-50 border border-blue-100"
-                          : "bg-gray-50 border border-gray-200"
+                          ? "bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800"
+                          : "bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
                       }`}
                     >
                       <div className="flex justify-between items-start mb-2">
-                        <span className="font-medium text-gray-900">
+                        <span className="font-medium text-gray-900 dark:text-gray-100">
                           {reply.authorType === "customer"
                             ? "You"
                             : "Support Team"}
                         </span>
-                        <span className="text-gray-500 text-sm">
+                        <span className="text-gray-500 dark:text-gray-400 text-sm">
                           {formatDate(reply.createdAt)}
                         </span>
                       </div>
@@ -217,8 +220,8 @@ function TicketStatusContent() {
               </div>
             </div>
 
-            <div className="bg-gray-50 px-6 py-4 border-gray-200 border-t rounded-b-lg">
-              <p className="text-gray-600 text-sm">
+            <div className="bg-gray-50 dark:bg-gray-900 px-6 py-4 border-gray-200 dark:border-gray-700 border-t rounded-b-lg">
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Last updated: {formatDate(ticket.lastUpdate)}
               </p>
             </div>
@@ -226,14 +229,15 @@ function TicketStatusContent() {
         )}
 
         {!ticket && !error && (
-          <div className="bg-blue-50 shadow p-6 border border-blue-200 rounded-lg text-center">
-            <p className="text-blue-800">
+          <div className="bg-blue-50 dark:bg-blue-900/30 shadow dark:shadow-gray-900 p-6 border border-blue-200 dark:border-blue-800 rounded-lg text-center">
+            <p className="text-blue-800 dark:text-blue-400">
               Enter your ticket ID and email above to view your ticket status.
             </p>
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

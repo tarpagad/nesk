@@ -23,13 +23,13 @@ export default async function StaffLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 bg-white shadow-md min-h-screen">
+        <aside className="w-64 bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-900 min-h-screen border-r dark:border-gray-700">
           <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-900">Staff Portal</h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Staff Portal</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               {session.user.name || session.user.email}
             </p>
           </div>
@@ -37,25 +37,25 @@ export default async function StaffLayout({
           <nav className="px-4 space-y-1">
             <Link
               href="/staff"
-              className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium"
+              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium"
             >
               Dashboard
             </Link>
             <Link
               href="/staff/tickets"
-              className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium"
+              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium"
             >
               All Tickets
             </Link>
             <Link
               href="/staff/kb"
-              className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium"
+              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium"
             >
               Knowledge Base
             </Link>
             <Link
               href="/"
-              className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium mt-8 border-t pt-4"
+              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 rounded-md font-medium mt-8 border-t dark:border-gray-700 pt-4"
             >
               ← Back to Portal
             </Link>

@@ -70,10 +70,10 @@ export default function ReportsPage() {
     <div className="mx-auto max-w-7xl">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="font-bold text-gray-900 text-3xl">
+          <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
             Reports & Analytics
           </h1>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             Insights into your help desk performance
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function ReportsPage() {
           <select
             value={days}
             onChange={(e) => setDays(Number(e.target.value))}
-            className="px-4 py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500"
           >
             <option value={7}>Last 7 days</option>
             <option value={30}>Last 30 days</option>
@@ -121,15 +121,15 @@ export default function ReportsPage() {
       {ticketStats && (
         <div className="space-y-6">
           {/* By Status */}
-          <div className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg">
-            <h2 className="mb-4 font-semibold text-gray-900 text-xl">
+          <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-xl">
               Tickets by Status (Last {days} days)
             </h2>
             <div className="space-y-3">
               {Object.entries(ticketStats.byStatus).map(([status, count]) => (
                 <div key={status} className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
-                    <span className="font-medium text-gray-900 text-sm capitalize">
+                    <span className="font-medium text-gray-900 dark:text-gray-100 text-sm capitalize">
                       {status.replace(/_/g, " ")}
                     </span>
                   </div>
@@ -142,7 +142,7 @@ export default function ReportsPage() {
                         }}
                       />
                     </div>
-                    <span className="w-12 font-semibold text-gray-900 text-sm text-right">
+                    <span className="w-12 font-semibold text-gray-900 dark:text-gray-100 text-sm text-right">
                       {count}
                     </span>
                   </div>
@@ -152,8 +152,8 @@ export default function ReportsPage() {
           </div>
 
           {/* By Priority */}
-          <div className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg">
-            <h2 className="mb-4 font-semibold text-gray-900 text-xl">
+          <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-xl">
               Tickets by Priority
             </h2>
             <div className="space-y-3">
@@ -164,7 +164,7 @@ export default function ReportsPage() {
                     className="flex justify-between items-center"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="font-medium text-gray-900 text-sm capitalize">
+                      <span className="font-medium text-gray-900 dark:text-gray-100 text-sm capitalize">
                         {priority}
                       </span>
                     </div>
@@ -177,7 +177,7 @@ export default function ReportsPage() {
                           }}
                         />
                       </div>
-                      <span className="w-12 font-semibold text-gray-900 text-sm text-right">
+                      <span className="w-12 font-semibold text-gray-900 dark:text-gray-100 text-sm text-right">
                         {count}
                       </span>
                     </div>
@@ -188,8 +188,8 @@ export default function ReportsPage() {
           </div>
 
           {/* By Category */}
-          <div className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg">
-            <h2 className="mb-4 font-semibold text-gray-900 text-xl">
+          <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-xl">
               Tickets by Category
             </h2>
             <div className="space-y-3">
@@ -200,7 +200,7 @@ export default function ReportsPage() {
                     className="flex justify-between items-center"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="font-medium text-gray-900 text-sm">
+                      <span className="font-medium text-gray-900 dark:text-gray-100 text-sm">
                         {category}
                       </span>
                     </div>
@@ -213,7 +213,7 @@ export default function ReportsPage() {
                           }}
                         />
                       </div>
-                      <span className="w-12 font-semibold text-gray-900 text-sm text-right">
+                      <span className="w-12 font-semibold text-gray-900 dark:text-gray-100 text-sm text-right">
                         {count}
                       </span>
                     </div>
@@ -224,8 +224,8 @@ export default function ReportsPage() {
           </div>
 
           {/* Trend Chart */}
-          <div className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg">
-            <h2 className="mb-4 font-semibold text-gray-900 text-xl">
+          <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <h2 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-xl">
               Ticket Trend
             </h2>
             <div className="space-y-2">
@@ -234,7 +234,7 @@ export default function ReportsPage() {
                 .slice(-14)
                 .map(([date, count]) => (
                   <div key={date} className="flex items-center gap-3">
-                    <span className="w-24 text-gray-600 text-xs">
+                    <span className="w-24 text-gray-600 dark:text-gray-400 text-xs">
                       {new Date(date).toLocaleDateString()}
                     </span>
                     <div className="flex-1 bg-gray-200 rounded-full h-2">
@@ -245,7 +245,7 @@ export default function ReportsPage() {
                         }}
                       />
                     </div>
-                    <span className="w-8 font-semibold text-gray-900 text-xs text-right">
+                    <span className="w-8 font-semibold text-gray-900 dark:text-gray-100 text-xs text-right">
                       {count}
                     </span>
                   </div>
@@ -255,27 +255,27 @@ export default function ReportsPage() {
 
           {/* Summary Stats */}
           <div className="gap-6 grid grid-cols-1 md:grid-cols-3">
-            <div className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg">
-              <h3 className="mb-2 font-medium text-gray-600 text-sm">
+            <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+              <h3 className="mb-2 font-medium text-gray-600 dark:text-gray-400 text-sm">
                 Total in Period
               </h3>
-              <p className="font-bold text-gray-900 text-3xl">
+              <p className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
                 {ticketStats.total}
               </p>
             </div>
-            <div className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg">
-              <h3 className="mb-2 font-medium text-gray-600 text-sm">
+            <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+              <h3 className="mb-2 font-medium text-gray-600 dark:text-gray-400 text-sm">
                 Avg. per Day
               </h3>
-              <p className="font-bold text-gray-900 text-3xl">
+              <p className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
                 {(ticketStats.total / days).toFixed(1)}
               </p>
             </div>
-            <div className="bg-white shadow-sm p-6 border border-gray-200 rounded-lg">
-              <h3 className="mb-2 font-medium text-gray-600 text-sm">
+            <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
+              <h3 className="mb-2 font-medium text-gray-600 dark:text-gray-400 text-sm">
                 Categories
               </h3>
-              <p className="font-bold text-gray-900 text-3xl">
+              <p className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
                 {Object.keys(ticketStats.byCategory).length}
               </p>
             </div>
@@ -296,15 +296,15 @@ function StatCard({
   color: string;
 }) {
   const colorClasses = {
-    blue: "bg-blue-50 border-blue-200 text-blue-900",
+    blue: "bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-900",
     yellow: "bg-yellow-50 border-yellow-200 text-yellow-900",
-    green: "bg-green-50 border-green-200 text-green-900",
+    green: "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-900",
     purple: "bg-purple-50 border-purple-200 text-purple-900",
   };
 
   return (
     <div
-      className={`rounded-lg shadow-sm border p-6 ${colorClasses[color as keyof typeof colorClasses]}`}
+      className={`rounded-lg shadow-sm dark:shadow-gray-900 border p-6 ${colorClasses[color as keyof typeof colorClasses]}`}
     >
       <h3 className="opacity-80 font-medium text-sm">{title}</h3>
       <p className="mt-2 font-bold text-3xl">{value}</p>
