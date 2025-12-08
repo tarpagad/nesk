@@ -33,18 +33,18 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex justify-center items-center bg-gray-50 min-h-screen">
-      <div className="space-y-8 bg-white shadow p-8 rounded-lg w-full max-w-md">
+    <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 min-h-screen">
+      <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 rounded-lg w-full max-w-md border dark:border-gray-700">
         <div>
-          <h2 className="font-bold text-3xl text-center">Create Account</h2>
-          <p className="mt-2 text-gray-600 text-center">
+          <h2 className="font-bold text-3xl text-center dark:text-gray-100">Create Account</h2>
+          <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
             Sign up for NESK Help Desk
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="bg-red-50 px-4 py-3 border border-red-200 rounded text-red-700">
+            <div className="bg-red-50 dark:bg-red-900/20 px-4 py-3 border border-red-200 dark:border-red-800 rounded text-red-700 dark:text-red-400">
               {error}
             </div>
           )}
@@ -52,7 +52,7 @@ export default function SignUpPage() {
           <div>
             <label
               htmlFor="name"
-              className="block font-medium text-gray-700 text-sm"
+              className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
               Full Name
             </label>
@@ -62,14 +62,14 @@ export default function SignUpPage() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
             />
           </div>
 
           <div>
             <label
               htmlFor="email"
-              className="block font-medium text-gray-700 text-sm"
+              className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
               Email Address
             </label>
@@ -79,14 +79,14 @@ export default function SignUpPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="block font-medium text-gray-700 text-sm"
+              className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
               Password
             </label>
@@ -97,23 +97,23 @@ export default function SignUpPage() {
               minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
+              className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="flex justify-center bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-sm px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full font-medium text-white text-sm"
+            className="flex justify-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 shadow-sm px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800 w-full font-medium text-white text-sm"
           >
             {loading ? "Creating account..." : "Sign Up"}
           </button>
 
-          <p className="text-gray-600 text-sm text-center">
+          <p className="text-gray-600 dark:text-gray-300 text-sm text-center">
             Already have an account?{" "}
             <a
               href="/auth/signin"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
             >
               Sign in
             </a>
