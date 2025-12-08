@@ -32,7 +32,9 @@ export default function EditKbArticlePage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-gray-600 dark:text-gray-400">Loading article...</div>
+        <div className="text-gray-600 dark:text-gray-400">
+          Loading article...
+        </div>
       </div>
     );
   }
@@ -50,8 +52,12 @@ export default function EditKbArticlePage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Edit Article</h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">Update the knowledge base article</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          Edit Article
+        </h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Update the knowledge base article
+        </p>
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900 p-6">

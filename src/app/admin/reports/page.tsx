@@ -298,7 +298,8 @@ function StatCard({
   const colorClasses = {
     blue: "bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-900",
     yellow: "bg-yellow-50 border-yellow-200 text-yellow-900",
-    green: "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-900",
+    green:
+      "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-900",
     purple: "bg-purple-50 border-purple-200 text-purple-900",
   };
 

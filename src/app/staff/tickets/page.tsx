@@ -52,11 +52,15 @@ export default function StaffTicketsPage() {
       <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 mb-6 p-6 rounded-lg">
         <div className="gap-4 grid grid-cols-1 md:grid-cols-4">
           <div>
-            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm">
+            <label
+              htmlFor="search"
+              className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm"
+            >
               Search
             </label>
             <input
               type="text"
+              id="search"
               value={filters.search}
               onChange={(e) => handleFilterChange("search", e.target.value)}
               placeholder="Search by subject or ID..."
@@ -65,10 +69,14 @@ export default function StaffTicketsPage() {
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm">
+            <label
+              htmlFor="status"
+              className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm"
+            >
               Status
             </label>
             <select
+              id="status"
               value={filters.status}
               onChange={(e) => handleFilterChange("status", e.target.value)}
               className="px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
@@ -83,10 +91,14 @@ export default function StaffTicketsPage() {
           </div>
 
           <div>
-            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm">
+            <label
+              htmlFor="priority"
+              className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm"
+            >
               Priority
             </label>
             <select
+              id="priority"
               value={filters.priority}
               onChange={(e) => handleFilterChange("priority", e.target.value)}
               className="px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
@@ -101,6 +113,7 @@ export default function StaffTicketsPage() {
 
           <div className="flex items-end">
             <button
+              type="button"
               onClick={clearFilters}
               className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-md w-full font-medium text-gray-700 dark:text-gray-300"
             >

@@ -19,8 +19,12 @@ export default async function AdminDashboard() {
   return (
     <div className="mx-auto max-w-7xl">
       <div className="mb-8">
-        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">Dashboard</h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">Overview of your help desk system</p>
+        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
+          Dashboard
+        </h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Overview of your help desk system
+        </p>
       </div>
 
       {/* Stats Grid */}
@@ -71,7 +75,9 @@ export default async function AdminDashboard() {
             href="/admin/team"
             className="hover:bg-gray-50 dark:hover:bg-gray-700 p-4 border border-gray-200 dark:border-gray-700 rounded-lg transition-colors"
           >
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">Manage Team</h3>
+            <h3 className="font-medium text-gray-900 dark:text-gray-100">
+              Manage Team
+            </h3>
             <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
               Add or remove team members
             </p>
@@ -80,7 +86,9 @@ export default async function AdminDashboard() {
             href="/admin/categories"
             className="hover:bg-gray-50 dark:hover:bg-gray-700 p-4 border border-gray-200 dark:border-gray-700 rounded-lg transition-colors"
           >
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">Manage Categories</h3>
+            <h3 className="font-medium text-gray-900 dark:text-gray-100">
+              Manage Categories
+            </h3>
             <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
               Organize tickets and articles
             </p>
@@ -89,7 +97,9 @@ export default async function AdminDashboard() {
             href="/admin/email-templates"
             className="hover:bg-gray-50 dark:hover:bg-gray-700 p-4 border border-gray-200 dark:border-gray-700 rounded-lg transition-colors"
           >
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">Email Templates</h3>
+            <h3 className="font-medium text-gray-900 dark:text-gray-100">
+              Email Templates
+            </h3>
             <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
               Customize email notifications
             </p>
@@ -98,7 +108,9 @@ export default async function AdminDashboard() {
             href="/admin/settings"
             className="hover:bg-gray-50 dark:hover:bg-gray-700 p-4 border border-gray-200 dark:border-gray-700 rounded-lg transition-colors"
           >
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">System Settings</h3>
+            <h3 className="font-medium text-gray-900 dark:text-gray-100">
+              System Settings
+            </h3>
             <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
               Configure system preferences
             </p>
@@ -107,8 +119,12 @@ export default async function AdminDashboard() {
             href="/admin/reports"
             className="hover:bg-gray-50 dark:hover:bg-gray-700 p-4 border border-gray-200 dark:border-gray-700 rounded-lg transition-colors"
           >
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">View Reports</h3>
-            <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">Analytics and insights</p>
+            <h3 className="font-medium text-gray-900 dark:text-gray-100">
+              View Reports
+            </h3>
+            <p className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+              Analytics and insights
+            </p>
           </Link>
         </div>
       </div>
@@ -119,7 +135,9 @@ export default async function AdminDashboard() {
           Recent Activity
         </h2>
         {!logs || logs.length === 0 ? (
-          <p className="text-gray-500 dark:text-gray-400 text-sm">No recent activity</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            No recent activity
+          </p>
         ) : (
           <div className="space-y-3">
             {logs.map((log) => (
@@ -132,7 +150,9 @@ export default async function AdminDashboard() {
                     {log.action} {log.entityType}
                   </p>
                   {log.details && (
-                    <p className="mt-1 text-gray-600 dark:text-gray-400 text-xs">{log.details}</p>
+                    <p className="mt-1 text-gray-600 dark:text-gray-400 text-xs">
+                      {log.details}
+                    </p>
                   )}
                 </div>
                 <span className="text-gray-500 dark:text-gray-400 text-xs whitespace-nowrap">
@@ -160,9 +180,15 @@ function StatCard({
 }) {
   const content = (
     <div className="bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg">
-      <h3 className="font-medium text-gray-600 dark:text-gray-400 text-sm">{title}</h3>
-      <p className="mt-2 font-bold text-gray-900 dark:text-gray-100 text-3xl">{value}</p>
-      <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">{subtitle}</p>
+      <h3 className="font-medium text-gray-600 dark:text-gray-400 text-sm">
+        {title}
+      </h3>
+      <p className="mt-2 font-bold text-gray-900 dark:text-gray-100 text-3xl">
+        {value}
+      </p>
+      <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">
+        {subtitle}
+      </p>
     </div>
   );
 

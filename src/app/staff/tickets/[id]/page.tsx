@@ -141,6 +141,7 @@ export default function StaffTicketDetailPage() {
       <div className="py-12 text-center">
         <div className="mb-4 text-red-600">{error || "Ticket not found"}</div>
         <button
+          type="button"
           onClick={() => router.push("/staff/tickets")}
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
         >
@@ -155,6 +156,7 @@ export default function StaffTicketDetailPage() {
       {/* Header */}
       <div className="mb-6">
         <button
+          type="button"
           onClick={() => router.push("/staff/tickets")}
           className="flex items-center gap-2 mb-4 text-blue-600 hover:text-blue-800 dark:text-blue-400"
         >

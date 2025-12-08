@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   createEmailTemplate,
   deleteEmailTemplate,
@@ -33,11 +33,7 @@ export default function EmailTemplatesPage() {
   });
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    loadTemplates();
-  }, []);
-
-  async function loadTemplates() {
+  const loadTemplates = useCallback(async () => {
     setLoading(true);
     const result = await getEmailTemplates();
     if ("error" in result) {
@@ -46,7 +42,11 @@ export default function EmailTemplatesPage() {
       setTemplates(result.templates);
     }
     setLoading(false);
-  }
+  }, []);
+
+  useEffect(() => {
+    loadTemplates();
+  }, [loadTemplates]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -139,6 +139,7 @@ export default function EmailTemplatesPage() {
           </p>
         </div>
         <button
+          type="button"
           onClick={() => setShowAddForm(!showAddForm)}
           className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white transition-colors"
         >
@@ -160,11 +161,15 @@ export default function EmailTemplatesPage() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
+              <label
+                htmlFor="templateName"
+                className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm"
+              >
                 Template Name
               </label>
               <input
                 type="text"
+                id="templateName"
                 value={formData.name}
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
@@ -175,11 +180,15 @@ export default function EmailTemplatesPage() {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
+              <label
+                htmlFor="templateDescription"
+                className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm"
+              >
                 Description
               </label>
               <input
                 type="text"
+                id="templateDescription"
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
@@ -189,11 +198,15 @@ export default function EmailTemplatesPage() {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
+              <label
+                htmlFor="templateSubject"
+                className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm"
+              >
                 Subject
               </label>
               <input
                 type="text"
+                id="templateSubject"
                 value={formData.subject}
                 onChange={(e) =>
                   setFormData({ ...formData, subject: e.target.value })
@@ -204,10 +217,14 @@ export default function EmailTemplatesPage() {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
+              <label
+                htmlFor="templateBody"
+                className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm"
+              >
                 Body
               </label>
               <textarea
+                id="templateBody"
                 value={formData.body}
                 onChange={(e) =>
                   setFormData({ ...formData, body: e.target.value })
@@ -219,11 +236,15 @@ export default function EmailTemplatesPage() {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
+              <label
+                htmlFor="templateVariables"
+                className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm"
+              >
                 Available Variables (JSON Array)
               </label>
               <input
                 type="text"
+                id="templateVariables"
                 value={formData.variables}
                 onChange={(e) =>
                   setFormData({ ...formData, variables: e.target.value })
@@ -281,12 +302,14 @@ export default function EmailTemplatesPage() {
                 </div>
                 <div className="flex gap-2">
                   <button
+                    type="button"
                     onClick={() => startEdit(template)}
                     className="hover:bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded text-blue-600 text-sm transition-colors"
                   >
                     Edit
                   </button>
                   <button
+                    type="button"
                     onClick={() => handleDelete(template.id)}
                     className="hover:bg-red-50 dark:bg-red-900/20 dark:hover:bg-red-900/30 px-3 py-1 rounded text-red-600 text-sm transition-colors"
                   >

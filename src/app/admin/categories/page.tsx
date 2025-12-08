@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   createCategory,
   deleteCategory,
@@ -37,11 +37,7 @@ export default function CategoriesPage() {
   });
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    loadCategories();
-  }, []);
-
-  async function loadCategories() {
+  const loadCategories = useCallback(async () => {
     setLoading(true);
     const result = await getCategories();
     if ("error" in result) {
@@ -50,7 +46,11 @@ export default function CategoriesPage() {
       setCategories(result.categories);
     }
     setLoading(false);
-  }
+  }, []);
+
+  useEffect(() => {
+    loadCategories();
+  }, [loadCategories]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -128,6 +128,7 @@ export default function CategoriesPage() {
           </p>
         </div>
         <button
+          type="button"
           onClick={() => setShowAddForm(!showAddForm)}
           className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white transition-colors"
         >
@@ -149,11 +150,15 @@ export default function CategoriesPage() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
+              <label
+                htmlFor="categoryName"
+                className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm"
+              >
                 Name
               </label>
               <input
                 type="text"
+                id="categoryName"
                 value={formData.name}
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
@@ -163,10 +168,14 @@ export default function CategoriesPage() {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
+              <label
+                htmlFor="parentcategoryselect"
+                className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm"
+              >
                 Parent Category (Optional)
               </label>
               <select
+                id="parentcategoryselect"
                 value={formData.parentId}
                 onChange={(e) =>
                   setFormData({ ...formData, parentId: e.target.value })
@@ -264,12 +273,14 @@ export default function CategoriesPage() {
                   </td>
                   <td className="px-6 py-4 font-medium text-sm text-right whitespace-nowrap">
                     <button
+                      type="button"
                       onClick={() => startEdit(category)}
                       className="mr-4 text-blue-600 hover:text-blue-900"
                     >
                       Edit
                     </button>
                     <button
+                      type="button"
                       onClick={() => handleDelete(category.id)}
                       className="text-red-600 hover:text-red-900"
                     >

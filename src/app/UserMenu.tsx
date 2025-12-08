@@ -60,7 +60,9 @@ export function UserMenu({ user }: UserMenuProps) {
                 <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
                   {user.name || "User"}
                 </p>
-                <p className="text-gray-500 dark:text-gray-400 text-xs">{user.email}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs">
+                  {user.email}
+                </p>
                 {user.role && (
                   <p className="mt-1 font-medium text-blue-600 dark:text-blue-400 text-xs">
                     Role: {user.role}

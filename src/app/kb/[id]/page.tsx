@@ -170,16 +170,14 @@ export default function KbArticlePage() {
                   Keywords:
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {article.keywords
-                    .split(",")
-                    .map((keyword: string, index: number) => (
-                      <span
-                        key={index}
-                        className="bg-gray-200 px-3 py-1 rounded-full text-gray-700 dark:text-gray-300 text-sm"
-                      >
-                        {keyword.trim()}
-                      </span>
-                    ))}
+                  {article.keywords.split(",").map((keyword: string) => (
+                    <span
+                      key={keyword.trim()}
+                      className="bg-gray-200 px-3 py-1 rounded-full text-gray-700 dark:text-gray-300 text-sm"
+                    >
+                      {keyword.trim()}
+                    </span>
+                  ))}
                 </div>
               </div>
             )}

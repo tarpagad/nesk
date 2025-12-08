@@ -87,8 +87,12 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-4xl">
       <div className="mb-8">
-        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">System Settings</h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">Configure your help desk system</p>
+        <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
+          System Settings
+        </h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Configure your help desk system
+        </p>
       </div>
 
       {error && (

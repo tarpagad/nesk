@@ -1,3 +1,15 @@
+// User types
+export interface User {
+  id: string;
+  email: string;
+  emailVerified: boolean;
+  name: string;
+  image?: string | null;
+  role?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Ticket types
 export interface Category {
   id: string;

@@ -178,7 +178,10 @@ export function KbArticleForm({ article, onSubmit }: KbArticleFormProps) {
           onChange={(e) => setPublished(e.target.checked)}
           className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"
         />
-        <label htmlFor="published" className="text-sm text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor="published"
+          className="text-sm text-gray-700 dark:text-gray-300"
+        >
           Publish this article (make it visible to customers)
         </label>
       </div>

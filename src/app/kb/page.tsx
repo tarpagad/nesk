@@ -162,6 +162,7 @@ function KnowledgeBaseContent() {
             <div className="flex flex-wrap gap-2 mb-6">
               {categories.map((cat) => (
                 <button
+                  type="button"
                   key={cat.id}
                   onClick={() =>
                     handleCategoryChange(
@@ -204,6 +205,7 @@ function KnowledgeBaseContent() {
               </p>
               {(searchFromUrl || selectedCategory) && (
                 <button
+                  type="button"
                   onClick={clearFilters}
                   className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium text-white"
                 >
@@ -217,7 +219,7 @@ function KnowledgeBaseContent() {
                 <Link
                   key={article.id}
                   href={`/kb/${article.id}`}
-                  className="block bg-white dark:bg-gray-800 shadow hover:shadow-lg dark:shadow-gray-900 dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg transition-shadow"
+                  className="block bg-white dark:bg-gray-800 shadow hover:shadow-lg dark:shadow-gray-900 p-6 border border-gray-200 dark:border-gray-700 rounded-lg transition-shadow"
                 >
                   <div className="flex justify-between items-start mb-3">
                     <h2 className="flex-1 font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 text-xl">
