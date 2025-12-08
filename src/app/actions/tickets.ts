@@ -54,21 +54,26 @@ export async function createTicket(formData: FormData) {
       },
     });
 
-    // Send email notification
+    // Send email notification (non-blocking warning if disabled)
+    let emailWarning: string | undefined;
     try {
-      await sendTicketCreatedEmail(
+      const emailResult = await sendTicketCreatedEmail(
         session.user.email,
         ticket.id,
         ticket.subject,
       );
+
+      if (emailResult?.status === "skipped" && emailResult.message) {
+        emailWarning = emailResult.message;
+      }
     } catch (emailError) {
       console.error("Failed to send email notification:", emailError);
-      // Don't fail the ticket creation if email fails
+      emailWarning = "Email notification failed to send.";
     }
 
     revalidatePath("/tickets");
 
-    return { success: true, ticketId: ticket.id };
+    return { success: true, ticketId: ticket.id, emailWarning };
   } catch (error) {
     console.error("Error creating ticket:", error);
     return { error: "Failed to create ticket. Please try again." };

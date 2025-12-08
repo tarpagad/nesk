@@ -28,6 +28,7 @@ export default function SubmitTicketPage() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [emailWarning, setEmailWarning] = useState<string | null>(null);
   useEffect(() => {
     async function loadData() {
       const [categoriesResult, prioritiesResult] = await Promise.all([
@@ -51,6 +52,7 @@ export default function SubmitTicketPage() {
     e.preventDefault();
     setError("");
     setSuccess(false);
+    setEmailWarning(null);
     setLoading(true);
 
     // Validate that message is not empty
@@ -71,12 +73,14 @@ export default function SubmitTicketPage() {
 
       if (result.error) {
         setError(result.error);
+        setEmailWarning(result.emailWarning || null);
       } else if (result.success) {
-        setSuccess(true);
         setSubject("");
         setMessage("");
         setCategoryId("");
         setPriorityId("");
+        setSuccess(true);
+        setEmailWarning(result.emailWarning || null);
 
         // Redirect to ticket status page after delay
         setTimeout(() => {
@@ -97,6 +101,11 @@ export default function SubmitTicketPage() {
         <div className="flex justify-center items-center min-h-screen">
           <div className="text-gray-600 dark:text-gray-400">Loading...</div>
         </div>
+        emailWarning && (
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 px-4 py-3 border border-yellow-200 rounded text-yellow-800 dark:text-yellow-300">
+          {emailWarning}
+        </div>
+        );
       </>
     );
   }

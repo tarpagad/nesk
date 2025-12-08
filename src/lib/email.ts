@@ -2,23 +2,25 @@ import { Resend } from "resend";
 import { escapeHtml } from "./utils";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+export const EMAIL_SENDING_ENABLED = Boolean(RESEND_API_KEY);
 
-if (!RESEND_API_KEY) {
+if (!EMAIL_SENDING_ENABLED) {
   console.warn(
-    "RESEND_API_KEY is not set. Email notifications will not be sent.",
+    "RESEND_API_KEY is not set. Email notifications will not be sent. User attempts will be logged instead.",
   );
 }
 
-const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
+const resend = EMAIL_SENDING_ENABLED ? new Resend(RESEND_API_KEY!) : null;
 
 export async function sendTicketCreatedEmail(
   to: string,
   ticketId: string,
   subject: string,
-) {
+): Promise<{ status: "sent" | "skipped"; message?: string }> {
   if (!resend) {
-    console.log("Skipping email - RESEND_API_KEY not configured");
-    return;
+    const message = "Email sending disabled: RESEND_API_KEY not configured.";
+    console.warn(message, { to, ticketId, subject });
+    return { status: "skipped", message };
   }
 
   const htmlContent = `
@@ -56,8 +58,10 @@ export async function sendTicketCreatedEmail(
       html: htmlContent,
     });
     console.log(`Ticket created email sent to ${to}`);
+    return { status: "sent" };
   } catch (error) {
     console.error("Error sending ticket created email:", error);
+    return { status: "skipped", message: "Email send failed" };
   }
 }
 
@@ -67,10 +71,11 @@ export async function sendTicketUpdateEmail(
   subject: string,
   status: string,
   message?: string,
-) {
+): Promise<{ status: "sent" | "skipped"; message?: string }> {
   if (!resend) {
-    console.log("Skipping email - RESEND_API_KEY not configured");
-    return;
+    const msg = "Email sending disabled: RESEND_API_KEY not configured.";
+    console.warn(msg, { to, ticketId, subject, status });
+    return { status: "skipped", message: msg };
   }
 
   const htmlContent = `
@@ -118,7 +123,9 @@ export async function sendTicketUpdateEmail(
       html: htmlContent,
     });
     console.log(`Ticket update email sent to ${to}`);
+    return { status: "sent" };
   } catch (error) {
     console.error("Error sending ticket update email:", error);
+    return { status: "skipped", message: "Email send failed" };
   }
 }

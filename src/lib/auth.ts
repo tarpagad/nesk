@@ -22,6 +22,11 @@ export const auth = betterAuth({
       console.log(`${"=".repeat(80)}\n`);
       // Not sending actual email - just logging for development
     },
+    autoSignInAfterReset: true,
+    autoSignInAfterSignUp: true,
+    autoSignInAfterEmailVerification: true,
+    autoSignIn: true,
+    disableSignUp: process.env.DISABLE_SIGNUP === "true",
   },
   user: {
     additionalFields: {
