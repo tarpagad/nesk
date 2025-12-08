@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "@/lib/auth-client";
+import { useEffect, useState } from "react";
 import {
   createTicket,
   getCategories,
   getPriorities,
 } from "@/app/actions/tickets";
+import { useSession } from "@/lib/auth-client";
 import type { Category, Priority } from "@/types";
 
 const REDIRECT_DELAY_MS = 2000;
@@ -73,7 +73,7 @@ export default function SubmitTicketPage() {
           router.push(`/tickets/status?id=${result.ticketId}`);
         }, REDIRECT_DELAY_MS);
       }
-    } catch (err) {
+    } catch (_err) {
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setLoading(false);

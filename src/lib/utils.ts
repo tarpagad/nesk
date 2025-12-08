@@ -12,8 +12,8 @@ export function truncateText(text: string, maxLength: number): string {
 
   // If there's a space, truncate there; otherwise use maxLength
   return lastSpace > 0
-    ? truncated.substring(0, lastSpace) + "..."
-    : truncated + "...";
+    ? `${truncated.substring(0, lastSpace)}...`
+    : `${truncated}...`;
 }
 
 /**

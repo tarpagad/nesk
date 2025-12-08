@@ -152,11 +152,11 @@ model Priority {
 
 ### Phase 3: Staff Portal
 - [x] Authentication system (Better-Auth)
-- [ ] Staff dashboard
-- [ ] Ticket list with filters
-- [ ] Ticket detail view with reply system
-- [ ] Internal notes
-- [ ] KB article CRUD
+- [x] Staff dashboard
+- [x] Ticket list with filters
+- [x] Ticket detail view with reply system
+- [x] Internal notes
+- [x] KB article CRUD
 
 ### Phase 4: Admin Features
 - [ ] Team member management

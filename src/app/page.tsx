@@ -1,5 +1,5 @@
-import { Navbar } from "./Navbar";
 import Link from "next/link";
+import { Navbar } from "./Navbar";
 
 export default function Home() {
   return (
