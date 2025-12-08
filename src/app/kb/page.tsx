@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { getKbCategories, getPublishedKbArticles } from "@/app/actions/kb";
 import { truncateText } from "@/lib/utils";
+import { Navbar } from "@/app/Navbar";
 import type { KbCategoryWithCount } from "@/types";
 
 const CONTENT_PREVIEW_LENGTH = 200;
@@ -94,7 +95,9 @@ function KnowledgeBaseContent() {
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+    <>
+      <Navbar />
+      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="mb-8">
           <h1 className="font-bold text-3xl text-gray-900 dark:text-gray-100">Knowledge Base</h1>
@@ -248,7 +251,7 @@ function KnowledgeBaseContent() {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

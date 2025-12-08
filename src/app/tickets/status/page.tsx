@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { getTicketStatus } from "@/app/actions/tickets";
 import RichTextDisplay from "@/components/RichTextDisplay";
+import { Navbar } from "@/app/Navbar";
 
 function TicketStatusContent() {
   const searchParams = useSearchParams();
@@ -71,7 +72,9 @@ function TicketStatusContent() {
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+    <>
+      <Navbar />
+      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="mb-8">
           <h1 className="font-bold text-3xl text-gray-900 dark:text-gray-100">
@@ -233,7 +236,7 @@ function TicketStatusContent() {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
 

@@ -10,6 +10,7 @@ import {
 import { useSession } from "@/lib/auth-client";
 import { isRichTextEmpty } from "@/lib/utils";
 import RichTextEditor from "@/components/RichTextEditor";
+import { Navbar } from "@/app/Navbar";
 import type { Category, Priority } from "@/types";
 
 const REDIRECT_DELAY_MS = 2000;
@@ -123,12 +124,14 @@ export default function SubmitTicketPage() {
             </a>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+    <>
+      <Navbar />
+      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         <div className="mb-8">
           <h1 className="font-bold text-3xl text-gray-900 dark:text-gray-100">
@@ -258,6 +261,6 @@ export default function SubmitTicketPage() {
           </ul>
         </div>
       </div>
-    </div>
+    </>
   );
 }

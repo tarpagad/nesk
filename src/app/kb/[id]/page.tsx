@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getKbArticleById } from "@/app/actions/kb";
+import { Navbar } from "@/app/Navbar";
 
 export default function KbArticlePage() {
   const params = useParams();
@@ -41,19 +42,23 @@ export default function KbArticlePage() {
 
   if (loading) {
     return (
-      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+      <>
+        <Navbar />
+        <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-12 rounded-lg text-center">
             <div className="text-gray-600 dark:text-gray-400">Loading article...</div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (error || !article) {
     return (
-      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+      <>
+        <Navbar />
+        <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <div className="bg-red-50 dark:bg-red-900/20 shadow dark:shadow-gray-900 p-6 border border-red-200 dark:border-red-800 rounded-lg">
             <h2 className="mb-2 font-semibold text-red-900 text-xl">
@@ -70,12 +75,14 @@ export default function KbArticlePage() {
             </Link>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+    <>
+      <Navbar />
+      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm">
@@ -192,6 +199,6 @@ export default function KbArticlePage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
