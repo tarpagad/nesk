@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getKbArticleById } from "@/app/actions/kb";
 import { Navbar } from "@/app/Navbar";
+import MarkdownDisplay from "@/components/MarkdownDisplay";
 
 export default function KbArticlePage() {
   const params = useParams();
@@ -157,10 +158,8 @@ export default function KbArticlePage() {
             </div>
 
             <div className="px-6 py-8">
-              <div className="max-w-none prose prose-blue">
-                <div className="text-gray-800 dark:text-gray-100 leading-relaxed whitespace-pre-wrap">
-                  {article.content}
-                </div>
+              <div className="max-w-none">
+                <MarkdownDisplay content={article.content} />
               </div>
             </div>
 

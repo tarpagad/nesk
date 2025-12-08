@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <content is sanitized> */
 "use client";
 
 import DOMPurify from "isomorphic-dompurify";
