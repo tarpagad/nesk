@@ -4,6 +4,7 @@ import { UserMenu } from "./UserMenu";
 
 export async function Navbar() {
   const session = await getSession();
+  const isStaff = session?.user.role === "staff" || session?.user.role === "admin";
 
   return (
     <nav className="bg-white shadow-sm">
@@ -34,6 +35,14 @@ export async function Navbar() {
               >
                 Track Ticket
               </Link>
+              {isStaff && (
+                <Link
+                  href="/staff"
+                  className="text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  Staff Portal
+                </Link>
+              )}
             </div>
           </div>
 
