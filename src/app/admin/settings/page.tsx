@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { deleteSetting, getSettings, updateSetting } from "@/app/actions/admin";
 
 type Setting = {
@@ -28,11 +28,7 @@ export default function SettingsPage() {
     { id: "sla", label: "SLA" },
   ];
 
-  useEffect(() => {
-    loadSettings();
-  }, [activeCategory]);
-
-  async function loadSettings() {
+  const loadSettings = useCallback(async () => {
     setLoading(true);
     const result = await getSettings(activeCategory);
     if ("error" in result) {
@@ -46,7 +42,11 @@ export default function SettingsPage() {
       setFormData(initialFormData);
     }
     setLoading(false);
-  }
+  }, [activeCategory]);
+
+  useEffect(() => {
+    loadSettings();
+  }, [loadSettings]);
 
   async function handleSave(key: string) {
     setError("");
@@ -137,7 +137,10 @@ export default function SettingsPage() {
               <div key={setting.id} className="p-6">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <label className="block mb-2 font-medium text-gray-900 dark:text-gray-100 text-sm">
+                    <label
+                      htmlFor={setting.key}
+                      className="block mb-2 font-medium text-gray-900 dark:text-gray-100 text-sm"
+                    >
                       {setting.key
                         .replace(/_/g, " ")
                         .replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -145,21 +148,24 @@ export default function SettingsPage() {
                     {editingKey === setting.key ? (
                       <div className="space-y-3">
                         <textarea
+                          id={setting.key}
                           value={formData[setting.key] || ""}
                           onChange={(e) =>
                             handleChange(setting.key, e.target.value)
                           }
                           rows={3}
-                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                          className="px-3 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
                         />
                         <div className="flex gap-2">
                           <button
+                            type="button"
                             onClick={() => handleSave(setting.key)}
                             className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white text-sm transition-colors"
                           >
                             Save
                           </button>
                           <button
+                            type="button"
                             onClick={() => setEditingKey(null)}
                             className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-gray-700 dark:text-gray-300 text-sm transition-colors"
                           >
@@ -182,12 +188,14 @@ export default function SettingsPage() {
                   {editingKey !== setting.key && (
                     <div className="flex gap-2 ml-4">
                       <button
+                        type="button"
                         onClick={() => setEditingKey(setting.key)}
                         className="text-blue-600 hover:text-blue-900 text-sm"
                       >
                         Edit
                       </button>
                       <button
+                        type="button"
                         onClick={() => handleDelete(setting.id)}
                         className="text-red-600 hover:text-red-900 text-sm"
                       >

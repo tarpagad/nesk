@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getDashboardStats, getTicketStats } from "@/app/actions/admin";
 
 type DashboardStats = {
@@ -30,11 +30,7 @@ export default function ReportsPage() {
   const [days, setDays] = useState(30);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    loadData();
-  }, [days]);
-
-  async function loadData() {
+  const loadData = useCallback(async () => {
     setLoading(true);
     setError("");
 
@@ -56,11 +52,15 @@ export default function ReportsPage() {
     }
 
     setLoading(false);
-  }
+  }, [days]);
 
-  if (loading) {
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const handleDaysChange = (newDays: number) => {
     return <div className="py-8 text-center">Loading...</div>;
-  }
+  };
 
   if (error) {
     return <div className="text-red-600">Error: {error}</div>;
@@ -81,7 +81,7 @@ export default function ReportsPage() {
           <select
             value={days}
             onChange={(e) => setDays(Number(e.target.value))}
-            className="px-4 py-2 border border-gray-300 dark:border-gray-600 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 focus:border-transparent dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
           >
             <option value={7}>Last 7 days</option>
             <option value={30}>Last 30 days</option>

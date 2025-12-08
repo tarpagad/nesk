@@ -12,7 +12,9 @@ function TicketStatusContent() {
 
   const [ticketId, setTicketId] = useState(ticketIdFromUrl || "");
   const [email, setEmail] = useState("");
-  const [ticket, setTicket] = useState<any>(null);
+  const [ticket, setTicket] = useState<
+    Awaited<ReturnType<typeof getTicketStatus>>["ticket"] | null
+  >(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -61,7 +63,7 @@ function TicketStatusContent() {
     }
   };
 
-  const formatDate = (date: string) => {
+  const formatDate = (date: string | Date) => {
     return new Date(date).toLocaleString("en-US", {
       year: "numeric",
       month: "long",

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { getKbCategories, getPublishedKbArticles } from "@/app/actions/kb";
 import { Navbar } from "@/app/Navbar";
 import { truncateText } from "@/lib/utils";
@@ -25,36 +25,38 @@ function KnowledgeBaseContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function loadCategories() {
-      const result = await getKbCategories();
-      if (result.success) {
-        setCategories(result.categories || []);
-      }
+  const loadCategories = useCallback(async () => {
+    const result = await getKbCategories();
+    if (result.success) {
+      setCategories(result.categories || []);
     }
-    loadCategories();
   }, []);
 
-  useEffect(() => {
-    async function loadArticles() {
-      setLoading(true);
-      setError("");
+  const loadArticles = useCallback(async () => {
+    setLoading(true);
+    setError("");
 
-      const result = await getPublishedKbArticles(
-        selectedCategory || undefined,
-        searchFromUrl || undefined,
-      );
+    const result = await getPublishedKbArticles(
+      selectedCategory || undefined,
+      searchFromUrl || undefined,
+    );
 
-      if (result.error) {
-        setError(result.error);
-      } else if (result.success) {
-        setArticles(result.articles || []);
-      }
-
-      setLoading(false);
+    if (result.error) {
+      setError(result.error);
+    } else if (result.success) {
+      setArticles(result.articles || []);
     }
-    loadArticles();
+
+    setLoading(false);
   }, [selectedCategory, searchFromUrl]);
+
+  useEffect(() => {
+    loadCategories();
+  }, [loadCategories]);
+
+  useEffect(() => {
+    loadArticles();
+  }, [loadArticles]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
