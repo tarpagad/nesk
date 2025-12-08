@@ -1,40 +1,27 @@
-import { SendSmtpEmail, TransactionalEmailsApi } from "@getbrevo/brevo";
+import { Resend } from "resend";
 import { escapeHtml } from "./utils";
 
-const BREVO_API_KEY = process.env.BREVO_API_KEY;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-if (!BREVO_API_KEY) {
+if (!RESEND_API_KEY) {
   console.warn(
-    "BREVO_API_KEY is not set. Email notifications will not be sent."
+    "RESEND_API_KEY is not set. Email notifications will not be sent.",
   );
 }
 
-let brevoClient: TransactionalEmailsApi | null = null;
-
-if (BREVO_API_KEY) {
-  brevoClient = new TransactionalEmailsApi();
-  // API Key Type: 0 = partner key, 1 = account key
-  brevoClient.setApiKey(0, BREVO_API_KEY);
-}
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 export async function sendTicketCreatedEmail(
   to: string,
   ticketId: string,
-  subject: string
+  subject: string,
 ) {
-  if (!brevoClient) {
-    console.log("Skipping email - BREVO_API_KEY not configured");
+  if (!resend) {
+    console.log("Skipping email - RESEND_API_KEY not configured");
     return;
   }
 
-  const emailData = new SendSmtpEmail();
-  emailData.sender = {
-    email: process.env.SUPPORT_EMAIL || "support@nesk.example.com",
-    name: "NESK Support",
-  };
-  emailData.to = [{ email: to }];
-  emailData.subject = `Ticket Created: ${subject}`;
-  emailData.htmlContent = `
+  const htmlContent = `
     <html>
       <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -62,7 +49,12 @@ export async function sendTicketCreatedEmail(
   `;
 
   try {
-    await brevoClient.sendTransacEmail(emailData);
+    await resend.emails.send({
+      from: process.env.SUPPORT_EMAIL || "onboarding@resend.dev",
+      to,
+      subject: `Ticket Created: ${subject}`,
+      html: htmlContent,
+    });
     console.log(`Ticket created email sent to ${to}`);
   } catch (error) {
     console.error("Error sending ticket created email:", error);
@@ -74,21 +66,14 @@ export async function sendTicketUpdateEmail(
   ticketId: string,
   subject: string,
   status: string,
-  message?: string
+  message?: string,
 ) {
-  if (!brevoClient) {
-    console.log("Skipping email - BREVO_API_KEY not configured");
+  if (!resend) {
+    console.log("Skipping email - RESEND_API_KEY not configured");
     return;
   }
 
-  const emailData = new SendSmtpEmail();
-  emailData.sender = {
-    email: process.env.SUPPORT_EMAIL || "support@nesk.example.com",
-    name: "NESK Support",
-  };
-  emailData.to = [{ email: to }];
-  emailData.subject = `Ticket Update: ${subject}`;
-  emailData.htmlContent = `
+  const htmlContent = `
     <html>
       <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -126,7 +111,12 @@ export async function sendTicketUpdateEmail(
   `;
 
   try {
-    await brevoClient.sendTransacEmail(emailData);
+    await resend.emails.send({
+      from: process.env.SUPPORT_EMAIL || "onboarding@resend.dev",
+      to,
+      subject: `Ticket Update: ${subject}`,
+      html: htmlContent,
+    });
     console.log(`Ticket update email sent to ${to}`);
   } catch (error) {
     console.error("Error sending ticket update email:", error);

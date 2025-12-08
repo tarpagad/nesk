@@ -10,7 +10,7 @@ A full-featured help desk ticketing system built with Next.js 16 (App Router), P
 - Better-Auth for authentication
 - Tailwind CSS v4 + shadcn/ui
 - Zustand for state management
-- Brevo for email notifications
+- Resend for email notifications
 - Lucide React icons
 
 ## Core Features
@@ -54,7 +54,7 @@ A full-featured help desk ticketing system built with Next.js 16 (App Router), P
   - Category management
   - Custom fields for tickets
   - SLA rules and automation
-  - Email integration (Brevo API)
+  - Email integration (Resend API)
 
 ### 4. Email Notifications
 - New ticket confirmation (customer)
@@ -144,14 +144,14 @@ model Priority {
 - [x] Basic KB component
 
 ### Phase 2: Customer Portal
-- [ ] Ticket submission form with validation
-- [ ] Ticket status checker
-- [ ] KB article browsing and search
-- [ ] Category filtering
-- [ ] Email notifications (Brevo integration)
+- [x] Ticket submission form with validation
+- [x] Ticket status checker
+- [x] KB article browsing and search
+- [x] Category filtering
+- [x] Email notifications (Resend integration)
 
 ### Phase 3: Staff Portal
-- [ ] Authentication system (BetterAuth or NextAuth)
+- [x] Authentication system (Better-Auth)
 - [ ] Staff dashboard
 - [ ] Ticket list with filters
 - [ ] Ticket detail view with reply system
@@ -175,37 +175,32 @@ model Priority {
 ## Environment Variables
 
 ```env
-# Cloudflare D1
-DATABASE_URL="file:./dev.db" # Local development
+# PostgreSQL Database
+DATABASE_URL="postgresql://..." # Your database connection string
 
-# Brevo Email API
-BREVO_API_KEY="your-api-key"
+# Resend Email API
+RESEND_API_KEY="re_..." # Get from https://resend.com
+SUPPORT_EMAIL="support@yourdomain.com" # Your verified domain email
 
-# Authentication (if using BetterAuth/NextAuth)
-AUTH_SECRET="your-secret"
-AUTH_URL="http://localhost:3000"
+# Better-Auth
+BETTER_AUTH_SECRET="your-secret"
+BETTER_AUTH_URL="http://localhost:3000"
 ```
 
 ## Development Setup
 
 1. Install dependencies: `bun install`
-2. Setup D1 database: Follow `howtos/d1_migrations_steps.md`
-3. Run migrations: `bunx wrangler d1 migrations apply neskd1 --local`
-4. Generate Prisma Client: `bunx prisma generate`
+2. Start Prisma dev database: `bun db:dev` (in separate terminal)
+3. Push database schema: `bun db:push`
+4. Generate Prisma Client: `bun db:generate`
 5. Start dev server: `bun dev`
-
-## Deployment (Cloudflare Pages)
-
-1. Build: `bun pages:build`
-2. Preview: `bun preview`
-3. Deploy: `bun deploy`
 
 ## Next Steps
 
-1. Complete Prisma schema with TicketReply, Category, Priority models
-2. Implement ticket submission form with Server Actions
-3. Build KB search functionality
-4. Setup Brevo email integration
-5. Create staff authentication flow
-6. Build ticket management UI
+1. Build staff dashboard with ticket management UI
+2. Implement ticket assignment and status updates
+3. Add internal notes functionality
+4. Create KB article CRUD interface for staff
+5. Implement role-based access control
+6. Add advanced filtering and search
 
