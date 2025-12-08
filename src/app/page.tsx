@@ -56,57 +56,6 @@ export default function Home() {
               </p>
             </Link>
           </div>
-
-          <div className="mt-16">
-            <h3 className="mb-8 font-bold dark:text-gray-100 text-2xl">
-              Getting Started
-            </h3>
-            <div className="bg-white dark:bg-gray-800 shadow-md mx-auto p-8 border dark:border-gray-700 rounded-lg max-w-3xl text-left">
-              <ol className="space-y-4">
-                <li className="flex items-start">
-                  <span className="mr-3 font-bold text-blue-600 dark:text-blue-400">
-                    1.
-                  </span>
-                  <div className="dark:text-gray-200">
-                    <strong>Start Prisma Database:</strong>
-                    <code className="block bg-gray-100 dark:bg-gray-900 mt-1 p-2 rounded dark:text-gray-200">
-                      bun db:dev
-                    </code>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3 font-bold text-blue-600 dark:text-blue-400">
-                    2.
-                  </span>
-                  <div className="dark:text-gray-200">
-                    <strong>Push Database Schema:</strong>
-                    <code className="block bg-gray-100 dark:bg-gray-900 mt-1 p-2 rounded dark:text-gray-200">
-                      bun db:push
-                    </code>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3 font-bold text-blue-600 dark:text-blue-400">
-                    3.
-                  </span>
-                  <div className="dark:text-gray-200">
-                    <strong>Start Development Server:</strong>
-                    <code className="block bg-gray-100 dark:bg-gray-900 mt-1 p-2 rounded dark:text-gray-200">
-                      bun dev
-                    </code>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3 font-bold text-blue-600 dark:text-blue-400">
-                    4.
-                  </span>
-                  <div className="dark:text-gray-200">
-                    <strong>Create an account and start using NESK!</strong>
-                  </div>
-                </li>
-              </ol>
-            </div>
-          </div>
         </div>
       </main>
     </div>
