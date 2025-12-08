@@ -236,6 +236,7 @@ function TicketStatusContent() {
           </div>
         )}
       </div>
+      </div>
     </>
   );
 }

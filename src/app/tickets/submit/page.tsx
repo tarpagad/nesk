@@ -92,15 +92,20 @@ export default function SubmitTicketPage() {
 
   if (isPending) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-gray-600 dark:text-gray-400">Loading...</div>
-      </div>
+      <>
+        <Navbar />
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+        </div>
+      </>
     );
   }
 
   if (!session) {
     return (
-      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+      <>
+        <Navbar />
+        <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
           <div className="bg-yellow-50 shadow dark:shadow-gray-900 p-6 border border-yellow-200 rounded-lg text-center">
             <h2 className="mb-4 font-semibold text-2xl text-yellow-800 dark:text-yellow-400">
@@ -124,6 +129,7 @@ export default function SubmitTicketPage() {
             </a>
           </div>
         </div>
+      </div>
       </>
     );
   }

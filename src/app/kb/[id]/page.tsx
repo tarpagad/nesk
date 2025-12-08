@@ -50,6 +50,7 @@ export default function KbArticlePage() {
             <div className="text-gray-600 dark:text-gray-400">Loading article...</div>
           </div>
         </div>
+        </div>
       </>
     );
   }
@@ -74,6 +75,7 @@ export default function KbArticlePage() {
               Back to Knowledge Base
             </Link>
           </div>
+        </div>
         </div>
       </>
     );
@@ -198,6 +200,7 @@ export default function KbArticlePage() {
             </Link>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

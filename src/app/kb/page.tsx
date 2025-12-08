@@ -251,6 +251,7 @@ function KnowledgeBaseContent() {
           </Link>
         </div>
       </div>
+      </div>
     </>
   );
 }
