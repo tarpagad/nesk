@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
   output   = "../generated/client"
 }
 
@@ -189,14 +189,14 @@ model EmailTemplate {
 }
 
 model ActivityLog {
-  id          String   @id @default(cuid())
-  userId      String?
-  action      String
-  entityType  String // ticket, user, kb_article, etc.
-  entityId    String?
-  details     String?  @db.Text
-  ipAddress   String?
-  createdAt   DateTime @default(now())
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
+  entityType String // ticket, user, kb_article, etc.
+  entityId   String?
+  details    String?  @db.Text
+  ipAddress  String?
+  createdAt  DateTime @default(now())
 
   @@index([userId])
   @@index([entityType, entityId])
