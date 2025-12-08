@@ -1,15 +1,25 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { signIn } from "@/lib/auth-client";
 
 export default function SignInPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("reset") === "success") {
+      setSuccess(
+        "Password reset successful! You can now sign in with your new password.",
+      );
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +59,12 @@ export default function SignInPage() {
             </div>
           )}
 
+          {success && (
+            <div className="bg-green-50 px-4 py-3 border border-green-200 rounded text-green-700">
+              {success}
+            </div>
+          )}
+
           <div>
             <label
               htmlFor="email"
@@ -81,6 +97,14 @@ export default function SignInPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 rounded-md focus:outline-none focus:ring-blue-500 w-full"
             />
+            <div className="mt-2 text-right">
+              <a
+                href="/auth/forgot-password"
+                className="text-blue-600 hover:text-blue-500 text-sm"
+              >
+                Forgot password?
+              </a>
+            </div>
           </div>
 
           <button

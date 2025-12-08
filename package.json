@@ -12,12 +12,14 @@
     "db:push": "bunx prisma db push",
     "db:migrate": "bunx prisma migrate dev",
     "db:studio": "bunx prisma studio",
-    "db:dev": "bunx prisma dev"
+    "db:dev": "bunx prisma dev",
+    "db:seed": "bunx tsx src/prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "@types/pg": "^8.15.6",
+    "bcrypt": "^6.0.0",
     "better-auth": "^1.4.5",
     "dotenv": "^17.2.3",
     "next": "16.0.7",
@@ -29,11 +31,13 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "prisma": "^7.1.0",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
