@@ -34,6 +34,7 @@
 - **Knowledge Base** - Searchable, categorized articles with draft/published workflow
 - **Real-Time Updates** - Server Actions for instant UI updates without page reloads
 - **Rich Text Editor** - Full-featured WYSIWYG editor with React Quill integration
+- **Dark/Light Theme** - System preference detection with user override and persistent storage
 
 ### 👥 User Portal
 - Ticket submission with file attachments
@@ -70,6 +71,7 @@
 - **TypeScript 5** (Type safety across the stack)
 - **Tailwind CSS v4** (Utility-first styling)
 - **React Quill** (Rich text editing)
+- **next-themes** (Dark/Light mode support)
 
 ### Backend
 - **Next.js API Routes** (RESTful endpoints)
@@ -127,6 +129,9 @@ BETTER_AUTH_URL="http://localhost:3000"
 
 # Email (Optional - defaults to console logging in dev)
 RESEND_API_KEY="your-resend-api-key"
+
+# PUBLIC URL
+NEXT_PUBLIC_BETTER_AUTH_URL="your-deployed-public-url"
 ```
 
 4. **Initialize the database**
@@ -214,7 +219,54 @@ EmailTemplate (Notification templates)
 
 ---
 
-## 📊 Database Commands
+## 🏗️ Routes & Navigation
+
+### Public Routes
+- `/` - Homepage with KB search and ticket submission
+- `/kb` - Knowledge base articles listing
+- `/kb/[id]` - View individual KB article
+- `/tickets/submit` - Submit new support ticket
+- `/tickets/status` - Check ticket status by ID and email
+
+### Authentication Routes
+- `/auth/signin` - User login
+- `/auth/signup` - User registration
+- `/auth/forgot-password` - Password reset request
+- `/auth/reset-password` - Set new password
+
+### Staff Portal (Protected)
+- `/staff` - Dashboard with ticket overview and statistics
+- `/staff/tickets` - All tickets with filtering and search
+- `/staff/tickets/[id]` - Individual ticket view and management
+- `/staff/kb` - Knowledge base management
+- `/staff/kb/new` - Create new KB article
+- `/staff/kb/edit/[id]` - Edit existing KB article
+
+### Admin Panel (Protected)
+- `/admin` - Admin dashboard with analytics
+- `/admin/team` - Team member management (roles, permissions)
+- `/admin/categories` - Ticket and KB category management
+- `/admin/email-templates` - Email notification templates
+- `/admin/settings` - System configuration (email, security, etc.)
+- `/admin/reports` - Performance analytics and metrics
+
+---
+
+## 📊 Database Schema
+
+### Core Models
+- **User** - Customer accounts (with Better Auth)
+- **TeamMember** - Staff user accounts (email, name, role)
+- **Ticket** - Support tickets (status, priority, category, replies)
+- **TicketReply** - Ticket messages and notes (internal/public)
+- **TicketAttachment** - File attachments on tickets
+- **KbArticle** - Knowledge base articles (title, content, keywords, status)
+- **Category** - Categorization for tickets and KB articles
+- **Priority** - Ticket priority levels (Low, Medium, High, Critical)
+- **Settings** - System configuration (key-value pairs)
+- **EmailTemplate** - Customizable email notification templates
+
+### Database Commands
 
 ```bash
 # Generate Prisma Client
@@ -226,16 +278,24 @@ bun run db:migrate
 # Push schema (dev only)
 bun run db:push
 
-# Open Prisma Studio
+# Open Prisma Studio (GUI)
 bun run db:studio
 
-# Seed database
+# Seed database with sample data
 bun run db:seed
 ```
 
 ---
 
-## 🎨 Development Workflow
+### 🎨 Development Workflow
+
+### Theme Management
+The application includes built-in dark/light theme support powered by `next-themes`:
+- **Theme Toggle**: Located in the top navbar on all pages
+- **Persistence**: User preference is saved to localStorage
+- **System Detection**: Defaults to OS preference (dark/light) on first visit
+- **Override**: Users can manually toggle theme which persists across sessions
+- **Coverage**: All pages, components, and custom styles support both themes
 
 ### Code Quality
 ```bash
@@ -297,6 +357,44 @@ Contributions are welcome! This project demonstrates:
 ## 📝 License
 
 MIT License - feel free to use this project for learning or commercial purposes.
+
+---
+
+## 📝 Implementation Highlights
+
+### Phase 1: Foundation ✅
+- Next.js 16 with App Router setup
+- PostgreSQL + Prisma ORM configuration
+- Tailwind CSS v4 + shadcn/ui components
+
+### Phase 2: Customer Portal ✅
+- Ticket submission and tracking
+- Knowledge base with search and categories
+- Email notifications (Resend integration)
+
+### Phase 3: Staff Portal ✅
+- Authentication system (Better Auth)
+- Ticket management dashboard
+- Knowledge base management
+- Team collaboration features
+
+### Phase 4: Admin Features ✅
+- Role-based access control (Admin, Agent, User)
+- Team member management
+- Email template customization
+- System settings and configuration
+- Analytics and reporting dashboard
+
+### Phase 5: Dark/Light Theme ✅
+- System preference detection
+- Theme toggle with persistent storage
+- Full application coverage
+
+### Phase 6: Coming Soon
+- File attachments (Cloudflare R2)
+- SLA tracking and automation
+- Customer satisfaction surveys
+- Multi-language support
 
 ---
 
