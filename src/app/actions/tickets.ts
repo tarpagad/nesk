@@ -12,6 +12,8 @@ export async function createTicket(formData: FormData) {
   const message = formData.get("message") as string;
   const categoryId = formData.get("categoryId") as string;
   const priorityId = formData.get("priorityId") as string;
+  const requesterEmail = formData.get("email") as string;
+  const requesterName = (formData.get("name") as string) || "";
 
   // Validate inputs
   if (!subject || subject.trim().length === 0) {
@@ -23,13 +25,41 @@ export async function createTicket(formData: FormData) {
   }
 
   try {
-    // Get current user session
     const session = await auth.api.getSession({
       headers: await headers(),
     });
 
+    // Anonymous users must provide name and email
     if (!session?.user) {
-      return { error: "You must be logged in to submit a ticket" };
+      if (!requesterEmail || requesterEmail.trim().length === 0) {
+        return { error: "Email is required to submit a ticket" };
+      }
+
+      if (!requesterName || requesterName.trim().length === 0) {
+        return { error: "Name is required to submit a ticket" };
+      }
+    }
+
+    // Resolve or create a user when not logged in
+    let userId = session?.user.id;
+    let emailForNotification = session?.user.email;
+
+    if (!userId) {
+      const normalizedEmail = normalizeEmail(requesterEmail);
+      const user = await prisma.user.upsert({
+        where: { email: normalizedEmail },
+        update: {
+          name: requesterName.trim(),
+        },
+        create: {
+          email: normalizedEmail,
+          name: requesterName.trim(),
+          role: "user",
+        },
+      });
+
+      userId = user.id;
+      emailForNotification = user.email;
     }
 
     // Create ticket
@@ -37,7 +67,7 @@ export async function createTicket(formData: FormData) {
       data: {
         subject: subject.trim(),
         status: "open",
-        userId: session.user.id,
+        userId,
         categoryId: categoryId || null,
         priorityId: priorityId || null,
       },
@@ -47,7 +77,7 @@ export async function createTicket(formData: FormData) {
     await prisma.ticketReply.create({
       data: {
         ticketId: ticket.id,
-        authorId: session.user.id,
+        authorId: userId,
         authorType: "customer",
         message: message.trim(),
         isInternal: false,
@@ -57,14 +87,16 @@ export async function createTicket(formData: FormData) {
     // Send email notification (non-blocking warning if disabled)
     let emailWarning: string | undefined;
     try {
-      const emailResult = await sendTicketCreatedEmail(
-        session.user.email,
-        ticket.id,
-        ticket.subject,
-      );
+      if (emailForNotification) {
+        const emailResult = await sendTicketCreatedEmail(
+          emailForNotification,
+          ticket.id,
+          ticket.subject,
+        );
 
-      if (emailResult?.status === "skipped" && emailResult.message) {
-        emailWarning = emailResult.message;
+        if (emailResult?.status === "skipped" && emailResult.message) {
+          emailWarning = emailResult.message;
+        }
       }
     } catch (emailError) {
       console.error("Failed to send email notification:", emailError);

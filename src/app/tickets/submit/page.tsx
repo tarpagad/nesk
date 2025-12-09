@@ -18,6 +18,8 @@ const REDIRECT_DELAY_MS = 2000;
 export default function SubmitTicketPage() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -48,6 +50,13 @@ export default function SubmitTicketPage() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (session?.user) {
+      setName(session.user.name || "");
+      setEmail(session.user.email || "");
+    }
+  }, [session]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -62,11 +71,29 @@ export default function SubmitTicketPage() {
       return;
     }
 
+    if (!session) {
+      if (!name.trim()) {
+        setError("Name is required");
+        setLoading(false);
+        return;
+      }
+
+      if (!email.trim()) {
+        setError("Email is required");
+        setLoading(false);
+        return;
+      }
+    }
+
     const formData = new FormData();
     formData.append("subject", subject);
     formData.append("message", message);
     if (categoryId) formData.append("categoryId", categoryId);
     if (priorityId) formData.append("priorityId", priorityId);
+    if (!session) {
+      formData.append("name", name.trim());
+      formData.append("email", email.trim());
+    }
 
     try {
       const result = await createTicket(formData);
@@ -94,55 +121,6 @@ export default function SubmitTicketPage() {
     }
   };
 
-  if (isPending) {
-    return (
-      <>
-        <Navbar />
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="text-gray-600 dark:text-gray-400">Loading...</div>
-        </div>
-        emailWarning && (
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 px-4 py-3 border border-yellow-200 rounded text-yellow-800 dark:text-yellow-300">
-          {emailWarning}
-        </div>
-        );
-      </>
-    );
-  }
-
-  if (!session) {
-    return (
-      <>
-        <Navbar />
-        <div className="bg-white dark:bg-gray-900 py-12 min-h-screen">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 shadow dark:shadow-gray-900 p-6 border border-yellow-200 dark:border-yellow-800 rounded-lg text-center">
-              <h2 className="mb-4 font-semibold text-yellow-800 dark:text-yellow-300 text-2xl">
-                Sign In Required
-              </h2>
-              <p className="mb-6 text-yellow-700">
-                You need to be signed in to submit a ticket.
-              </p>
-              <a
-                href="/auth/signin"
-                className="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium text-white"
-              >
-                Sign In
-              </a>
-              <span className="mx-4 text-gray-500 dark:text-gray-400">or</span>
-              <a
-                href="/auth/signup"
-                className="inline-block bg-green-600 hover:bg-green-700 px-6 py-2 rounded-md font-medium text-white"
-              >
-                Create Account
-              </a>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
-
   return (
     <>
       <Navbar />
@@ -168,6 +146,46 @@ export default function SubmitTicketPage() {
               {success && (
                 <div className="bg-green-50 dark:bg-green-900/20 px-4 py-3 border border-green-200 rounded text-green-700 dark:text-green-400">
                   Ticket submitted successfully! Redirecting to ticket status...
+                </div>
+              )}
+
+              {!session && (
+                <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
+                    >
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
+                    >
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
+                    />
+                  </div>
                 </div>
               )}
 
