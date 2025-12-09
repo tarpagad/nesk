@@ -202,7 +202,7 @@ function TicketStatusContent() {
                     Conversation
                   </h3>
                   <div className="space-y-4">
-                    {ticket.replies.map((reply: any) => (
+                    {ticket.replies.map((reply: (typeof ticket.replies)[0]) => (
                       <div
                         key={reply.id}
                         className={`p-4 rounded-lg ${

@@ -55,3 +55,11 @@ export function stripHtmlTags(html: string): string {
 export function isRichTextEmpty(html: string): boolean {
   return stripHtmlTags(html).length === 0;
 }
+
+export const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { signOut } from "@/lib/auth-client";
 
@@ -13,6 +14,7 @@ interface UserMenuProps {
 
 export function UserMenu({ user }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const isStaff = user.role === "staff" || user.role === "admin";
 
   const handleSignOut = async () => {
     await signOut();
@@ -54,7 +56,7 @@ export function UserMenu({ user }: UserMenuProps) {
             onClick={() => setIsOpen(false)}
             aria-label="Close menu"
           />
-          <div className="right-0 z-20 absolute bg-white dark:bg-gray-800 ring-opacity-5 dark:ring-gray-700 shadow-lg dark:shadow-gray-900 mt-2 rounded-md ring-1 ring-black dark:ring-gray-700 w-56">
+          <div className="right-0 z-20 absolute bg-white dark:bg-gray-800 ring-opacity-5 shadow-lg dark:shadow-gray-900 mt-2 rounded-md ring-1 ring-black dark:ring-gray-700 w-56">
             <div className="p-2">
               <div className="px-3 py-2 border-gray-100 dark:border-gray-700 border-b">
                 <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
@@ -69,6 +71,14 @@ export function UserMenu({ user }: UserMenuProps) {
                   </p>
                 )}
               </div>
+              {!isStaff && (
+                <Link
+                  href="/tickets/status"
+                  className="inline-flex hover:bg-gray-50 dark:hover:bg-gray-700 mt-1 px-3 py-2 rounded-md w-full text-gray-700 hover:text-blue-600 dark:text-gray-300 text-sm"
+                >
+                  My Tickets
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={handleSignOut}

@@ -5,10 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { getKbCategories, getPublishedKbArticles } from "@/app/actions/kb";
 import { Navbar } from "@/app/Navbar";
-import { truncateText } from "@/lib/utils";
-import type { KbCategoryWithCount } from "@/types";
+import { formatDate, truncateText } from "@/lib/utils";
+import type { KbArticle, KbCategoryWithCount } from "@/types";
 
 const CONTENT_PREVIEW_LENGTH = 200;
+const SEARCH_DEBOUNCE_MS = 400;
 
 function KnowledgeBaseContent() {
   const router = useRouter();
@@ -16,12 +17,13 @@ function KnowledgeBaseContent() {
   const categoryFromUrl = searchParams.get("category");
   const searchFromUrl = searchParams.get("search");
 
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<KbArticle[]>([]);
   const [categories, setCategories] = useState<KbCategoryWithCount[]>([]);
   const [selectedCategory, setSelectedCategory] = useState(
     categoryFromUrl || "",
   );
   const [searchQuery, setSearchQuery] = useState(searchFromUrl || "");
+  const [debouncedSearch, setDebouncedSearch] = useState(searchFromUrl || "");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -36,19 +38,47 @@ function KnowledgeBaseContent() {
     setLoading(true);
     setError("");
 
+    const trimmedSearch = debouncedSearch.trim();
     const result = await getPublishedKbArticles(
       selectedCategory || undefined,
-      searchFromUrl || undefined,
+      trimmedSearch || undefined,
     );
 
     if (result.error) {
       setError(result.error);
     } else if (result.success) {
-      setArticles(result.articles || []);
+      const transformedArticles = (result.articles || []).map((article) => ({
+        ...article,
+        publishedAt: article.publishedAt?.toISOString() || null,
+        createdAt: article.createdAt.toISOString(),
+        updatedAt: article.updatedAt.toISOString(),
+      }));
+      setArticles(transformedArticles);
     }
 
     setLoading(false);
-  }, [selectedCategory, searchFromUrl]);
+  }, [debouncedSearch, selectedCategory]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery.trim());
+    }, SEARCH_DEBOUNCE_MS);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (debouncedSearch) {
+      params.set("search", debouncedSearch);
+    }
+    if (selectedCategory) {
+      params.set("category", selectedCategory);
+    }
+
+    const query = params.toString();
+    router.replace(query ? `/kb?${query}` : "/kb");
+  }, [debouncedSearch, router, selectedCategory]);
 
   useEffect(() => {
     loadCategories();
@@ -60,40 +90,17 @@ function KnowledgeBaseContent() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const params = new URLSearchParams();
-    if (searchQuery.trim()) {
-      params.set("search", searchQuery.trim());
-    }
-    if (selectedCategory) {
-      params.set("category", selectedCategory);
-    }
-    router.push(`/kb?${params.toString()}`);
+    setDebouncedSearch(searchQuery.trim());
   };
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
-    const params = new URLSearchParams();
-    if (categoryId) {
-      params.set("category", categoryId);
-    }
-    if (searchFromUrl) {
-      params.set("search", searchFromUrl);
-    }
-    router.push(`/kb?${params.toString()}`);
   };
 
   const clearFilters = () => {
     setSelectedCategory("");
     setSearchQuery("");
-    router.push("/kb");
-  };
-
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    setDebouncedSearch("");
   };
 
   return (
@@ -146,7 +153,7 @@ function KnowledgeBaseContent() {
                 >
                   Search
                 </button>
-                {(selectedCategory || searchFromUrl) && (
+                {(selectedCategory || searchQuery) && (
                   <button
                     type="button"
                     onClick={clearFilters}
@@ -201,7 +208,7 @@ function KnowledgeBaseContent() {
                 No articles found
               </h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">
-                {searchFromUrl || selectedCategory
+                {debouncedSearch || selectedCategory
                   ? "Try adjusting your search or filters."
                   : "There are no published articles yet."}
               </p>
