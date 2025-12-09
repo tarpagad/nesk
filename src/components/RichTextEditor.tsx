@@ -53,7 +53,7 @@ export default function RichTextEditor({
         modules={modules}
         formats={formats}
         placeholder={placeholder}
-        className="bg-white"
+        className="bg-white [&_.ql-container]:dark:bg-gray-800 [&_.ql-toolbar]:dark:bg-gray-700 dark:bg-gray-800 [&_.ql-editor]:dark:text-white"
       />
     </div>
   );
