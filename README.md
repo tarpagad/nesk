@@ -133,7 +133,7 @@ BETTER_AUTH_URL="http://localhost:3000"
 RESEND_API_KEY="your-resend-api-key"
 
 # PUBLIC URL
-NEXT_PUBLIC_BETTER_AUTH_URL="your-deployed-public-url"
+NEXT_PUBLIC_URL="your-deployed-public-url"
 ```
 
 4. **Initialize the database**
