@@ -30,7 +30,15 @@ export async function getTicketsForStaff(filters: {
   }
 
   try {
-    const where: any = {};
+    const where: {
+      status?: string;
+      priority?: { name: { equals: string; mode: "insensitive" } };
+      category?: { name: { equals: string; mode: "insensitive" } };
+      OR?: Array<
+        | { subject: { contains: string; mode: "insensitive" } }
+        | { id: { contains: string } }
+      >;
+    } = {};
 
     if (filters.status) {
       where.status = filters.status;

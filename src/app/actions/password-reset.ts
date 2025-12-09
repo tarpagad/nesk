@@ -4,7 +4,7 @@ export async function requestPasswordReset(email: string) {
   try {
     // Use Better Auth's built-in password reset API
     const response = await fetch(
-      `${process.env.BETTER_AUTH_URL || "http://localhost:3000"}/api/auth/request-password-reset`,
+      `${process.env.BETTER_AUTH_URL}/api/auth/request-password-reset`,
       {
         method: "POST",
         headers: {
@@ -35,7 +35,7 @@ export async function resetPasswordWithToken(
 ) {
   try {
     const response = await fetch(
-      `${process.env.BETTER_AUTH_URL || "http://localhost:3000"}/api/auth/reset-password`,
+      `${process.env.BETTER_AUTH_URL}/api/auth/reset-password`,
       {
         method: "POST",
         headers: {
