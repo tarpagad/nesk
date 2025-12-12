@@ -188,6 +188,7 @@ function SignInForm() {
 }
 
 export default function SignInPage() {
+  const { t } = useI18n();
   return (
     <Suspense
       fallback={

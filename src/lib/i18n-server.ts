@@ -1,4 +1,4 @@
-import { cookies, type ReadonlyRequestCookies } from "next/headers";
+import { cookies } from "next/headers";
 
 type Locale = "en" | "ar" | "es" | "fr";
 
@@ -34,7 +34,7 @@ export function normalizeLocale(locale: string): Locale {
 }
 
 export async function getRequestedLocale(
-  cookieStore?: ReadonlyRequestCookies,
+  cookieStore?: Awaited<ReturnType<typeof cookies>>,
 ): Promise<Locale> {
   const store = cookieStore ?? (await cookies());
   const cookieLocale = store.get(localeCookieName)?.value;
