@@ -10,6 +10,7 @@ import {
 import { Navbar } from "@/app/Navbar";
 import RichTextEditor from "@/components/RichTextEditor";
 import { useSession } from "@/lib/auth-client";
+import { useI18n } from "@/lib/i18n";
 import { isRichTextEmpty } from "@/lib/utils";
 import type { Category, Priority } from "@/types";
 
@@ -18,6 +19,7 @@ const REDIRECT_DELAY_MS = 2000;
 export default function SubmitTicketPage() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
+  const { t, dictionary } = useI18n();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -66,20 +68,20 @@ export default function SubmitTicketPage() {
 
     // Validate that message is not empty
     if (isRichTextEmpty(message)) {
-      setError("Message is required");
+      setError(t("tickets.submit.errorMessageRequired"));
       setLoading(false);
       return;
     }
 
     if (!session) {
       if (!name.trim()) {
-        setError("Name is required");
+        setError(t("tickets.submit.errorNameRequired"));
         setLoading(false);
         return;
       }
 
       if (!email.trim()) {
-        setError("Email is required");
+        setError(t("tickets.submit.errorEmailRequired"));
         setLoading(false);
         return;
       }
@@ -115,7 +117,7 @@ export default function SubmitTicketPage() {
         }, REDIRECT_DELAY_MS);
       }
     } catch (_err) {
-      setError("An unexpected error occurred. Please try again.");
+      setError(t("tickets.submit.errorUnexpected"));
     } finally {
       setLoading(false);
     }
@@ -128,10 +130,10 @@ export default function SubmitTicketPage() {
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
           <div className="mb-8">
             <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
-              Submit Support Ticket
+              {t("tickets.submit.title")}
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Describe your issue and we'll get back to you as soon as possible.
+              {t("tickets.submit.subtitle")}
             </p>
           </div>
 
@@ -145,7 +147,7 @@ export default function SubmitTicketPage() {
 
               {success && (
                 <div className="bg-green-50 dark:bg-green-900/20 px-4 py-3 border border-green-200 rounded text-green-700 dark:text-green-400">
-                  Ticket submitted successfully! Redirecting to ticket status...
+                  {t("tickets.submit.success")}
                 </div>
               )}
 
@@ -156,7 +158,8 @@ export default function SubmitTicketPage() {
                       htmlFor="name"
                       className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                     >
-                      Name <span className="text-red-500">*</span>
+                      {t("tickets.submit.name")}{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="name"
@@ -164,7 +167,7 @@ export default function SubmitTicketPage() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
+                      placeholder={t("tickets.submit.namePlaceholder")}
                       className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                     />
                   </div>
@@ -174,7 +177,8 @@ export default function SubmitTicketPage() {
                       htmlFor="email"
                       className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                     >
-                      Email <span className="text-red-500">*</span>
+                      {t("tickets.submit.email")}{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="email"
@@ -182,7 +186,7 @@ export default function SubmitTicketPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@example.com"
+                      placeholder={t("tickets.submit.emailPlaceholder")}
                       className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                     />
                   </div>
@@ -194,7 +198,8 @@ export default function SubmitTicketPage() {
                   htmlFor="subject"
                   className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                 >
-                  Subject <span className="text-red-500">*</span>
+                  {t("tickets.submit.subject")}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="subject"
@@ -202,7 +207,7 @@ export default function SubmitTicketPage() {
                   required
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  placeholder="Brief description of your issue"
+                  placeholder={t("tickets.submit.subjectPlaceholder")}
                   className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                 />
               </div>
@@ -212,7 +217,7 @@ export default function SubmitTicketPage() {
                   htmlFor="category"
                   className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                 >
-                  Category
+                  {t("tickets.submit.category")}
                 </label>
                 <select
                   id="category"
@@ -220,7 +225,9 @@ export default function SubmitTicketPage() {
                   onChange={(e) => setCategoryId(e.target.value)}
                   className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                 >
-                  <option value="">Select a category (optional)</option>
+                  <option value="">
+                    {t("tickets.submit.categoryPlaceholder")}
+                  </option>
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
@@ -234,7 +241,7 @@ export default function SubmitTicketPage() {
                   htmlFor="priority"
                   className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                 >
-                  Priority
+                  {t("tickets.submit.priority")}
                 </label>
                 <select
                   id="priority"
@@ -242,7 +249,9 @@ export default function SubmitTicketPage() {
                   onChange={(e) => setPriorityId(e.target.value)}
                   className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                 >
-                  <option value="">Select priority (optional)</option>
+                  <option value="">
+                    {t("tickets.submit.priorityPlaceholder")}
+                  </option>
                   {priorities.map((pri) => (
                     <option key={pri.id} value={pri.id}>
                       {pri.name}
@@ -256,12 +265,13 @@ export default function SubmitTicketPage() {
                   htmlFor="message"
                   className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                 >
-                  Message <span className="text-red-500">*</span>
+                  {t("tickets.submit.message")}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <RichTextEditor
                   value={message}
                   onChange={setMessage}
-                  placeholder="Please provide as much detail as possible about your issue..."
+                  placeholder={t("tickets.submit.messagePlaceholder")}
                 />
               </div>
 
@@ -271,13 +281,15 @@ export default function SubmitTicketPage() {
                   disabled={loading || success}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-sm dark:shadow-gray-900 px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-medium text-white"
                 >
-                  {loading ? "Submitting..." : "Submit Ticket"}
+                  {loading
+                    ? t("tickets.submit.submitting")
+                    : t("tickets.submit.submit")}
                 </button>
                 <a
                   href="/"
                   className="flex-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 font-medium text-gray-700 dark:text-gray-300 text-center"
                 >
-                  Cancel
+                  {t("tickets.submit.cancel")}
                 </a>
               </div>
             </form>
@@ -285,12 +297,14 @@ export default function SubmitTicketPage() {
 
           <div className="bg-blue-50 dark:bg-blue-900/30 shadow dark:shadow-gray-900 mt-6 p-4 border border-blue-200 dark:border-blue-800 rounded-lg">
             <h3 className="mb-2 font-semibold text-blue-900">
-              Before submitting:
+              {t("tickets.submit.beforeTitle")}
             </h3>
             <ul className="space-y-1 text-blue-800 dark:text-blue-400 text-sm list-disc list-inside">
-              <li>Check the Knowledge Base for solutions to common issues</li>
-              <li>Provide clear and detailed information about your problem</li>
-              <li>Include any error messages or screenshots if applicable</li>
+              {(dictionary.tickets?.submit?.beforeTips ?? []).map(
+                (item: string) => (
+                  <li key={item}>{item}</li>
+                ),
+              )}
             </ul>
           </div>
         </div>

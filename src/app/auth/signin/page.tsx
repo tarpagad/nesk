@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { signIn } from "@/lib/auth-client";
+import { useI18n } from "@/lib/i18n";
 
 function createCaptcha() {
   const a = Math.floor(Math.random() * 8) + 2; // 2-9
@@ -16,6 +17,7 @@ function createCaptcha() {
 function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -26,18 +28,16 @@ function SignInForm() {
 
   useEffect(() => {
     if (searchParams.get("reset") === "success") {
-      setSuccess(
-        "Password reset successful! You can now sign in with your new password.",
-      );
+      setSuccess(t("auth.signin.successReset"));
     }
-  }, [searchParams]);
+  }, [searchParams, t]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     if (Number(captchaInput) !== captcha.answer) {
-      setError("Captcha incorrect. Please try again.");
+      setError(t("auth.signin.errorCaptcha"));
       setCaptcha(createCaptcha());
       setCaptchaInput("");
       return;
@@ -54,7 +54,7 @@ function SignInForm() {
       router.push("/");
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Invalid email or password",
+        err instanceof Error ? err.message : t("auth.signin.errorInvalid"),
       );
       setCaptcha(createCaptcha());
       setCaptchaInput("");
@@ -68,10 +68,10 @@ function SignInForm() {
       <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
         <div>
           <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
-            Welcome Back
+            {t("auth.signin.title")}
           </h2>
           <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
-            Sign in to NESK Help Desk
+            {t("auth.signin.subtitle")}
           </p>
         </div>
 
@@ -93,7 +93,7 @@ function SignInForm() {
               htmlFor="email"
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
-              Email Address
+              {t("auth.signin.email")}
             </label>
             <input
               id="email"
@@ -110,7 +110,7 @@ function SignInForm() {
               htmlFor="password"
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
-              Password
+              {t("auth.signin.password")}
             </label>
             <input
               id="password"
@@ -125,7 +125,7 @@ function SignInForm() {
                 href="/auth/forgot-password"
                 className="text-blue-600 hover:text-blue-500 text-sm"
               >
-                Forgot password?
+                {t("auth.signin.forgot")}
               </a>
             </div>
           </div>
@@ -135,7 +135,7 @@ function SignInForm() {
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
               htmlFor="captcha"
             >
-              Anti-bot check
+              {t("auth.signin.antiBot")}
             </label>
             <div className="flex items-center gap-3 mt-1">
               <span className="font-medium text-gray-700 dark:text-gray-200 text-sm">
@@ -149,7 +149,7 @@ function SignInForm() {
                 value={captchaInput}
                 onChange={(e) => setCaptchaInput(e.target.value)}
                 className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-32"
-                placeholder="Answer"
+                placeholder={t("auth.signin.captchaPlaceholder")}
               />
               <button
                 type="button"
@@ -159,7 +159,7 @@ function SignInForm() {
                 }}
                 className="text-blue-600 hover:text-blue-500 dark:text-blue-400 text-xs"
               >
-                Refresh
+                {t("auth.signin.captchaRefresh")}
               </button>
             </div>
           </div>
@@ -169,16 +169,16 @@ function SignInForm() {
             disabled={loading}
             className="flex justify-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 shadow-sm px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800 w-full font-medium text-white text-sm"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? t("auth.signin.submitting") : t("auth.signin.submit")}
           </button>
 
           <p className="text-gray-600 dark:text-gray-300 text-sm text-center">
-            Don't have an account?{" "}
+            {t("auth.signin.footer")}{" "}
             <a
               href="/auth/signup"
               className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400"
             >
-              Sign up
+              {t("auth.signin.footerLink")}
             </a>
           </p>
         </form>
@@ -192,7 +192,9 @@ export default function SignInPage() {
     <Suspense
       fallback={
         <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
-          <div className="text-gray-600 dark:text-gray-300">Loading...</div>
+          <div className="text-gray-600 dark:text-gray-300">
+            {t("auth.signin.loading")}
+          </div>
         </div>
       }
     >

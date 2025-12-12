@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { resetPasswordWithToken } from "@/app/actions/password-reset";
+import { useI18n } from "@/lib/i18n";
 
 function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useI18n();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,27 +19,27 @@ function ResetPasswordForm() {
   useEffect(() => {
     const tokenParam = searchParams.get("token");
     if (!tokenParam) {
-      setError("Invalid or missing reset token");
+      setError(t("auth.reset.errorMissing"));
     }
     setToken(tokenParam);
-  }, [searchParams]);
+  }, [searchParams, t]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     if (!token) {
-      setError("Invalid or missing reset token");
+      setError(t("auth.reset.errorMissing"));
       return;
     }
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters long");
+      setError(t("auth.reset.errorLength"));
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(t("auth.reset.errorMatch"));
       return;
     }
 
@@ -50,9 +52,7 @@ function ResetPasswordForm() {
       router.push("/auth/signin?reset=success");
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to reset password. Please try again or request a new reset link.",
+        err instanceof Error ? err.message : t("auth.reset.errorGeneric"),
       );
     } finally {
       setLoading(false);
@@ -65,10 +65,10 @@ function ResetPasswordForm() {
         <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
           <div>
             <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
-              Invalid Link
+              {t("auth.reset.invalidTitle")}
             </h2>
             <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
-              This password reset link is invalid or has expired.
+              {t("auth.reset.invalidBody")}
             </p>
           </div>
           <div className="text-center">
@@ -76,7 +76,7 @@ function ResetPasswordForm() {
               href="/auth/forgot-password"
               className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400"
             >
-              Request a new reset link
+              {t("auth.reset.requestNew")}
             </Link>
           </div>
         </div>
@@ -89,10 +89,10 @@ function ResetPasswordForm() {
       <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
         <div>
           <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
-            Set New Password
+            {t("auth.reset.title")}
           </h2>
           <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
-            Enter your new password below
+            {t("auth.reset.subtitle")}
           </p>
         </div>
 
@@ -108,7 +108,7 @@ function ResetPasswordForm() {
               htmlFor="password"
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
-              New Password
+              {t("auth.reset.newPassword")}
             </label>
             <input
               id="password"
@@ -117,7 +117,7 @@ function ResetPasswordForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
-              placeholder="Minimum 8 characters"
+              placeholder={t("auth.reset.placeholder")}
               minLength={8}
             />
           </div>
@@ -127,7 +127,7 @@ function ResetPasswordForm() {
               htmlFor="confirmPassword"
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
-              Confirm Password
+              {t("auth.reset.confirmPassword")}
             </label>
             <input
               id="confirmPassword"
@@ -136,7 +136,7 @@ function ResetPasswordForm() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-full"
-              placeholder="Re-enter your password"
+              placeholder={t("auth.reset.confirmPassword")}
               minLength={8}
             />
           </div>
@@ -146,7 +146,7 @@ function ResetPasswordForm() {
             disabled={loading}
             className="flex justify-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 shadow-sm px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800 w-full font-medium text-white text-sm"
           >
-            {loading ? "Resetting password..." : "Reset Password"}
+            {loading ? t("auth.reset.submitting") : t("auth.reset.submit")}
           </button>
 
           <div className="text-center">
@@ -154,7 +154,7 @@ function ResetPasswordForm() {
               href="/auth/signin"
               className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400"
             >
-              Back to sign in
+              {t("auth.reset.back")}
             </Link>
           </div>
         </form>
@@ -164,11 +164,14 @@ function ResetPasswordForm() {
 }
 
 export default function ResetPasswordPage() {
+  const { t } = useI18n();
   return (
     <Suspense
       fallback={
         <div className="flex justify-center items-center bg-white dark:bg-gray-900 min-h-screen">
-          <div className="text-gray-600 dark:text-gray-300">Loading...</div>
+          <div className="text-gray-600 dark:text-gray-300">
+            {t("auth.reset.loading")}
+          </div>
         </div>
       }
     >

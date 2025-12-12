@@ -5,10 +5,12 @@ import { Suspense, useEffect, useState } from "react";
 import { getTicketStatus } from "@/app/actions/tickets";
 import { Navbar } from "@/app/Navbar";
 import RichTextDisplay from "@/components/RichTextDisplay";
+import { useI18n } from "@/lib/i18n";
 
 function TicketStatusContent() {
   const searchParams = useSearchParams();
   const ticketIdFromUrl = searchParams.get("id");
+  const { t, locale } = useI18n();
 
   const [ticketId, setTicketId] = useState(ticketIdFromUrl || "");
   const [email, setEmail] = useState("");
@@ -40,19 +42,22 @@ function TicketStatusContent() {
         setTicket(result.ticket);
       }
     } catch (_err) {
-      setError("An unexpected error occurred. Please try again.");
+      setError(t("tickets.status.errorUnexpected"));
     } finally {
       setLoading(false);
     }
   };
 
   const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
+    const normalized = status.toLowerCase();
+    switch (normalized) {
       case "open":
         return "bg-blue-100 text-blue-800 dark:text-blue-400";
       case "in progress":
+      case "in_progress":
         return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400";
       case "waiting for customer":
+      case "waiting_customer":
         return "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400";
       case "resolved":
         return "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400";
@@ -64,7 +69,7 @@ function TicketStatusContent() {
   };
 
   const formatDate = (date: string | Date) => {
-    return new Date(date).toLocaleString("en-US", {
+    return new Date(date).toLocaleString(locale, {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -80,10 +85,10 @@ function TicketStatusContent() {
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <div className="mb-8">
             <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
-              Check Ticket Status
+              {t("tickets.status.title")}
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Enter your ticket ID and email address to view your ticket status.
+              {t("tickets.status.subtitle")}
             </p>
           </div>
 
@@ -100,7 +105,8 @@ function TicketStatusContent() {
                   htmlFor="ticketId"
                   className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                 >
-                  Ticket ID <span className="text-red-500">*</span>
+                  {t("tickets.status.ticketId")}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="ticketId"
@@ -108,7 +114,7 @@ function TicketStatusContent() {
                   required
                   value={ticketId}
                   onChange={(e) => setTicketId(e.target.value)}
-                  placeholder="Enter your ticket ID"
+                  placeholder={t("tickets.status.ticketIdPlaceholder")}
                   className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                 />
               </div>
@@ -118,7 +124,8 @@ function TicketStatusContent() {
                   htmlFor="email"
                   className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
                 >
-                  Email Address <span className="text-red-500">*</span>
+                  {t("tickets.status.email")}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="email"
@@ -126,7 +133,7 @@ function TicketStatusContent() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter the email used when submitting the ticket"
+                  placeholder={t("tickets.status.emailPlaceholder")}
                   className="block shadow-sm dark:shadow-gray-900 mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                 />
               </div>
@@ -136,7 +143,9 @@ function TicketStatusContent() {
                 disabled={loading}
                 className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 shadow-sm dark:shadow-gray-900 px-6 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full font-medium text-white"
               >
-                {loading ? "Checking..." : "Check Status"}
+                {loading
+                  ? t("tickets.status.submitting")
+                  : t("tickets.status.submit")}
               </button>
             </form>
           </div>
@@ -150,13 +159,19 @@ function TicketStatusContent() {
                       {ticket.subject}
                     </h2>
                     <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">
-                      Ticket ID: {ticket.id}
+                      {t("tickets.status.ticketIdLabel", { id: ticket.id })}
                     </p>
                   </div>
                   <span
                     className={`px-3 py-1 rounded-full font-medium text-sm ${getStatusColor(ticket.status)}`}
                   >
-                    {ticket.status}
+                    {(() => {
+                      const statusKey = `tickets.status.status.${ticket.status.toLowerCase()}`;
+                      const statusLabel = t(statusKey);
+                      return statusLabel === statusKey
+                        ? ticket.status
+                        : statusLabel;
+                    })()}
                   </span>
                 </div>
               </div>
@@ -165,7 +180,7 @@ function TicketStatusContent() {
                 <div className="gap-6 grid grid-cols-2 md:grid-cols-4 mb-6">
                   <div>
                     <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">
-                      Created By
+                      {t("tickets.status.createdBy")}
                     </p>
                     <p className="mt-1 text-gray-900 dark:text-gray-100">
                       {ticket.user.name}
@@ -173,7 +188,7 @@ function TicketStatusContent() {
                   </div>
                   <div>
                     <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">
-                      Created On
+                      {t("tickets.status.createdOn")}
                     </p>
                     <p className="mt-1 text-gray-900 dark:text-gray-100">
                       {formatDate(ticket.openDate)}
@@ -181,25 +196,27 @@ function TicketStatusContent() {
                   </div>
                   <div>
                     <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">
-                      Category
+                      {t("tickets.status.category")}
                     </p>
                     <p className="mt-1 text-gray-900 dark:text-gray-100">
-                      {ticket.category?.name || "Not specified"}
+                      {ticket.category?.name ||
+                        t("tickets.status.notSpecified")}
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-gray-500 dark:text-gray-400 text-sm">
-                      Priority
+                      {t("tickets.status.priority")}
                     </p>
                     <p className="mt-1 text-gray-900 dark:text-gray-100">
-                      {ticket.priority?.name || "Not specified"}
+                      {ticket.priority?.name ||
+                        t("tickets.status.notSpecified")}
                     </p>
                   </div>
                 </div>
 
                 <div className="pt-6 border-gray-200 dark:border-gray-700 border-t">
                   <h3 className="mb-4 font-semibold text-gray-900 dark:text-gray-100 text-lg">
-                    Conversation
+                    {t("tickets.status.conversation")}
                   </h3>
                   <div className="space-y-4">
                     {ticket.replies.map((reply: (typeof ticket.replies)[0]) => (
@@ -214,8 +231,8 @@ function TicketStatusContent() {
                         <div className="flex justify-between items-start mb-2">
                           <span className="font-medium text-gray-900 dark:text-gray-100">
                             {reply.authorType === "customer"
-                              ? "You"
-                              : "Support Team"}
+                              ? t("tickets.status.you")
+                              : t("tickets.status.supportTeam")}
                           </span>
                           <span className="text-gray-500 dark:text-gray-400 text-sm">
                             {formatDate(reply.createdAt)}
@@ -230,7 +247,9 @@ function TicketStatusContent() {
 
               <div className="bg-white dark:bg-gray-900 px-6 py-4 border-gray-200 dark:border-gray-700 border-t rounded-b-lg">
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Last updated: {formatDate(ticket.lastUpdate)}
+                  {t("tickets.status.lastUpdated", {
+                    date: formatDate(ticket.lastUpdate),
+                  })}
                 </p>
               </div>
             </div>
@@ -239,7 +258,7 @@ function TicketStatusContent() {
           {!ticket && !error && (
             <div className="bg-blue-50 dark:bg-blue-900/30 shadow dark:shadow-gray-900 p-6 border border-blue-200 dark:border-blue-800 rounded-lg text-center">
               <p className="text-blue-800 dark:text-blue-400">
-                Enter your ticket ID and email above to view your ticket status.
+                {t("tickets.status.prompt")}
               </p>
             </div>
           )}
@@ -250,11 +269,12 @@ function TicketStatusContent() {
 }
 
 export default function TicketStatusPage() {
+  const { t } = useI18n();
   return (
     <Suspense
       fallback={
         <div className="flex justify-center items-center min-h-screen">
-          Loading...
+          {t("tickets.status.loading")}
         </div>
       }
     >

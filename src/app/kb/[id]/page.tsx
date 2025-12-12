@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { getKbArticleById } from "@/app/actions/kb";
 import { Navbar } from "@/app/Navbar";
 import MarkdownDisplay from "@/components/MarkdownDisplay";
+import { useI18n } from "@/lib/i18n";
 
 export default function KbArticlePage() {
   const params = useParams();
   const articleId = params.id as string;
+  const { t } = useI18n();
 
   const [article, setArticle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -49,7 +51,7 @@ export default function KbArticlePage() {
           <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-12 rounded-lg text-center">
               <div className="text-gray-600 dark:text-gray-400">
-                Loading article...
+                {t("kb.detail.loading")}
               </div>
             </div>
           </div>
@@ -66,16 +68,16 @@ export default function KbArticlePage() {
           <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <div className="bg-red-50 dark:bg-red-900/20 shadow dark:shadow-gray-900 p-6 border border-red-200 dark:border-red-800 rounded-lg">
               <h2 className="mb-2 font-semibold text-red-900 text-xl">
-                Article Not Found
+                {t("kb.detail.notFoundTitle")}
               </h2>
               <p className="mb-4 text-red-700 dark:text-red-400">
-                {error || "The article you're looking for doesn't exist."}
+                {error || t("kb.detail.notFoundBody")}
               </p>
               <Link
                 href="/kb"
                 className="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium text-white"
               >
-                Back to Knowledge Base
+                {t("kb.detail.back")}
               </Link>
             </div>
           </div>
@@ -97,7 +99,7 @@ export default function KbArticlePage() {
                   href="/"
                   className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
                 >
-                  Home
+                  {t("kb.detail.home")}
                 </Link>
               </li>
               <li className="text-gray-400">/</li>
@@ -106,7 +108,7 @@ export default function KbArticlePage() {
                   href="/kb"
                   className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
                 >
-                  Knowledge Base
+                  {t("kb.detail.kb")}
                 </Link>
               </li>
               {article.category && (
@@ -142,16 +144,23 @@ export default function KbArticlePage() {
                 {article.title}
               </h1>
               <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm">
-                <span className="mr-4">By {article.author.name}</span>
+                <span className="mr-4">
+                  {t("kb.detail.by", { author: article.author.name })}
+                </span>
                 <span className="mr-4">•</span>
                 <span>
-                  Published{" "}
-                  {formatDate(article.publishedAt || article.createdAt)}
+                  {t("kb.detail.published", {
+                    date: formatDate(article.publishedAt || article.createdAt),
+                  })}
                 </span>
                 {article.updatedAt !== article.createdAt && (
                   <>
                     <span className="mx-4">•</span>
-                    <span>Updated {formatDate(article.updatedAt)}</span>
+                    <span>
+                      {t("kb.detail.updated", {
+                        date: formatDate(article.updatedAt),
+                      })}
+                    </span>
                   </>
                 )}
               </div>
@@ -166,7 +175,7 @@ export default function KbArticlePage() {
             {article.keywords && (
               <div className="bg-white dark:bg-gray-900 px-6 py-4 border-gray-200 dark:border-gray-700 border-t">
                 <h3 className="mb-2 font-semibold text-gray-700 dark:text-gray-300 text-sm">
-                  Keywords:
+                  {t("kb.detail.keywords")}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {article.keywords.split(",").map((keyword: string) => (
@@ -185,24 +194,23 @@ export default function KbArticlePage() {
           {/* Helpful Section */}
           <div className="bg-blue-50 dark:bg-blue-900/30 shadow dark:shadow-gray-900 mt-8 p-6 border border-blue-200 dark:border-blue-800 rounded-lg">
             <h3 className="mb-2 font-semibold text-blue-900 text-lg">
-              Was this article helpful?
+              {t("kb.detail.helpfulTitle")}
             </h3>
             <p className="mb-4 text-blue-800 dark:text-blue-400">
-              If this didn't solve your issue, you can submit a support ticket
-              for personalized assistance.
+              {t("kb.detail.helpfulBody")}
             </p>
             <div className="flex gap-4">
               <Link
                 href="/kb"
                 className="inline-block bg-white hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 px-6 py-2 border border-blue-300 dark:border-blue-600 rounded-md font-medium text-blue-700 dark:text-blue-400"
               >
-                Browse More Articles
+                {t("kb.detail.browse")}
               </Link>
               <Link
                 href="/tickets/submit"
                 className="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium text-white"
               >
-                Submit a Ticket
+                {t("kb.detail.submit")}
               </Link>
             </div>
           </div>

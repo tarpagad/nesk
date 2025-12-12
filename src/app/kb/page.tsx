@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { getKbCategories, getPublishedKbArticles } from "@/app/actions/kb";
 import { Navbar } from "@/app/Navbar";
+import { useI18n } from "@/lib/i18n";
 import { formatDate, truncateText } from "@/lib/utils";
 import type { KbArticle, KbCategoryWithCount } from "@/types";
 
@@ -14,6 +15,7 @@ const SEARCH_DEBOUNCE_MS = 400;
 function KnowledgeBaseContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useI18n();
   const categoryFromUrl = searchParams.get("category");
   const searchFromUrl = searchParams.get("search");
 
@@ -110,10 +112,10 @@ function KnowledgeBaseContent() {
         <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="mb-8">
             <h1 className="font-bold text-gray-900 dark:text-gray-100 text-3xl">
-              Knowledge Base
+              {t("kb.list.title")}
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Browse articles and find answers to common questions.
+              {t("kb.list.subtitle")}
             </p>
           </div>
 
@@ -128,7 +130,7 @@ function KnowledgeBaseContent() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search articles..."
+                  placeholder={t("kb.list.searchPlaceholder")}
                   className="block shadow-sm dark:shadow-gray-900 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                 />
               </div>
@@ -138,7 +140,7 @@ function KnowledgeBaseContent() {
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className="block shadow-sm dark:shadow-gray-900 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 w-full"
                 >
-                  <option value="">All Categories</option>
+                  <option value="">{t("kb.list.allCategories")}</option>
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name} ({cat._count.kbArticles})
@@ -151,7 +153,7 @@ function KnowledgeBaseContent() {
                   type="submit"
                   className="flex-1 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md font-medium text-white"
                 >
-                  Search
+                  {t("kb.list.search")}
                 </button>
                 {(selectedCategory || searchQuery) && (
                   <button
@@ -159,7 +161,7 @@ function KnowledgeBaseContent() {
                     onClick={clearFilters}
                     className="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300"
                   >
-                    Clear
+                    {t("kb.list.clear")}
                   </button>
                 )}
               </div>
@@ -194,23 +196,25 @@ function KnowledgeBaseContent() {
           {loading ? (
             <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-12 rounded-lg text-center">
               <div className="text-gray-600 dark:text-gray-400">
-                Loading articles...
+                {t("kb.list.loading")}
               </div>
             </div>
           ) : error ? (
             <div className="bg-red-50 dark:bg-red-900/20 shadow dark:shadow-gray-900 p-6 border border-red-200 dark:border-red-800 rounded-lg">
-              <p className="text-red-700 dark:text-red-400">{error}</p>
+              <p className="text-red-700 dark:text-red-400">
+                {error || t("kb.list.error")}
+              </p>
             </div>
           ) : articles.length === 0 ? (
             <div className="bg-white dark:bg-gray-800 shadow dark:shadow-gray-900 p-12 rounded-lg text-center">
               <div className="mb-4 text-6xl">📚</div>
               <h3 className="mb-2 font-semibold text-gray-900 dark:text-gray-100 text-xl">
-                No articles found
+                {t("kb.list.noArticles")}
               </h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">
                 {debouncedSearch || selectedCategory
-                  ? "Try adjusting your search or filters."
-                  : "There are no published articles yet."}
+                  ? t("kb.list.emptyFiltered")
+                  : t("kb.list.empty")}
               </p>
               {(searchFromUrl || selectedCategory) && (
                 <button
@@ -218,7 +222,7 @@ function KnowledgeBaseContent() {
                   onClick={clearFilters}
                   className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium text-white"
                 >
-                  Clear Filters
+                  {t("kb.list.clearFilters")}
                 </button>
               )}
             </div>
@@ -244,8 +248,14 @@ function KnowledgeBaseContent() {
                     {truncateText(article.content, CONTENT_PREVIEW_LENGTH)}
                   </p>
                   <div className="flex justify-between items-center text-gray-500 dark:text-gray-400 text-sm">
-                    <span>By {article.author.name}</span>
-                    <span>Updated {formatDate(article.updatedAt)}</span>
+                    <span>
+                      {t("kb.list.by", { author: article.author.name })}
+                    </span>
+                    <span>
+                      {t("kb.list.updated", {
+                        date: formatDate(article.updatedAt),
+                      })}
+                    </span>
                   </div>
                 </Link>
               ))}
@@ -255,17 +265,16 @@ function KnowledgeBaseContent() {
           {/* Help Section */}
           <div className="bg-blue-50 dark:bg-blue-900/30 shadow dark:shadow-gray-900 mt-8 p-6 border border-blue-200 dark:border-blue-800 rounded-lg">
             <h3 className="mb-2 font-semibold text-blue-900 text-lg">
-              Can't find what you're looking for?
+              {t("kb.list.helpTitle")}
             </h3>
             <p className="mb-4 text-blue-800 dark:text-blue-400">
-              If you can't find an answer in our knowledge base, feel free to
-              submit a support ticket.
+              {t("kb.list.helpBody")}
             </p>
             <Link
               href="/tickets/submit"
               className="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium text-white"
             >
-              Submit a Ticket
+              {t("kb.list.submit")}
             </Link>
           </div>
         </div>
@@ -275,11 +284,12 @@ function KnowledgeBaseContent() {
 }
 
 export default function KnowledgeBasePage() {
+  const { t } = useI18n();
   return (
     <Suspense
       fallback={
         <div className="flex justify-center items-center min-h-screen">
-          Loading...
+          {t("kb.list.loading")}
         </div>
       }
     >

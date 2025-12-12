@@ -1,7 +1,11 @@
 import Link from "next/link";
+import { getDictionary, getRequestedLocale } from "@/lib/i18n-server";
 import { Navbar } from "./Navbar";
 
-export default function Home() {
+export default async function Home() {
+  const locale = await getRequestedLocale();
+  const t = (await getDictionary(locale)).home;
+
   return (
     <div className="bg-linear-to-br from-blue-50 dark:from-gray-900 to-indigo-100 dark:to-gray-800 min-h-screen">
       <Navbar />
@@ -9,11 +13,10 @@ export default function Home() {
       <main className="mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-7xl">
         <div className="text-center">
           <h2 className="mb-4 font-bold text-gray-900 dark:text-gray-100 text-5xl">
-            Welcome to NESK Help Desk
+            {t.heroTitle}
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-gray-600 dark:text-gray-300 text-xl">
-            A modern, full-featured ticketing system built with Next.js 16,
-            Prisma, and Better-Auth
+            {t.heroSubtitle}
           </p>
 
           <div className="gap-8 grid md:grid-cols-3 mt-16">
@@ -23,10 +26,10 @@ export default function Home() {
             >
               <div className="mb-4 text-4xl">🎫</div>
               <h3 className="mb-2 font-semibold dark:text-gray-100 text-xl">
-                Submit Tickets
+                {t.submitTitle}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Easy ticket submission with real-time status tracking
+                {t.submitSubtitle}
               </p>
             </Link>
 
@@ -36,11 +39,9 @@ export default function Home() {
             >
               <div className="mb-4 text-4xl">📚</div>
               <h3 className="mb-2 font-semibold dark:text-gray-100 text-xl">
-                Knowledge Base
+                {t.kbTitle}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Search and browse helpful articles and documentation
-              </p>
+              <p className="text-gray-600 dark:text-gray-300">{t.kbSubtitle}</p>
             </Link>
 
             <Link
@@ -49,10 +50,10 @@ export default function Home() {
             >
               <div className="mb-4 text-4xl">🔍</div>
               <h3 className="mb-2 font-semibold dark:text-gray-100 text-xl">
-                Track Ticket
+                {t.trackTitle}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Check the status of your existing support tickets
+                {t.trackSubtitle}
               </p>
             </Link>
           </div>

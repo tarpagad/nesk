@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useSession } from "@/lib/auth-client";
+import { useI18n } from "@/lib/i18n";
 import { UserMenu } from "./UserMenu";
 
 export function Navbar() {
   const { data: session } = useSession();
   const isStaff =
     session?.user?.role === "staff" || session?.user?.role === "admin";
+  const { t } = useI18n();
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-sm dark:border-gray-800 border-b">
@@ -17,10 +20,10 @@ export function Navbar() {
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center">
               <h1 className="font-bold text-blue-600 dark:text-blue-500 text-2xl">
-                NESK
+                {t("navbar.brand")}
               </h1>
               <span className="ml-2 text-gray-600 dark:text-gray-300">
-                Help Desk
+                {t("navbar.helpDesk")}
               </span>
             </Link>
 
@@ -29,32 +32,33 @@ export function Navbar() {
                 href="/kb"
                 className="font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-500 dark:text-gray-300"
               >
-                Knowledge Base
+                {t("navbar.knowledgeBase")}
               </Link>
               <Link
                 href="/tickets/submit"
                 className="font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-500 dark:text-gray-300"
               >
-                Submit Ticket
+                {t("navbar.submitTicket")}
               </Link>
               <Link
                 href="/tickets/status"
                 className="font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-500 dark:text-gray-300"
               >
-                Track Ticket
+                {t("navbar.trackTicket")}
               </Link>
               {isStaff && (
                 <Link
                   href="/staff"
                   className="font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-500 dark:text-gray-300"
                 >
-                  Staff Portal
+                  {t("navbar.staffPortal")}
                 </Link>
               )}
             </div>
           </div>
 
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             <ThemeToggle />
             {session ? (
               <UserMenu user={session.user} />
@@ -64,13 +68,13 @@ export function Navbar() {
                   href="/auth/signin"
                   className="px-4 py-2 font-medium text-gray-700 hover:text-blue-600 dark:hover:text-blue-500 dark:text-gray-300"
                 >
-                  Sign In
+                  {t("navbar.signIn")}
                 </Link>
                 <Link
                   href="/auth/signup"
                   className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 px-4 py-2 rounded-md font-medium text-white"
                 >
-                  Sign Up
+                  {t("navbar.signUp")}
                 </Link>
               </div>
             )}
@@ -92,7 +96,7 @@ export function Navbar() {
                   clipRule="evenodd"
                 />
               </svg>
-              GitHub
+              {t("navbar.github")}
             </Link>
           </div>
         </div>

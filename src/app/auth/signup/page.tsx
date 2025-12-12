@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signUp } from "@/lib/auth-client";
+import { useI18n } from "@/lib/i18n";
 
 function createCaptcha() {
   const a = Math.floor(Math.random() * 8) + 2; // 2-9
@@ -15,6 +16,7 @@ function createCaptcha() {
 
 export default function SignUpPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -28,7 +30,7 @@ export default function SignUpPage() {
     setError("");
 
     if (Number(captchaInput) !== captcha.answer) {
-      setError("Captcha incorrect. Please try again.");
+      setError(t("auth.signup.errorCaptcha"));
       setCaptcha(createCaptcha());
       setCaptchaInput("");
       return;
@@ -45,7 +47,9 @@ export default function SignUpPage() {
 
       router.push("/");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to sign up");
+      setError(
+        err instanceof Error ? err.message : t("auth.signup.errorGeneric"),
+      );
       setCaptcha(createCaptcha());
       setCaptchaInput("");
     } finally {
@@ -58,10 +62,10 @@ export default function SignUpPage() {
       <div className="space-y-8 bg-white dark:bg-gray-800 shadow p-8 border dark:border-gray-700 rounded-lg w-full max-w-md">
         <div>
           <h2 className="font-bold dark:text-gray-100 text-3xl text-center">
-            Create Account
+            {t("auth.signup.title")}
           </h2>
           <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
-            Sign up for NESK Help Desk
+            {t("auth.signup.subtitle")}
           </p>
         </div>
 
@@ -77,7 +81,7 @@ export default function SignUpPage() {
               htmlFor="name"
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
-              Full Name
+              {t("auth.signup.name")}
             </label>
             <input
               id="name"
@@ -94,7 +98,7 @@ export default function SignUpPage() {
               htmlFor="email"
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
-              Email Address
+              {t("auth.signup.email")}
             </label>
             <input
               id="email"
@@ -111,7 +115,7 @@ export default function SignUpPage() {
               htmlFor="password"
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
             >
-              Password
+              {t("auth.signup.password")}
             </label>
             <input
               id="password"
@@ -129,7 +133,7 @@ export default function SignUpPage() {
               className="block font-medium text-gray-700 dark:text-gray-300 text-sm"
               htmlFor="captcha"
             >
-              Anti-bot check
+              {t("auth.signup.antiBot")}
             </label>
             <div className="flex items-center gap-3 mt-1">
               <span className="font-medium text-gray-700 dark:text-gray-200 text-sm">
@@ -143,7 +147,7 @@ export default function SignUpPage() {
                 value={captchaInput}
                 onChange={(e) => setCaptchaInput(e.target.value)}
                 className="block shadow-sm mt-1 px-3 py-2 border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400 rounded-md focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400 w-32"
-                placeholder="Answer"
+                placeholder={t("auth.signup.captchaPlaceholder")}
               />
               <button
                 type="button"
@@ -153,7 +157,7 @@ export default function SignUpPage() {
                 }}
                 className="text-blue-600 hover:text-blue-500 dark:text-blue-400 text-xs"
               >
-                Refresh
+                {t("auth.signup.captchaRefresh")}
               </button>
             </div>
           </div>
@@ -163,16 +167,16 @@ export default function SignUpPage() {
             disabled={loading}
             className="flex justify-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 shadow-sm px-4 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800 w-full font-medium text-white text-sm"
           >
-            {loading ? "Creating account..." : "Sign Up"}
+            {loading ? t("auth.signup.submitting") : t("auth.signup.submit")}
           </button>
 
           <p className="text-gray-600 dark:text-gray-300 text-sm text-center">
-            Already have an account?{" "}
+            {t("auth.signup.footer")}{" "}
             <a
               href="/auth/signin"
               className="font-medium text-blue-600 hover:text-blue-500 dark:hover:text-blue-300 dark:text-blue-400"
             >
-              Sign in
+              {t("auth.signup.footerLink")}
             </a>
           </p>
         </form>

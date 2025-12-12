@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { signOut } from "@/lib/auth-client";
+import { useI18n } from "@/lib/i18n";
 
 interface UserMenuProps {
   user: {
@@ -15,6 +16,7 @@ interface UserMenuProps {
 export function UserMenu({ user }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const isStaff = user.role === "staff" || user.role === "admin";
+  const { t } = useI18n();
 
   const handleSignOut = async () => {
     await signOut();
@@ -44,7 +46,7 @@ export function UserMenu({ user }: UserMenuProps) {
             strokeWidth={2}
             d="M19 9l-7 7-7-7"
           />
-          <title>Toggle menu</title>
+          <title>{t("common.toggleMenu")}</title>
         </svg>
       </button>
 
@@ -60,14 +62,14 @@ export function UserMenu({ user }: UserMenuProps) {
             <div className="p-2">
               <div className="px-3 py-2 border-gray-100 dark:border-gray-700 border-b">
                 <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
-                  {user.name || "User"}
+                  {user.name || t("common.user")}
                 </p>
                 <p className="text-gray-500 dark:text-gray-400 text-xs">
                   {user.email}
                 </p>
                 {user.role && (
                   <p className="mt-1 font-medium text-blue-600 dark:text-blue-400 text-xs">
-                    Role: {user.role}
+                    {t("common.role", { role: user.role })}
                   </p>
                 )}
               </div>
@@ -76,7 +78,7 @@ export function UserMenu({ user }: UserMenuProps) {
                   href="/tickets/status"
                   className="inline-flex hover:bg-gray-50 dark:hover:bg-gray-700 mt-1 px-3 py-2 rounded-md w-full text-gray-700 hover:text-blue-600 dark:text-gray-300 text-sm"
                 >
-                  My Tickets
+                  {t("navbar.myTickets")}
                 </Link>
               )}
               <button
@@ -84,7 +86,7 @@ export function UserMenu({ user }: UserMenuProps) {
                 onClick={handleSignOut}
                 className="hover:bg-red-50 dark:hover:bg-red-900/30 mt-1 px-3 py-2 rounded-md w-full text-red-600 dark:text-red-400 text-sm text-left"
               >
-                Sign Out
+                {t("navbar.signOut")}
               </button>
             </div>
           </div>
