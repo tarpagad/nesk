@@ -35,6 +35,7 @@
 - **Real-Time Updates** - Server Actions for instant UI updates without page reloads
 - **Rich Text Editor** - Full-featured WYSIWYG editor with React Quill integration
 - **Dark/Light Theme** - System preference detection with user override and persistent storage
+- **Internationalization** - Multi-language support (English, Arabic, Spanish, French) with locale switching
 
 ### 👥 User Portal
 - Ticket submission with file attachments
@@ -182,8 +183,12 @@ nesk/
 │   ├── components/           # Reusable React components
 │   ├── lib/                  # Utilities & configurations
 │   │   ├── auth.ts           # Better Auth setup
+│   │   ├── auth-client.ts    # Client-side auth hooks
+│   │   ├── i18n.tsx          # Client i18n provider & hooks
+│   │   ├── i18n-server.ts    # Server-side locale detection
 │   │   ├── prisma.ts         # Prisma client instance
 │   │   └── email.ts          # Email service
+│   ├── locales/              # Translation JSON files (en, ar, es, fr)
 │   ├── prisma/
 │   │   ├── schema.prisma     # Database schema
 │   │   └── seed.ts           # Sample data seeder
@@ -299,6 +304,16 @@ The application includes built-in dark/light theme support powered by `next-them
 - **Override**: Users can manually toggle theme which persists across sessions
 - **Coverage**: All pages, components, and custom styles support both themes
 
+### Language Support
+The application supports multiple languages with a complete i18n infrastructure:
+- **Supported Languages**: English (en), Arabic (ar), Spanish (es), French (fr)
+- **Language Switcher**: Dropdown selector in the navbar for easy switching
+- **Persistence**: Selected language saved in cookies and persists across sessions
+- **Auto-Detection**: Falls back to browser's Accept-Language header
+- **Locale-Aware**: Date/time formatting respects the selected language
+- **Complete Coverage**: All UI strings, labels, and messages are fully translated
+- **Translation Files**: Located in `src/locales/` as JSON dictionaries
+
 ### Code Quality
 ```bash
 # Lint & format check
@@ -394,11 +409,19 @@ MIT License - feel free to use this project for learning or commercial purposes.
 - Theme toggle with persistent storage
 - Full application coverage
 
-### Phase 6: Coming Soon
+### Phase 6: Internationalization (i18n) ✅
+- Multi-language support (English, Arabic, Spanish, French)
+- Language switcher with cookie-based persistence
+- Server-side locale detection from Accept-Language header
+- Fully translated UI across all pages and components
+- Locale-aware date/time formatting
+- Translation infrastructure with JSON dictionaries
+
+### Phase 7: Coming Soon
 - File attachments (Cloudflare R2)
 - SLA tracking and automation
 - Customer satisfaction surveys
-- Multi-language support
+- Additional language support
 
 ---
 
