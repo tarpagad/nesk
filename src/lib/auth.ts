@@ -1,17 +1,22 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { nextCookies } from "better-auth/next-js";
 import { prisma } from "./prisma";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  session: {
+    cookieCache: {
+      enabled: false,
+    },
+  },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false,
     autoSignInAfterVerification: true,
     sendResetPassword: async ({ user, url, token }) => {
-      // Log password reset details to console instead of sending email
       console.log(`\n${"=".repeat(80)}`);
       console.log("🔐 PASSWORD RESET REQUEST");
       console.log("=".repeat(80));
@@ -20,13 +25,13 @@ export const auth = betterAuth({
       console.log(`🔗 Reset URL: ${url}`);
       console.log(`🎫 Token: ${token}`);
       console.log(`${"=".repeat(80)}\n`);
-      // Not sending actual email - just logging for development
     },
     autoSignInAfterReset: true,
     autoSignInAfterSignUp: true,
     autoSignInAfterEmailVerification: true,
     autoSignIn: true,
     disableSignUp: process.env.DISABLE_SIGNUP === "true",
+    revokeSessionsOnPasswordReset: true,
   },
   user: {
     additionalFields: {
@@ -37,6 +42,7 @@ export const auth = betterAuth({
       },
     },
   },
+  plugins: [nextCookies()],
   baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
 });
